@@ -1,27 +1,10 @@
 import React from "react";
 import Link from "@/compat/next-link";
-import { db } from "@/db";
-import { products } from "@/db/schema";
-import { desc, eq } from "drizzle-orm";
+import type { Product } from "@/lib/types";
 import { ArrowRight, Sparkles, Check, Star, ShieldCheck, Layers, Scissors, Compass } from "lucide-react";
 import { HomeClientSection } from "@/components/HomeClientSection";
 
-export const revalidate = 0; // dynamic data
-
-export default async function HomePage() {
-  // Fetch featured products for the storefront
-  const featuredProducts = await db
-    .select()
-    .from(products)
-    .where(eq(products.isFeatured, true))
-    .limit(8);
-
-  const bestsellers = await db
-    .select()
-    .from(products)
-    .where(eq(products.isBestseller, true))
-    .limit(4);
-
+export default function HomePage({ featuredProducts, bestsellers }: { featuredProducts: Product[]; bestsellers: Product[] }) {
   return (
     <div className="flex flex-col min-h-screen bg-neutral-950 text-neutral-100">
       

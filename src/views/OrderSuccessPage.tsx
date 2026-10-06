@@ -1,9 +1,6 @@
 import React from "react";
 import Link from "@/compat/next-link";
-import { notFound } from "@/compat/next-navigation";
-import { db } from "@/db";
-import { orders, orderItems } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import type { Order, OrderItem } from "@/lib/types";
 import {
   CheckCircle,
   Package,
@@ -17,27 +14,7 @@ import {
 } from "lucide-react";
 import { OrderPrintButton } from "@/components/OrderPrintButton";
 
-export const revalidate = 0;
-
-interface PageProps {
-  params: Promise<{ orderId: string }>;
-}
-
-export default async function OrderSuccessPage({ params }: PageProps) {
-  const { orderId } = await params;
-  const idNum = parseInt(orderId, 10);
-  if (isNaN(idNum)) {
-    notFound();
-  }
-
-  const orderResult = await db.select().from(orders).where(eq(orders.id, idNum));
-  if (!orderResult || orderResult.length === 0) {
-    notFound();
-  }
-
-  const order = orderResult[0];
-  const items = await db.select().from(orderItems).where(eq(orderItems.orderId, idNum));
-
+export default function OrderSuccessPage({ order, items }: { order: Order; items: OrderItem[] }) {
   // Delivery date estimate (4 business days from now)
   const deliveryDate = new Date();
   deliveryDate.setDate(deliveryDate.getDate() + 4);
