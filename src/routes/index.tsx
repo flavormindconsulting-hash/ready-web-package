@@ -1,24 +1,19 @@
 import { createFileRoute } from "@tanstack/react-router";
+import HomePage from "@/views/HomePage";
+import { getHomeData } from "@/lib/store.functions";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "HENRO | Haute Shirting for Men" },
+      { name: "description", content: "Bespoke Italian cotton oxfords, Normandy washed linen resort shirts, and heavyweight overshirts crafted for the modern man." },
+      { property: "og:title", content: "HENRO | Haute Shirting for Men" },
+      { property: "og:description", content: "Bespoke Italian cotton oxfords, Normandy linen resort shirts and heavyweight overshirts." },
+    ],
+  }),
+  loader: () => getHomeData(),
+  component: () => {
+    const d = Route.useLoaderData();
+    return <HomePage featuredProducts={d.featuredProducts} bestsellers={d.bestsellers} />;
+  },
 });
-
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
