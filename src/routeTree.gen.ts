@@ -10,16 +10,21 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as ApiCheckoutRouteImport } from './routes/api/checkout'
 import { Route as ApiHealthRouteImport } from './routes/api/health'
 import { Route as ApiNewsletterRouteImport } from './routes/api/newsletter'
 import { Route as ApiProductsRouteImport } from './routes/api/products'
 import { Route as ApiReviewsRouteImport } from './routes/api/reviews'
+import { Route as CheckoutIndexRouteImport } from './routes/checkout/index'
+import { Route as ProductsIndexRouteImport } from './routes/products/index'
+import { Route as ProductsSlugRouteImport } from './routes/products/$slug'
 import { Route as ApiAdminOrdersRouteImport } from './routes/api/admin/orders'
 import { Route as ApiAdminSeedRouteImport } from './routes/api/admin/seed'
 import { Route as ApiAdminStatsRouteImport } from './routes/api/admin/stats'
 import { Route as ApiOrdersIdRouteImport } from './routes/api/orders.$id'
 import { Route as ApiProductsIdRouteImport } from './routes/api/products.$id'
+import { Route as CheckoutSuccessOrderIdRouteImport } from './routes/checkout/success/$orderId'
 import { Route as ApiAdminOrdersIdRouteImport } from './routes/api/admin/orders.$id'
 import { Route as ApiAdminReviewsIdRouteImport } from './routes/api/admin/reviews.$id'
 import { Route as ApiProductsSlugSlugRouteImport } from './routes/api/products/slug/$slug'
@@ -27,6 +32,11 @@ import { Route as ApiProductsSlugSlugRouteImport } from './routes/api/products/s
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiCheckoutRoute = ApiCheckoutRouteImport.update({
@@ -54,6 +64,21 @@ const ApiReviewsRoute = ApiReviewsRouteImport.update({
   path: '/api/reviews',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CheckoutIndexRoute = CheckoutIndexRouteImport.update({
+  id: '/checkout/',
+  path: '/checkout/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductsIndexRoute = ProductsIndexRouteImport.update({
+  id: '/products/',
+  path: '/products/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductsSlugRoute = ProductsSlugRouteImport.update({
+  id: '/products/$slug',
+  path: '/products/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAdminOrdersRoute = ApiAdminOrdersRouteImport.update({
   id: '/api/admin/orders',
   path: '/api/admin/orders',
@@ -79,6 +104,11 @@ const ApiProductsIdRoute = ApiProductsIdRouteImport.update({
   path: '/$id',
   getParentRoute: () => ApiProductsRoute,
 } as any)
+const CheckoutSuccessOrderIdRoute = CheckoutSuccessOrderIdRouteImport.update({
+  id: '/checkout/success/$orderId',
+  path: '/checkout/success/$orderId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAdminOrdersIdRoute = ApiAdminOrdersIdRouteImport.update({
   id: '/$id',
   path: '/$id',
@@ -97,32 +127,42 @@ const ApiProductsSlugSlugRoute = ApiProductsSlugSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/api/checkout': typeof ApiCheckoutRoute
   '/api/health': typeof ApiHealthRoute
   '/api/newsletter': typeof ApiNewsletterRoute
   '/api/products': typeof ApiProductsRouteWithChildren
   '/api/reviews': typeof ApiReviewsRoute
+  '/products/$slug': typeof ProductsSlugRoute
+  '/checkout/': typeof CheckoutIndexRoute
+  '/products/': typeof ProductsIndexRoute
   '/api/admin/orders': typeof ApiAdminOrdersRouteWithChildren
   '/api/admin/seed': typeof ApiAdminSeedRoute
   '/api/admin/stats': typeof ApiAdminStatsRoute
   '/api/orders/$id': typeof ApiOrdersIdRoute
   '/api/products/$id': typeof ApiProductsIdRoute
+  '/checkout/success/$orderId': typeof CheckoutSuccessOrderIdRoute
   '/api/admin/orders/$id': typeof ApiAdminOrdersIdRoute
   '/api/admin/reviews/$id': typeof ApiAdminReviewsIdRoute
   '/api/products/slug/$slug': typeof ApiProductsSlugSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/api/checkout': typeof ApiCheckoutRoute
   '/api/health': typeof ApiHealthRoute
   '/api/newsletter': typeof ApiNewsletterRoute
   '/api/products': typeof ApiProductsRouteWithChildren
   '/api/reviews': typeof ApiReviewsRoute
+  '/products/$slug': typeof ProductsSlugRoute
+  '/checkout': typeof CheckoutIndexRoute
+  '/products': typeof ProductsIndexRoute
   '/api/admin/orders': typeof ApiAdminOrdersRouteWithChildren
   '/api/admin/seed': typeof ApiAdminSeedRoute
   '/api/admin/stats': typeof ApiAdminStatsRoute
   '/api/orders/$id': typeof ApiOrdersIdRoute
   '/api/products/$id': typeof ApiProductsIdRoute
+  '/checkout/success/$orderId': typeof CheckoutSuccessOrderIdRoute
   '/api/admin/orders/$id': typeof ApiAdminOrdersIdRoute
   '/api/admin/reviews/$id': typeof ApiAdminReviewsIdRoute
   '/api/products/slug/$slug': typeof ApiProductsSlugSlugRoute
@@ -130,16 +170,21 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/api/checkout': typeof ApiCheckoutRoute
   '/api/health': typeof ApiHealthRoute
   '/api/newsletter': typeof ApiNewsletterRoute
   '/api/products': typeof ApiProductsRouteWithChildren
   '/api/reviews': typeof ApiReviewsRoute
+  '/products/$slug': typeof ProductsSlugRoute
+  '/checkout/': typeof CheckoutIndexRoute
+  '/products/': typeof ProductsIndexRoute
   '/api/admin/orders': typeof ApiAdminOrdersRouteWithChildren
   '/api/admin/seed': typeof ApiAdminSeedRoute
   '/api/admin/stats': typeof ApiAdminStatsRoute
   '/api/orders/$id': typeof ApiOrdersIdRoute
   '/api/products/$id': typeof ApiProductsIdRoute
+  '/checkout/success/$orderId': typeof CheckoutSuccessOrderIdRoute
   '/api/admin/orders/$id': typeof ApiAdminOrdersIdRoute
   '/api/admin/reviews/$id': typeof ApiAdminReviewsIdRoute
   '/api/products/slug/$slug': typeof ApiProductsSlugSlugRoute
@@ -148,48 +193,63 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/api/checkout'
     | '/api/health'
     | '/api/newsletter'
     | '/api/products'
     | '/api/reviews'
+    | '/products/$slug'
+    | '/checkout/'
+    | '/products/'
     | '/api/admin/orders'
     | '/api/admin/seed'
     | '/api/admin/stats'
     | '/api/orders/$id'
     | '/api/products/$id'
+    | '/checkout/success/$orderId'
     | '/api/admin/orders/$id'
     | '/api/admin/reviews/$id'
     | '/api/products/slug/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/admin'
     | '/api/checkout'
     | '/api/health'
     | '/api/newsletter'
     | '/api/products'
     | '/api/reviews'
+    | '/products/$slug'
+    | '/checkout'
+    | '/products'
     | '/api/admin/orders'
     | '/api/admin/seed'
     | '/api/admin/stats'
     | '/api/orders/$id'
     | '/api/products/$id'
+    | '/checkout/success/$orderId'
     | '/api/admin/orders/$id'
     | '/api/admin/reviews/$id'
     | '/api/products/slug/$slug'
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/api/checkout'
     | '/api/health'
     | '/api/newsletter'
     | '/api/products'
     | '/api/reviews'
+    | '/products/$slug'
+    | '/checkout/'
+    | '/products/'
     | '/api/admin/orders'
     | '/api/admin/seed'
     | '/api/admin/stats'
     | '/api/orders/$id'
     | '/api/products/$id'
+    | '/checkout/success/$orderId'
     | '/api/admin/orders/$id'
     | '/api/admin/reviews/$id'
     | '/api/products/slug/$slug'
@@ -197,15 +257,20 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
   ApiCheckoutRoute: typeof ApiCheckoutRoute
   ApiHealthRoute: typeof ApiHealthRoute
   ApiNewsletterRoute: typeof ApiNewsletterRoute
   ApiProductsRoute: typeof ApiProductsRouteWithChildren
   ApiReviewsRoute: typeof ApiReviewsRoute
+  ProductsSlugRoute: typeof ProductsSlugRoute
+  CheckoutIndexRoute: typeof CheckoutIndexRoute
+  ProductsIndexRoute: typeof ProductsIndexRoute
   ApiAdminOrdersRoute: typeof ApiAdminOrdersRouteWithChildren
   ApiAdminSeedRoute: typeof ApiAdminSeedRoute
   ApiAdminStatsRoute: typeof ApiAdminStatsRoute
   ApiOrdersIdRoute: typeof ApiOrdersIdRoute
+  CheckoutSuccessOrderIdRoute: typeof CheckoutSuccessOrderIdRoute
   ApiAdminReviewsIdRoute: typeof ApiAdminReviewsIdRoute
 }
 
@@ -216,6 +281,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/checkout': {
@@ -253,6 +325,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiReviewsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/checkout/': {
+      id: '/checkout/'
+      path: '/checkout'
+      fullPath: '/checkout/'
+      preLoaderRoute: typeof CheckoutIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/products/': {
+      id: '/products/'
+      path: '/products'
+      fullPath: '/products/'
+      preLoaderRoute: typeof ProductsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/products/$slug': {
+      id: '/products/$slug'
+      path: '/products/$slug'
+      fullPath: '/products/$slug'
+      preLoaderRoute: typeof ProductsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/admin/orders': {
       id: '/api/admin/orders'
       path: '/api/admin/orders'
@@ -287,6 +380,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/api/products/$id'
       preLoaderRoute: typeof ApiProductsIdRouteImport
       parentRoute: typeof ApiProductsRoute
+    }
+    '/checkout/success/$orderId': {
+      id: '/checkout/success/$orderId'
+      path: '/checkout/success/$orderId'
+      fullPath: '/checkout/success/$orderId'
+      preLoaderRoute: typeof CheckoutSuccessOrderIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/api/admin/orders/$id': {
       id: '/api/admin/orders/$id'
@@ -340,15 +440,20 @@ const ApiAdminOrdersRouteWithChildren = ApiAdminOrdersRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
   ApiCheckoutRoute: ApiCheckoutRoute,
   ApiHealthRoute: ApiHealthRoute,
   ApiNewsletterRoute: ApiNewsletterRoute,
   ApiProductsRoute: ApiProductsRouteWithChildren,
   ApiReviewsRoute: ApiReviewsRoute,
+  ProductsSlugRoute: ProductsSlugRoute,
+  CheckoutIndexRoute: CheckoutIndexRoute,
+  ProductsIndexRoute: ProductsIndexRoute,
   ApiAdminOrdersRoute: ApiAdminOrdersRouteWithChildren,
   ApiAdminSeedRoute: ApiAdminSeedRoute,
   ApiAdminStatsRoute: ApiAdminStatsRoute,
   ApiOrdersIdRoute: ApiOrdersIdRoute,
+  CheckoutSuccessOrderIdRoute: CheckoutSuccessOrderIdRoute,
   ApiAdminReviewsIdRoute: ApiAdminReviewsIdRoute,
 }
 export const routeTree = rootRouteImport
