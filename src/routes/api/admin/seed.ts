@@ -10,7 +10,7 @@ export const Route = createFileRoute("/api/admin/seed")({
         const t = await c.rpc("reset_store"); if (t.error) throw t.error;
         const s = seed as Record<string, Record<string, unknown>[]>;
         for (const table of ["products", "reviews", "orders", "order_items"]) {
-          const r = await c.from(table).insert(s[table].map(({ id: _id, ...x }) => toSnake(x)));
+          const r = await c.from(table).insert((s[table] ?? []).map(({ id: _id, ...x }) => toSnake(x)));
           if (r.error) throw r.error;
         }
         return json({ success: true, message: "Database reseeded successfully" });

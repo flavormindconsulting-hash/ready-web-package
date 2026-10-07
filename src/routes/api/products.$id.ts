@@ -19,8 +19,8 @@ export const Route = createFileRoute("/api/products/$id")({
         const b = await request.json();
         const u: Record<string, unknown> = { updatedAt: new Date() };
         for (const k of ["name", "slug", "subtitle", "description", "category", "fit", "material", "careInstructions"]) if (b[k] !== undefined) u[k] = b[k];
-        if (b.price !== undefined) u.price = String(b.price);
-        if (b.compareAtPrice !== undefined) u.compareAtPrice = b.compareAtPrice ? String(b.compareAtPrice) : null;
+        if (b["price"] !== undefined) u["price"] = String(b["price"]);
+        if (b["compareAtPrice"] !== undefined) u["compareAtPrice"] = b["compareAtPrice"] ? String(b["compareAtPrice"]) : null;
         for (const k of ["details", "images", "colors", "sizes"]) if (b[k] !== undefined) u[k] = typeof b[k] === "string" ? b[k] : JSON.stringify(b[k]);
         for (const k of ["isFeatured", "isNew", "isBestseller", "inStock"]) if (b[k] !== undefined) u[k] = Boolean(b[k]);
         const c = await db();

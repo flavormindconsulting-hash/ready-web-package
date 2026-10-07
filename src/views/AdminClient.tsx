@@ -199,7 +199,7 @@ export const AdminClient: React.FC = () => {
 
   const handleStockChange = (index: number, stock: number) => {
     const updated = [...formData.sizes];
-    updated[index].stock = Math.max(0, stock);
+    updated[index]!.stock = Math.max(0, stock);
     setFormData({ ...formData, sizes: updated });
   };
 
