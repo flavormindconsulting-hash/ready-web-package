@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { db, rows, toCamel, toSnake, json } from "@/lib/store.server";
+import { requireAdmin, db, rows, toCamel, toSnake, json } from "@/lib/store.server";
 
 export const Route = createFileRoute("/api/products/$id")({
   server: { handlers: {
@@ -13,6 +13,7 @@ export const Route = createFileRoute("/api/products/$id")({
       return json({ ...toCamel(p.data), reviews: rows(rv.data) });
     },
     PUT: async ({ params, request }) => {
+      const denied = await requireAdmin(request); if (denied) return denied;
       try {
         const id = parseInt(params.id, 10);
         if (isNaN(id)) return json({ error: "Invalid product id" }, { status: 400 });
@@ -29,7 +30,8 @@ export const Route = createFileRoute("/api/products/$id")({
         return json(toCamel(r.data));
       } catch (e) { console.error(e); return json({ error: "Failed to update product" }, { status: 500 }); }
     },
-    DELETE: async ({ params }) => {
+    DELETE: async ({params, request}) => {
+      const denied = await requireAdmin(request); if (denied) return denied;
       const id = parseInt(params.id, 10);
       if (isNaN(id)) return json({ error: "Invalid product id" }, { status: 400 });
       const c = await db();

@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { db, rows, toCamel, toSnake, json } from "@/lib/store.server";
+import { requireAdmin, db, rows, toCamel, toSnake, json } from "@/lib/store.server";
 
 import seed from "@/lib/seed-data.json";
 export const Route = createFileRoute("/api/admin/seed")({
