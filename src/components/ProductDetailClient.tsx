@@ -102,7 +102,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({
         slug: product.slug,
         name: product.name,
         price: parseFloat(product.price),
-        image: images[selectedImageIndex] || images[0],
+        image: images[selectedImageIndex] || images[0] || "",
         size: selectedSize,
         color: selectedColor,
         quantity,

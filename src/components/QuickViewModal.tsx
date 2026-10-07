@@ -69,7 +69,7 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
         slug: product.slug,
         name: product.name,
         price: parseFloat(product.price),
-        image: images[selectedImageIndex] || images[0],
+        image: images[selectedImageIndex] || images[0] || "",
         size: selectedSize,
         color: currentColor,
         quantity,
