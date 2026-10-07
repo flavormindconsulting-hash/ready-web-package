@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { db, rows, toCamel, toSnake, json } from "@/lib/store.server";
+import { requireAdmin, db, rows, toCamel, toSnake, json } from "@/lib/store.server";
 
 export const Route = createFileRoute("/api/admin/stats")({
   server: { handlers: {
-    GET: async () => {
+    GET: async ({ request }) => {
+      const denied = await requireAdmin(request); if (denied) return denied;
       const c = await db();
       const [p, o, r, recent] = await Promise.all([
         c.from("products").select("id", { count: "exact", head: true }),

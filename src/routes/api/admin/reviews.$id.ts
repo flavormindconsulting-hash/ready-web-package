@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { db, rows, toCamel, toSnake, json } from "@/lib/store.server";
+import { requireAdmin, db, rows, toCamel, toSnake, json } from "@/lib/store.server";
 
 export const Route = createFileRoute("/api/admin/reviews/$id")({
   server: { handlers: {
-    DELETE: async ({ params }) => {
+    DELETE: async ({params, request}) => {
+      const denied = await requireAdmin(request); if (denied) return denied;
       const id = parseInt(params.id, 10);
       if (isNaN(id)) return json({ error: "Invalid review ID" }, { status: 400 });
       const c = await db();

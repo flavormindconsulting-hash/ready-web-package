@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { db, rows, toCamel, toSnake, json } from "@/lib/store.server";
+import { requireAdmin, db, rows, toCamel, toSnake, json } from "@/lib/store.server";
 
 const str = (v: unknown, d: unknown) => (typeof v === "string" ? v : JSON.stringify(v ?? d));
 export const Route = createFileRoute("/api/products")({
@@ -25,6 +25,7 @@ export const Route = createFileRoute("/api/products")({
       } catch (e) { console.error(e); return json({ error: "Failed to fetch products" }, { status: 500 }); }
     },
     POST: async ({ request }) => {
+      const denied = await requireAdmin(request); if (denied) return denied;
       try {
         const b = await request.json();
         const slug = b.slug || String(b.name).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");

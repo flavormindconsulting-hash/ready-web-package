@@ -1,4 +1,5 @@
 
+import { adminFetch } from "@/lib/admin-fetch";
 import React, { useState, useEffect } from "react";
 import Link from "@/compat/next-link";
 import { Product, Order, Review, ProductSize, ProductColor } from "@/lib/types";
@@ -81,10 +82,10 @@ export const AdminClient: React.FC = () => {
     setRefreshing(true);
     try {
       const [statsRes, productsRes, ordersRes, reviewsRes] = await Promise.all([
-        fetch("/api/admin/stats"),
-        fetch("/api/products"),
-        fetch("/api/admin/orders"),
-        fetch("/api/reviews"),
+        adminFetch("/api/admin/stats"),
+        adminFetch("/api/products"),
+        adminFetch("/api/admin/orders"),
+        adminFetch("/api/reviews"),
       ]);
 
       if (statsRes.ok) setStats(await statsRes.json());
@@ -268,13 +269,13 @@ export const AdminClient: React.FC = () => {
     try {
       let res;
       if (editingProduct) {
-        res = await fetch(`/api/products/${editingProduct.id}`, {
+        res = await adminFetch(`/api/products/${editingProduct.id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
       } else {
-        res = await fetch("/api/products", {
+        res = await adminFetch("/api/products", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
@@ -305,7 +306,7 @@ export const AdminClient: React.FC = () => {
     }
 
     try {
-      const res = await fetch(`/api/products/${id}`, { method: "DELETE" });
+      const res = await adminFetch(`/api/products/${id}`, { method: "DELETE" });
       if (res.ok) {
         setActionSuccess(`"${name}" has been removed.`);
         setTimeout(() => setActionSuccess(""), 3000);
@@ -318,7 +319,7 @@ export const AdminClient: React.FC = () => {
 
   const handleToggleStock = async (product: Product) => {
     try {
-      const res = await fetch(`/api/products/${product.id}`, {
+      const res = await adminFetch(`/api/products/${product.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ inStock: !product.inStock }),
@@ -333,7 +334,7 @@ export const AdminClient: React.FC = () => {
 
   const handleUpdateOrderStatus = async (orderId: number, newStatus: string) => {
     try {
-      const res = await fetch(`/api/admin/orders/${orderId}`, {
+      const res = await adminFetch(`/api/admin/orders/${orderId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status: newStatus }),
@@ -351,7 +352,7 @@ export const AdminClient: React.FC = () => {
   const handleDeleteReview = async (id: number) => {
     if (!confirm("Are you sure you want to delete this customer review?")) return;
     try {
-      const res = await fetch(`/api/admin/reviews/${id}`, { method: "DELETE" });
+      const res = await adminFetch(`/api/admin/reviews/${id}`, { method: "DELETE" });
       if (res.ok) {
         setActionSuccess("Review deleted.");
         setTimeout(() => setActionSuccess(""), 3000);
@@ -368,7 +369,7 @@ export const AdminClient: React.FC = () => {
     }
     setRefreshing(true);
     try {
-      const res = await fetch("/api/admin/seed", { method: "POST" });
+      const res = await adminFetch("/api/admin/seed", { method: "POST" });
       if (res.ok) {
         setActionSuccess("Database reset to demo state.");
         setTimeout(() => setActionSuccess(""), 3000);

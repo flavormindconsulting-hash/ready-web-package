@@ -1,10 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { db, rows, toCamel, toSnake, json } from "@/lib/store.server";
+import { requireAdmin, db, rows, toCamel, toSnake, json } from "@/lib/store.server";
 
 import seed from "@/lib/seed-data.json";
 export const Route = createFileRoute("/api/admin/seed")({
   server: { handlers: {
-    POST: async () => {
+    POST: async ({ request }) => {
+      const denied = await requireAdmin(request); if (denied) return denied;
       try {
         const c = await db();
         const t = await c.rpc("reset_store"); if (t.error) throw t.error;
