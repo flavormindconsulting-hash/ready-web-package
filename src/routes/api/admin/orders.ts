@@ -3,7 +3,8 @@ import { requireAdmin, db, rows, toCamel, toSnake, json } from "@/lib/store.serv
 
 export const Route = createFileRoute("/api/admin/orders")({
   server: { handlers: {
-    GET: async () => {
+    GET: async ({ request }) => {
+      const denied = await requireAdmin(request); if (denied) return denied;
       const c = await db();
       const r = await c.from("orders").select("*, order_items(*)").order("created_at", { ascending: false });
       return json((r.data ?? []).map((x: any) => { const { order_items, ...o } = x; return { ...toCamel(o), items: rows(order_items) }; }));
