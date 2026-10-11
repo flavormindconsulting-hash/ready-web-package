@@ -48,10 +48,9 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
     const message = error instanceof Error ? error.message : String(error);
     const isStaleChunkError = /failed to fetch dynamically imported module|importing a module script failed|failed to load module script/i.test(message);
     if (isStaleChunkError) {
-      const retryKey = "henro:chunk-refresh-at";
-      const previousAttempt = Number(window.sessionStorage.getItem(retryKey));
-      if (!Number.isFinite(previousAttempt) || Date.now() - previousAttempt > 30_000) {
-        window.sessionStorage.setItem(retryKey, String(Date.now()));
+      const retryKey = "henro:chunk-refresh-attempted";
+      if (window.sessionStorage.getItem(retryKey) !== "true") {
+        window.sessionStorage.setItem(retryKey, "true");
         window.location.reload();
       }
     }
