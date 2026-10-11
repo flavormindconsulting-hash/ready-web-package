@@ -1,252 +1,68 @@
+import React, { useState, useEffect } from 'react';
+import Link from '@/compat/next-link';
+import { usePathname } from '@/compat/next-navigation';
+import { useCart } from '@/lib/cart-context';
+import { Button } from '@/components/ui/button';
+import logo from '@/assets/henro-logo.png';
+import { ShoppingBag, Search, Menu, X, ArrowRight, UserRound } from 'lucide-react';
 
-import React, { useState } from "react";
-import Link from "@/compat/next-link";
-import { usePathname } from "@/compat/next-navigation";
-import { useCart } from "@/lib/cart-context";
-import {
-  ShoppingBag,
-  Search,
-  Menu,
-  X,
-  SlidersHorizontal,
-  ArrowRight,
-  ShieldAlert,
-} from "lucide-react";
-
+const links = [
+  { label: 'All shirts', href: '/products' },
+  { label: 'Oxford & formal', href: '/products?category=Oxford+%26+Formal' },
+  { label: 'Linen & resort', href: '/products?category=Linen+%26+Resort' },
+  { label: 'Overshirts', href: '/products?category=Overshirts' },
+];
 export const Header: React.FC = () => {
   const pathname = usePathname();
   const { totalItems, setIsCartOpen } = useCart();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [announcementVisible, setAnnouncementVisible] = useState(true);
-
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      window.location.href = `/products?search=${encodeURIComponent(searchQuery.trim())}`;
-      setSearchOpen(false);
-    }
-  };
-
-  const navLinks = [
-    { label: "ALL SHIRTS", href: "/products" },
-    { label: "OXFORD & FORMAL", href: "/products?category=Oxford+%26+Formal" },
-    { label: "LINEN & RESORT", href: "/products?category=Linen+%26+Resort" },
-    { label: "OVERSHIRTS", href: "/products?category=Overshirts" },
-    { label: "KNIT & SILK", href: "/products?category=Knit+%26+Polo" },
-  ];
-
-  return (
-    <>
-      {/* Top Announcement Bar */}
-      {announcementVisible && (
-        <div className="bg-neutral-900 border-b border-neutral-800 text-neutral-300 text-[11px] tracking-widest uppercase py-2 px-4 flex items-center justify-between text-center transition-all duration-300">
-          <div className="hidden sm:block w-6" />
-          <div className="flex-1 text-center font-medium">
-            <span>COMPLIMENTARY WORLDWIDE COURIER OVER ₹150</span>
-            <span className="mx-2 text-neutral-600">·</span>
-            <span className="text-amber-200/90 font-semibold">CODE 'HENRO10' FOR 10% OFF</span>
-            <span className="mx-2 text-neutral-600 hidden md:inline">·</span>
-            <span className="hidden md:inline text-neutral-400">30-DAY ATELIER RETURNS</span>
-          </div>
-          <button
-            onClick={() => setAnnouncementVisible(false)}
-            aria-label="Dismiss announcement"
-            className="text-neutral-500 hover:text-neutral-200 transition-colors p-0.5 ml-2"
-          >
-            <X className="w-3.5 h-3.5" />
-          </button>
+  const [menu, setMenu] = useState(false);
+  const [search, setSearch] = useState(false);
+  const [query, setQuery] = useState('');
+  useEffect(() => { setMenu(false); setSearch(false); }, [pathname]);
+  useEffect(() => {
+    if (!menu) return;
+    const old = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const close = (e: KeyboardEvent) => { if (e.key === 'Escape') setMenu(false); };
+    window.addEventListener('keydown', close);
+    return () => { document.body.style.overflow = old; window.removeEventListener('keydown', close); };
+  }, [menu]);
+  return <>
+    <div className="bg-primary text-primary-foreground text-center text-[10px] sm:text-xs py-2.5 px-4">
+      <span>YOUR FIRST HENRO. 10% OFF WITH HENRO10</span>
+      <span className="hidden sm:inline"> &nbsp; / &nbsp; COMPLIMENTARY SHIPPING OVER ₹150</span>
+    </div>
+    <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-md border-b border-border">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 h-20 grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3">
+        <div className="min-w-0">
+          <Button variant="ghost" size="icon" className="lg:hidden" aria-label="Open menu" onClick={() => setMenu(true)}><Menu /></Button>
+          <nav className="hidden lg:flex gap-6 text-xs font-semibold uppercase">
+            {links.slice(0,2).map(l => <Link key={l.href} href={l.href} className="hover:text-muted-foreground">{l.label}</Link>)}
+          </nav>
         </div>
-      )}
-
-      {/* Main Navigation Header */}
-      <header className="sticky top-0 z-40 bg-neutral-950/90 backdrop-blur-md border-b border-neutral-800/80 transition-all">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-          
-          {/* Mobile Menu Button & Left Desktop Links */}
-          <div className="flex items-center gap-6">
-            <button
-              onClick={() => setMobileMenuOpen(true)}
-              className="lg:hidden p-2 text-neutral-300 hover:text-white"
-              aria-label="Open menu"
-            >
-              <Menu className="w-6 h-6" />
-            </button>
-
-            <nav className="hidden lg:flex items-center gap-7 text-[12px] font-medium tracking-[0.16em] uppercase text-neutral-400">
-              {navLinks.slice(0, 3).map((link) => {
-                const isActive = pathname === link.href;
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className={`transition-colors hover:text-white relative py-1 ${
-                      isActive ? "text-white" : ""
-                    }`}
-                  >
-                    {link.label}
-                    {isActive && (
-                      <span className="absolute bottom-0 left-0 w-full h-[1px] bg-amber-200" />
-                    )}
-                  </Link>
-                );
-              })}
-            </nav>
-          </div>
-
-          {/* Central Luxury Brand Logo */}
-          <div className="text-center">
-            <Link
-              href="/"
-              className="font-editorial text-2xl sm:text-3xl font-light tracking-[0.32em] text-white hover:text-neutral-300 transition-colors inline-block"
-            >
-              HENRO
-            </Link>
-            <span className="block text-[9px] tracking-[0.35em] text-neutral-500 uppercase font-sans -mt-1">
-              HAUTE SHIRTING
-            </span>
-          </div>
-
-          {/* Right Desktop Nav & Action Icons */}
-          <div className="flex items-center gap-3 sm:gap-5">
-            <nav className="hidden xl:flex items-center gap-6 text-[12px] font-medium tracking-[0.16em] uppercase text-neutral-400 mr-2">
-              {navLinks.slice(3).map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="transition-colors hover:text-white py-1"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </nav>
-
-            {/* Search Trigger */}
-            <button
-              onClick={() => setSearchOpen(!searchOpen)}
-              aria-label="Search collection"
-              className="p-2 text-neutral-300 hover:text-white transition-colors"
-            >
-              <Search className="w-4 h-4 sm:w-5 sm:h-5" />
-            </button>
-
-            {/* Admin Portal Direct Link */}
-            <Link
-              href="/admin"
-              className="inline-flex items-center gap-1 px-2.5 py-1 text-[10px] tracking-widest uppercase font-semibold text-amber-300 bg-amber-950/40 border border-amber-800/60 rounded-full hover:bg-amber-900/50 transition-colors"
-              title="Open Atelier Admin Panel"
-            >
-              <SlidersHorizontal className="w-3 h-3" />
-              <span className="hidden sm:inline">Admin</span>
-            </Link>
-
-            {/* Cart Trigger */}
-            <button
-              onClick={() => setIsCartOpen(true)}
-              aria-label="View Shopping Bag"
-              className="relative p-2 text-neutral-300 hover:text-white transition-colors flex items-center gap-2 group"
-            >
-              <ShoppingBag className="w-5 h-5 group-hover:scale-105 transition-transform" />
-              <span className="text-[11px] font-mono tracking-wider font-semibold text-neutral-300 group-hover:text-amber-200">
-                [{totalItems}]
-              </span>
-            </button>
-          </div>
+        <Link href="/" aria-label="HENRO home"><img src={logo} alt="HENRO" className="brand-logo" /></Link>
+        <div className="min-w-0 flex justify-end items-center gap-0 sm:gap-2">
+          <nav className="hidden xl:flex text-xs font-semibold uppercase gap-5 mr-4">{links.slice(2).map(l => <Link key={l.href} href={l.href}>{l.label}</Link>)}</nav>
+          <Button variant="ghost" size="icon" aria-label="Search collection" title="Search" onClick={() => setSearch(!search)}><Search /></Button>
+          <Button asChild variant="ghost" size="icon" className="hidden sm:inline-flex"><Link href="/admin" aria-label="Owner sign in" title="Owner sign in"><UserRound /></Link></Button>
+          <Button variant="ghost" className="px-2 shrink-0" aria-label="View Shopping Bag" onClick={() => setIsCartOpen(true)}><ShoppingBag /><span className="text-xs">{totalItems}</span></Button>
         </div>
-
-        {/* Search Bar Overlay */}
-        {searchOpen && (
-          <div className="border-t border-neutral-800 bg-neutral-900/95 py-4 px-4 sm:px-8 transition-all animate-fade-in">
-            <form onSubmit={handleSearchSubmit} className="max-w-3xl mx-auto flex items-center gap-3">
-              <Search className="w-5 h-5 text-neutral-500" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search shirts by style, weave, linen, oxford, wool..."
-                autoFocus
-                className="w-full bg-transparent border-none text-white text-sm focus:outline-none placeholder-neutral-500 tracking-wide"
-              />
-              <button
-                type="submit"
-                className="text-xs uppercase tracking-widest text-amber-200 font-semibold px-3 py-1.5 hover:underline"
-              >
-                Search
-              </button>
-              <button
-                type="button"
-                onClick={() => setSearchOpen(false)}
-                className="p-1 text-neutral-500 hover:text-white"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </form>
-          </div>
-        )}
-      </header>
-
-      {/* Mobile Menu Drawer */}
-      {mobileMenuOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden">
-          <div
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity"
-            onClick={() => setMobileMenuOpen(false)}
-          />
-          <div className="fixed inset-y-0 left-0 max-w-xs w-full bg-neutral-950 border-r border-neutral-800 p-6 flex flex-col justify-between z-10 animate-slide-in">
-            <div>
-              <div className="flex items-center justify-between pb-6 border-b border-neutral-800">
-                <span className="font-editorial text-2xl tracking-[0.25em] text-white">
-                  HENRO
-                </span>
-                <button
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="p-2 text-neutral-400 hover:text-white"
-                  aria-label="Close menu"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-
-              <div className="mt-8 flex flex-col gap-6 text-sm font-medium tracking-[0.2em] uppercase">
-                <Link
-                  href="/products"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-white hover:text-amber-200 flex items-center justify-between py-1 border-b border-neutral-900"
-                >
-                  <span>All Shirts</span>
-                  <ArrowRight className="w-4 h-4 text-neutral-600" />
-                </Link>
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="text-neutral-400 hover:text-white flex items-center justify-between py-1 border-b border-neutral-900"
-                  >
-                    <span>{link.label}</span>
-                    <ArrowRight className="w-4 h-4 text-neutral-700" />
-                  </Link>
-                ))}
-                <Link
-                  href="/admin"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-amber-300 font-semibold flex items-center gap-2 pt-2"
-                >
-                  <SlidersHorizontal className="w-4 h-4" />
-                  <span>Admin Atelier Panel</span>
-                </Link>
-              </div>
-            </div>
-
-            <div className="pt-6 border-t border-neutral-900 text-xs text-neutral-500 tracking-wider">
-              <p className="uppercase font-medium text-neutral-400 mb-1">Maison Henro</p>
-              <p>Milano · Okayama · Paris</p>
-              <p className="mt-2 text-neutral-600">Complimentary Global Shipping</p>
-            </div>
-          </div>
-        </div>
-      )}
-    </>
-  );
+      </div>
+      {search && <form action="/products" className="max-w-3xl mx-auto px-4 py-4 flex min-w-0 items-center gap-2 border-t border-border">
+        <Search className="size-4 shrink-0 text-muted-foreground" />
+        <input name="search" aria-label="Search shirts" value={query} onChange={e => setQuery(e.target.value)} placeholder="Search the collection" autoFocus className="min-w-0 flex-1 bg-transparent py-2 text-sm outline-none" />
+        <Button type="submit" variant="ghost" size="icon" aria-label="Submit search"><ArrowRight /></Button>
+        <Button variant="ghost" size="icon" type="button" aria-label="Close search" onClick={() => setSearch(false)}><X /></Button>
+      </form>}
+    </header>
+    {menu && <div className="fixed inset-0 z-50 lg:hidden" role="dialog" aria-modal="true" aria-label="Main menu">
+      <div className="absolute inset-0 bg-overlay/60" onClick={() => setMenu(false)} />
+      <div className="relative bg-background w-[min(88vw,360px)] h-[100dvh] p-6 flex flex-col">
+        <div className="flex justify-between items-center border-b border-border pb-5"><img src={logo} alt="HENRO" className="brand-logo" /><Button variant="ghost" size="icon" aria-label="Close menu" onClick={() => setMenu(false)}><X /></Button></div>
+        <nav className="mt-6 flex-1">{links.map(l => <Link key={l.href} href={l.href} onClick={() => setMenu(false)} className="flex items-center justify-between py-5 border-b border-border font-display text-lg">{l.label}<ArrowRight className="size-4" /></Link>)}</nav>
+        <Link href="/admin" onClick={() => setMenu(false)} className="flex gap-2 items-center text-xs py-5"><UserRound className="size-4" />Owner sign in</Link>
+        <p className="text-xs text-muted-foreground">HENRO / A signature of your own.</p>
+      </div>
+    </div>}
+  </>;
 };
