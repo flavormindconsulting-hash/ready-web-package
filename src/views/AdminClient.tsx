@@ -243,7 +243,7 @@ export const AdminClient: React.FC = () => {
     setFormData((current) => ({
       ...current,
       sizes: current.sizes.map((row, i) => i === index ? { ...row, size } : row),
-    });
+    }));
   };
 
   const handleRemoveSizeRow = (index: number) => {

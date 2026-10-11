@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { requireAdmin, db, rows, toCamel, toSnake, json } from "@/lib/store.server";
+import { sizeValidationError } from "@/lib/product-sizes";
 
 export const Route = createFileRoute("/api/products/$id")({
   server: { handlers: {
@@ -18,6 +19,13 @@ export const Route = createFileRoute("/api/products/$id")({
         const id = parseInt(params.id, 10);
         if (isNaN(id)) return json({ error: "Invalid product id" }, { status: 400 });
         const b = await request.json();
+        if (b.sizes !== undefined) {
+          const sizes = typeof b.sizes === "string" ? JSON.parse(b.sizes) : b.sizes;
+          if (!Array.isArray(sizes) || sizes.some((row) => !row || typeof row.size !== "string"))
+            return json({ error: "Invalid sizes." }, { status: 400 });
+          const sizeError = sizeValidationError(sizes);
+          if (sizeError) return json({ error: sizeError }, { status: 400 });
+        }
         const u: Record<string, unknown> = { updatedAt: new Date() };
         for (const k of ["name", "slug", "subtitle", "description", "category", "fit", "material", "careInstructions"]) if (b[k] !== undefined) u[k] = b[k];
         if (b["price"] !== undefined) u["price"] = String(b["price"]);
