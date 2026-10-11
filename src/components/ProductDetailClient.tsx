@@ -265,12 +265,12 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({
               <div className="flex items-center justify-between pt-3 pb-1 border-b border-neutral-900">
                 <div className="flex items-center gap-3">
                   <span className="text-2xl font-mono font-semibold text-white">
-                    ${parseFloat(product.price).toFixed(2)}
+                    ₹{parseFloat(product.price).toFixed(2)}
                   </span>
                   {product.compareAtPrice &&
                     parseFloat(product.compareAtPrice) > parseFloat(product.price) && (
                       <span className="text-base font-mono text-neutral-500 line-through">
-                        ${parseFloat(product.compareAtPrice).toFixed(2)}
+                        ₹{parseFloat(product.compareAtPrice).toFixed(2)}
                       </span>
                     )}
                 </div>

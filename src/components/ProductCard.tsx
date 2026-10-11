@@ -178,11 +178,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }
         {/* Price */}
         <div className="flex items-center gap-2 pt-0.5">
           <span className="text-xs font-mono font-semibold text-white">
-            ${parseFloat(product.price).toFixed(2)}
+            ₹{parseFloat(product.price).toFixed(2)}
           </span>
           {product.compareAtPrice && parseFloat(product.compareAtPrice) > parseFloat(product.price) && (
             <span className="text-xs font-mono text-neutral-500 line-through">
-              ${parseFloat(product.compareAtPrice).toFixed(2)}
+              ₹{parseFloat(product.compareAtPrice).toFixed(2)}
             </span>
           )}
           <span className="text-[10px] text-neutral-400 font-sans tracking-widest uppercase ml-auto">

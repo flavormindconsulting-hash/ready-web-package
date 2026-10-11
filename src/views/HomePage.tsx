@@ -311,7 +311,7 @@ export default function HomePage({ featuredProducts, bestsellers }: { featuredPr
             Elevate Your Everyday Standard
           </h2>
           <p className="text-xs sm:text-sm text-neutral-400 max-w-lg mx-auto">
-            Complimentary worldwide express courier on orders over $150. Free returns and 30-day sizing exchanges.
+            Complimentary worldwide express courier on orders over ₹150. Free returns and 30-day sizing exchanges.
           </p>
           <div className="pt-4 flex justify-center gap-4">
             <Link

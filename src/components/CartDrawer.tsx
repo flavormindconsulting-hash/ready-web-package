@@ -77,7 +77,7 @@ export const CartDrawer: React.FC = () => {
               <span>
                 {amountNeededForFreeShipping > 0 ? (
                   <>
-                    Add <strong className="text-amber-200">${amountNeededForFreeShipping.toFixed(2)}</strong> for Complimentary Express Courier
+                    Add <strong className="text-amber-200">₹{amountNeededForFreeShipping.toFixed(2)}</strong> for Complimentary Express Courier
                   </>
                 ) : (
                   <span className="text-emerald-400 flex items-center gap-1 font-semibold">
@@ -183,7 +183,7 @@ export const CartDrawer: React.FC = () => {
                       </div>
 
                       <span className="text-xs font-mono font-medium text-neutral-200">
-                        ${(item.price * item.quantity).toFixed(2)}
+                        ₹{(item.price * item.quantity).toFixed(2)}
                       </span>
                     </div>
                   </div>
@@ -202,7 +202,7 @@ export const CartDrawer: React.FC = () => {
                   <div className="flex items-center justify-between bg-neutral-900 px-3 py-2 border border-amber-900/50 rounded text-xs text-amber-200">
                     <span className="flex items-center gap-1.5 font-mono">
                       <Tag className="w-3.5 h-3.5" />
-                      {promoCode} applied (-${discountAmount.toFixed(2)})
+                      {promoCode} applied (-₹{discountAmount.toFixed(2)})
                     </span>
                     <button
                       onClick={removePromoCode}
@@ -243,21 +243,21 @@ export const CartDrawer: React.FC = () => {
               <div className="space-y-1.5 text-xs text-neutral-400 pt-2 border-t border-neutral-900 font-mono">
                 <div className="flex justify-between">
                   <span>Subtotal</span>
-                  <span>${subtotal.toFixed(2)}</span>
+                  <span>₹{subtotal.toFixed(2)}</span>
                 </div>
                 {discountAmount > 0 && (
                   <div className="flex justify-between text-amber-300">
                     <span>Voucher Discount</span>
-                    <span>-${discountAmount.toFixed(2)}</span>
+                    <span>-₹{discountAmount.toFixed(2)}</span>
                   </div>
                 )}
                 <div className="flex justify-between">
                   <span>Express Courier</span>
-                  <span>{finalShipping === 0 ? "FREE" : `$${finalShipping.toFixed(2)}`}</span>
+                  <span>{finalShipping === 0 ? "FREE" : `₹${finalShipping.toFixed(2)}`}</span>
                 </div>
                 <div className="flex justify-between text-sm text-white font-semibold pt-2 border-t border-neutral-800 font-sans tracking-wide">
                   <span className="uppercase tracking-widest text-xs">Estimated Total</span>
-                  <span className="font-mono text-base text-amber-200">${grandTotal.toFixed(2)}</span>
+                  <span className="font-mono text-base text-amber-200">₹{grandTotal.toFixed(2)}</span>
                 </div>
               </div>
 

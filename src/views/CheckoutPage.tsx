@@ -61,7 +61,7 @@ export default function CheckoutPage() {
   const getShippingCost = () => {
     if (shippingMethod === "express") return 15;
     if (shippingMethod === "atelier") return 25;
-    // Standard: free if over $150, else $15
+    // Standard: free if over ₹150, else ₹15
     return subtotal >= 150 ? 0 : 15;
   };
 
@@ -398,7 +398,7 @@ export default function CheckoutPage() {
                       </div>
                     </div>
                     <span className="font-mono text-xs font-semibold text-white">
-                      {subtotal >= 150 ? "FREE" : "$15.00"}
+                      {subtotal >= 150 ? "FREE" : "₹15.00"}
                     </span>
                   </label>
 
@@ -426,7 +426,7 @@ export default function CheckoutPage() {
                         </div>
                       </div>
                     </div>
-                    <span className="font-mono text-xs font-semibold text-white">$15.00</span>
+                    <span className="font-mono text-xs font-semibold text-white">₹15.00</span>
                   </label>
 
                   <label
@@ -453,7 +453,7 @@ export default function CheckoutPage() {
                         </div>
                       </div>
                     </div>
-                    <span className="font-mono text-xs font-semibold text-white">$25.00</span>
+                    <span className="font-mono text-xs font-semibold text-white">₹25.00</span>
                   </label>
                 </div>
               </div>
@@ -552,7 +552,7 @@ export default function CheckoutPage() {
                           </p>
                         </div>
                         <span className="font-mono text-neutral-200">
-                          ${(item.price * item.quantity).toFixed(2)}
+                          ₹{(item.price * item.quantity).toFixed(2)}
                         </span>
                       </div>
                     </div>
@@ -565,7 +565,7 @@ export default function CheckoutPage() {
                     <div className="flex items-center justify-between bg-neutral-950 px-3 py-2 border border-amber-900/60 rounded text-xs text-amber-200">
                       <span className="flex items-center gap-1.5 font-mono">
                         <Tag className="w-3.5 h-3.5" />
-                        {promoCode} applied (-${discountAmount.toFixed(2)})
+                        {promoCode} applied (-₹{discountAmount.toFixed(2)})
                       </span>
                       <button
                         type="button"
@@ -608,25 +608,25 @@ export default function CheckoutPage() {
                 <div className="space-y-2 text-xs font-mono text-neutral-400 pt-2 border-t border-neutral-800">
                   <div className="flex justify-between">
                     <span>Subtotal</span>
-                    <span>${subtotal.toFixed(2)}</span>
+                    <span>₹{subtotal.toFixed(2)}</span>
                   </div>
                   {discountAmount > 0 && (
                     <div className="flex justify-between text-amber-300">
                       <span>Promotional Discount</span>
-                      <span>-${discountAmount.toFixed(2)}</span>
+                      <span>-₹{discountAmount.toFixed(2)}</span>
                     </div>
                   )}
                   <div className="flex justify-between">
                     <span>Courier Delivery</span>
-                    <span>{shippingCost === 0 ? "FREE" : `$${shippingCost.toFixed(2)}`}</span>
+                    <span>{shippingCost === 0 ? "FREE" : `₹${shippingCost.toFixed(2)}`}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Estimated Tax (8%)</span>
-                    <span>${estimatedTax.toFixed(2)}</span>
+                    <span>₹{estimatedTax.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-white font-semibold text-base pt-3 border-t border-neutral-800 font-sans tracking-wide">
                     <span className="uppercase text-xs tracking-widest">Total Due</span>
-                    <span className="font-mono text-amber-200">${grandTotal.toFixed(2)}</span>
+                    <span className="font-mono text-amber-200">₹{grandTotal.toFixed(2)}</span>
                   </div>
                 </div>
 

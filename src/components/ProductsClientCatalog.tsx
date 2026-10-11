@@ -357,9 +357,9 @@ export const ProductsClientCatalog: React.FC<ProductsClientCatalogProps> = ({
             <div className="space-y-1.5">
               {[
                 { label: "All Prices", val: "All" },
-                { label: "Under $150", val: "under150" },
-                { label: "$150 - $180", val: "150to180" },
-                { label: "$180 & Above", val: "over180" },
+                { label: "Under ₹150", val: "under150" },
+                { label: "₹150 - ₹180", val: "150to180" },
+                { label: "₹180 & Above", val: "over180" },
               ].map((p) => (
                 <button
                   key={p.val}
@@ -508,9 +508,9 @@ export const ProductsClientCatalog: React.FC<ProductsClientCatalogProps> = ({
                 <div className="space-y-1">
                   {[
                     { label: "All Prices", val: "All" },
-                    { label: "Under $150", val: "under150" },
-                    { label: "$150 - $180", val: "150to180" },
-                    { label: "$180 & Above", val: "over180" },
+                    { label: "Under ₹150", val: "under150" },
+                    { label: "₹150 - ₹180", val: "150to180" },
+                    { label: "₹180 & Above", val: "over180" },
                   ].map((p) => (
                     <button
                       key={p.val}
