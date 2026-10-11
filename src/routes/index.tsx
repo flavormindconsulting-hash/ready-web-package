@@ -9,6 +9,8 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "Bespoke Italian cotton oxfords, Normandy washed linen resort shirts, and heavyweight overshirts crafted for the modern man." },
       { property: "og:title", content: "HENRO | Haute Shirting for Men" },
       { property: "og:description", content: "Bespoke Italian cotton oxfords, Normandy linen resort shirts and heavyweight overshirts." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   loader: () => getHomeData(),
