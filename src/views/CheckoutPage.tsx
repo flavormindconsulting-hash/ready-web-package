@@ -618,7 +618,7 @@ export default function CheckoutPage() {
                   )}
                   <div className="flex justify-between">
                     <span>Courier Delivery</span>
-                    <span>{shippingCost === 0 ? "FREE" : `₹₹{shippingCost.toFixed(2)}`}</span>
+                    <span>{shippingCost === 0 ? "FREE" : `₹${shippingCost.toFixed(2)}`}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Estimated Tax (8%)</span>

@@ -151,7 +151,7 @@ export default function OrderSuccessPage({ order, items }: { order: Order; items
                 <span>
                   {parseFloat(order.shippingCost) === 0
                     ? "FREE"
-                    : `₹₹{parseFloat(order.shippingCost).toFixed(2)}`}
+                    : `₹${parseFloat(order.shippingCost).toFixed(2)}`}
                 </span>
               </div>
               <div className="flex justify-between">

@@ -253,7 +253,7 @@ export const CartDrawer: React.FC = () => {
                 )}
                 <div className="flex justify-between">
                   <span>Express Courier</span>
-                  <span>{finalShipping === 0 ? "FREE" : `₹₹{finalShipping.toFixed(2)}`}</span>
+                  <span>{finalShipping === 0 ? "FREE" : `₹${finalShipping.toFixed(2)}`}</span>
                 </div>
                 <div className="flex justify-between text-sm text-white font-semibold pt-2 border-t border-neutral-800 font-sans tracking-wide">
                   <span className="uppercase tracking-widest text-xs">Estimated Total</span>
