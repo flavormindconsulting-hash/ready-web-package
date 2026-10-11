@@ -22,6 +22,7 @@ import { Route as CheckoutIndexRouteImport } from './routes/checkout/index'
 import { Route as ProductsIndexRouteImport } from './routes/products/index'
 import { Route as ProductsSlugRouteImport } from './routes/products/$slug'
 import { Route as ApiAdminOrdersRouteImport } from './routes/api/admin/orders'
+import { Route as ApiAdminProductPhotosRouteImport } from './routes/api/admin/product-photos'
 import { Route as ApiAdminSeedRouteImport } from './routes/api/admin/seed'
 import { Route as ApiAdminStatsRouteImport } from './routes/api/admin/stats'
 import { Route as ApiOrdersIdRouteImport } from './routes/api/orders.$id'
@@ -30,6 +31,7 @@ import { Route as CheckoutSuccessOrderIdRouteImport } from './routes/checkout/su
 import { Route as ApiAdminOrdersIdRouteImport } from './routes/api/admin/orders.$id'
 import { Route as ApiAdminReviewsIdRouteImport } from './routes/api/admin/reviews.$id'
 import { Route as ApiProductsSlugSlugRouteImport } from './routes/api/products/slug/$slug'
+import { Route as ApiPublicProductPhotosFilenameRouteImport } from './routes/api/public/product-photos/$filename'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -95,6 +97,11 @@ const ApiAdminOrdersRoute = ApiAdminOrdersRouteImport.update({
   path: '/api/admin/orders',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAdminProductPhotosRoute = ApiAdminProductPhotosRouteImport.update({
+  id: '/api/admin/product-photos',
+  path: '/api/admin/product-photos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAdminSeedRoute = ApiAdminSeedRouteImport.update({
   id: '/api/admin/seed',
   path: '/api/admin/seed',
@@ -135,6 +142,12 @@ const ApiProductsSlugSlugRoute = ApiProductsSlugSlugRouteImport.update({
   path: '/slug/$slug',
   getParentRoute: () => ApiProductsRoute,
 } as any)
+const ApiPublicProductPhotosFilenameRoute =
+  ApiPublicProductPhotosFilenameRouteImport.update({
+    id: '/api/public/product-photos/$filename',
+    path: '/api/public/product-photos/$filename',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -149,6 +162,7 @@ export interface FileRoutesByFullPath {
   '/checkout/': typeof CheckoutIndexRoute
   '/products/': typeof ProductsIndexRoute
   '/api/admin/orders': typeof ApiAdminOrdersRouteWithChildren
+  '/api/admin/product-photos': typeof ApiAdminProductPhotosRoute
   '/api/admin/seed': typeof ApiAdminSeedRoute
   '/api/admin/stats': typeof ApiAdminStatsRoute
   '/api/orders/$id': typeof ApiOrdersIdRoute
@@ -157,6 +171,7 @@ export interface FileRoutesByFullPath {
   '/api/admin/orders/$id': typeof ApiAdminOrdersIdRoute
   '/api/admin/reviews/$id': typeof ApiAdminReviewsIdRoute
   '/api/products/slug/$slug': typeof ApiProductsSlugSlugRoute
+  '/api/public/product-photos/$filename': typeof ApiPublicProductPhotosFilenameRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -171,6 +186,7 @@ export interface FileRoutesByTo {
   '/checkout': typeof CheckoutIndexRoute
   '/products': typeof ProductsIndexRoute
   '/api/admin/orders': typeof ApiAdminOrdersRouteWithChildren
+  '/api/admin/product-photos': typeof ApiAdminProductPhotosRoute
   '/api/admin/seed': typeof ApiAdminSeedRoute
   '/api/admin/stats': typeof ApiAdminStatsRoute
   '/api/orders/$id': typeof ApiOrdersIdRoute
@@ -179,6 +195,7 @@ export interface FileRoutesByTo {
   '/api/admin/orders/$id': typeof ApiAdminOrdersIdRoute
   '/api/admin/reviews/$id': typeof ApiAdminReviewsIdRoute
   '/api/products/slug/$slug': typeof ApiProductsSlugSlugRoute
+  '/api/public/product-photos/$filename': typeof ApiPublicProductPhotosFilenameRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -195,6 +212,7 @@ export interface FileRoutesById {
   '/checkout/': typeof CheckoutIndexRoute
   '/products/': typeof ProductsIndexRoute
   '/api/admin/orders': typeof ApiAdminOrdersRouteWithChildren
+  '/api/admin/product-photos': typeof ApiAdminProductPhotosRoute
   '/api/admin/seed': typeof ApiAdminSeedRoute
   '/api/admin/stats': typeof ApiAdminStatsRoute
   '/api/orders/$id': typeof ApiOrdersIdRoute
@@ -203,6 +221,7 @@ export interface FileRoutesById {
   '/api/admin/orders/$id': typeof ApiAdminOrdersIdRoute
   '/api/admin/reviews/$id': typeof ApiAdminReviewsIdRoute
   '/api/products/slug/$slug': typeof ApiProductsSlugSlugRoute
+  '/api/public/product-photos/$filename': typeof ApiPublicProductPhotosFilenameRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -219,6 +238,7 @@ export interface FileRouteTypes {
     | '/checkout/'
     | '/products/'
     | '/api/admin/orders'
+    | '/api/admin/product-photos'
     | '/api/admin/seed'
     | '/api/admin/stats'
     | '/api/orders/$id'
@@ -227,6 +247,7 @@ export interface FileRouteTypes {
     | '/api/admin/orders/$id'
     | '/api/admin/reviews/$id'
     | '/api/products/slug/$slug'
+    | '/api/public/product-photos/$filename'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -241,6 +262,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/products'
     | '/api/admin/orders'
+    | '/api/admin/product-photos'
     | '/api/admin/seed'
     | '/api/admin/stats'
     | '/api/orders/$id'
@@ -249,6 +271,7 @@ export interface FileRouteTypes {
     | '/api/admin/orders/$id'
     | '/api/admin/reviews/$id'
     | '/api/products/slug/$slug'
+    | '/api/public/product-photos/$filename'
   id:
     | '__root__'
     | '/'
@@ -264,6 +287,7 @@ export interface FileRouteTypes {
     | '/checkout/'
     | '/products/'
     | '/api/admin/orders'
+    | '/api/admin/product-photos'
     | '/api/admin/seed'
     | '/api/admin/stats'
     | '/api/orders/$id'
@@ -272,6 +296,7 @@ export interface FileRouteTypes {
     | '/api/admin/orders/$id'
     | '/api/admin/reviews/$id'
     | '/api/products/slug/$slug'
+    | '/api/public/product-photos/$filename'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -287,11 +312,13 @@ export interface RootRouteChildren {
   CheckoutIndexRoute: typeof CheckoutIndexRoute
   ProductsIndexRoute: typeof ProductsIndexRoute
   ApiAdminOrdersRoute: typeof ApiAdminOrdersRouteWithChildren
+  ApiAdminProductPhotosRoute: typeof ApiAdminProductPhotosRoute
   ApiAdminSeedRoute: typeof ApiAdminSeedRoute
   ApiAdminStatsRoute: typeof ApiAdminStatsRoute
   ApiOrdersIdRoute: typeof ApiOrdersIdRoute
   CheckoutSuccessOrderIdRoute: typeof CheckoutSuccessOrderIdRoute
   ApiAdminReviewsIdRoute: typeof ApiAdminReviewsIdRoute
+  ApiPublicProductPhotosFilenameRoute: typeof ApiPublicProductPhotosFilenameRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -387,6 +414,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAdminOrdersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/admin/product-photos': {
+      id: '/api/admin/product-photos'
+      path: '/api/admin/product-photos'
+      fullPath: '/api/admin/product-photos'
+      preLoaderRoute: typeof ApiAdminProductPhotosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/admin/seed': {
       id: '/api/admin/seed'
       path: '/api/admin/seed'
@@ -443,6 +477,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiProductsSlugSlugRouteImport
       parentRoute: typeof ApiProductsRoute
     }
+    '/api/public/product-photos/$filename': {
+      id: '/api/public/product-photos/$filename'
+      path: '/api/public/product-photos/$filename'
+      fullPath: '/api/public/product-photos/$filename'
+      preLoaderRoute: typeof ApiPublicProductPhotosFilenameRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -496,11 +537,13 @@ const rootRouteChildren: RootRouteChildren = {
   CheckoutIndexRoute: CheckoutIndexRoute,
   ProductsIndexRoute: ProductsIndexRoute,
   ApiAdminOrdersRoute: ApiAdminOrdersRouteWithChildren,
+  ApiAdminProductPhotosRoute: ApiAdminProductPhotosRoute,
   ApiAdminSeedRoute: ApiAdminSeedRoute,
   ApiAdminStatsRoute: ApiAdminStatsRoute,
   ApiOrdersIdRoute: ApiOrdersIdRoute,
   CheckoutSuccessOrderIdRoute: CheckoutSuccessOrderIdRoute,
   ApiAdminReviewsIdRoute: ApiAdminReviewsIdRoute,
+  ApiPublicProductPhotosFilenameRoute: ApiPublicProductPhotosFilenameRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
