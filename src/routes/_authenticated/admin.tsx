@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
@@ -38,23 +39,23 @@ function AdminPage() {
   }
 
   const bar = (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 flex items-center justify-end gap-3 text-xs font-mono text-neutral-400">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 flex items-center justify-end gap-3 text-xs font-mono text-muted-foreground">
       <span>Signed in as {user.email}</span>
-      <button onClick={signOut} className="inline-flex items-center gap-1.5 px-3 py-1.5 border border-neutral-800 rounded hover:text-white hover:border-neutral-600 transition-colors">
+      <Button variant="atelier" onClick={signOut} className="inline-flex items-center gap-1.5 px-3 py-1.5 border border-border rounded hover:text-foreground hover:border-border transition-colors">
         <LogOut className="w-3.5 h-3.5" /> Sign out
-      </button>
+      </Button>
     </div>
   );
 
   if (status === "checking")
-    return <div className="py-32 text-center font-mono text-xs uppercase tracking-widest text-neutral-500">Verifying atelier access...</div>;
+    return <div className="py-32 text-center font-mono text-xs uppercase tracking-widest text-muted-foreground">Verifying atelier access...</div>;
   if (status === "denied")
     return (
       <div>
         {bar}
         <div className="max-w-md mx-auto py-32 text-center space-y-3">
-          <h1 className="text-3xl font-editorial text-white">Access restricted</h1>
-          <p className="text-sm text-neutral-400">This account isn't the store owner. Only the owner can manage products and orders.</p>
+          <h1 className="text-3xl font-editorial text-foreground">Access restricted</h1>
+          <p className="text-sm text-muted-foreground">This account isn't the store owner. Only the owner can manage products and orders.</p>
         </div>
       </div>
     );

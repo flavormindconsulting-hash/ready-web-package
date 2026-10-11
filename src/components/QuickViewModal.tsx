@@ -1,3 +1,5 @@
+import { productImages } from "@/lib/brand-media";
+import { Button } from "@/components/ui/button";
 
 import React, { useState } from "react";
 import Link from "@/compat/next-link";
@@ -26,12 +28,7 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
 
   if (!product) return null;
 
-  let images: string[] = [];
-  try {
-    images = typeof product.images === "string" ? JSON.parse(product.images) : product.images;
-  } catch {
-    images = [product.images];
-  }
+  const images = productImages(product);
 
   let sizes: ProductSize[] = [];
   try {
@@ -88,24 +85,24 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/85 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 bg-overlay/85 backdrop-blur-sm transition-opacity"
         onClick={onClose}
       />
 
-      <div className="relative w-full max-w-4xl bg-neutral-950 border border-neutral-800 text-neutral-100 shadow-2xl rounded-sm overflow-hidden z-10 animate-fade-in my-8">
+      <div className="relative w-full max-w-4xl max-h-[90dvh] overflow-y-auto bg-background border border-border text-foreground shadow-2xl rounded-sm z-10 animate-fade-in my-8">
         {/* Close Button */}
-        <button
+        <Button variant="atelier"
           onClick={onClose}
-          className="absolute top-4 right-4 z-20 p-2 text-neutral-400 hover:text-white bg-neutral-900/80 rounded-full transition-colors"
+          className="absolute top-4 right-4 z-20 p-2 text-muted-foreground hover:text-foreground bg-muted/80 rounded-full transition-colors"
           aria-label="Close modal"
         >
           <X className="w-5 h-5" />
-        </button>
+        </Button>
 
         <div className="grid grid-cols-1 md:grid-cols-2">
           {/* Gallery side */}
-          <div className="p-6 bg-neutral-900/50 flex flex-col justify-between border-b md:border-b-0 md:border-r border-neutral-800">
-            <div className="relative aspect-[3/4] w-full overflow-hidden bg-neutral-900 border border-neutral-800">
+          <div className="p-6 bg-muted/50 flex flex-col justify-between border-b md:border-b-0 md:border-r border-border">
+            <div className="relative aspect-[3/4] w-full overflow-hidden bg-muted border border-border">
               <img
                 src={images[selectedImageIndex] || images[0]}
                 alt={product.name}
@@ -116,15 +113,15 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
             {images.length > 1 && (
               <div className="flex gap-2 mt-4 overflow-x-auto pb-1">
                 {images.map((img, idx) => (
-                  <button
+                  <Button variant="atelier"
                     key={idx}
                     onClick={() => setSelectedImageIndex(idx)}
                     className={`relative w-16 h-20 flex-shrink-0 border overflow-hidden ${
-                      selectedImageIndex === idx ? "border-amber-300" : "border-neutral-800 opacity-60 hover:opacity-100"
+                      selectedImageIndex === idx ? "border-primary" : "border-border opacity-60 hover:opacity-100"
                     }`}
                   >
                     <img src={img} alt="" className="w-full h-full object-cover" />
-                  </button>
+                  </Button>
                 ))}
               </div>
             )}
@@ -133,52 +130,52 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
           {/* Details side */}
           <div className="p-6 md:p-8 flex flex-col justify-between space-y-6">
             <div>
-              <div className="flex items-center gap-2 text-[10px] tracking-widest uppercase text-neutral-400 mb-1">
+              <div className="flex items-center gap-2 text-[10px] tracking-widest uppercase text-muted-foreground mb-1">
                 <span>{product.category}</span>
                 <span>·</span>
-                <span className="text-amber-300">{product.fit}</span>
+                <span className="text-primary">{product.fit}</span>
               </div>
 
-              <h2 className="text-lg md:text-xl font-editorial tracking-wide uppercase text-white font-medium">
+              <h2 className="text-lg md:text-xl font-editorial tracking-wide uppercase text-foreground font-medium">
                 {product.name}
               </h2>
 
               {product.subtitle && (
-                <p className="text-xs text-neutral-400 italic font-serif mt-1">
+                <p className="text-xs text-muted-foreground font-sans mt-1">
                   {product.subtitle}
                 </p>
               )}
 
               <div className="flex items-center gap-3 mt-3">
-                <span className="text-lg font-mono font-semibold text-white">
+                <span className="text-lg font-mono font-semibold text-foreground">
                   ₹{parseFloat(product.price).toFixed(2)}
                 </span>
                 {product.compareAtPrice && parseFloat(product.compareAtPrice) > parseFloat(product.price) && (
-                  <span className="text-sm font-mono text-neutral-500 line-through">
+                  <span className="text-sm font-mono text-muted-foreground line-through">
                     ₹{parseFloat(product.compareAtPrice).toFixed(2)}
                   </span>
                 )}
               </div>
 
-              <p className="text-xs text-neutral-400 leading-relaxed mt-4 line-clamp-3">
+              <p className="text-xs text-muted-foreground leading-relaxed mt-4 line-clamp-3">
                 {product.description}
               </p>
 
               {/* Color Selector */}
               {colors.length > 0 && (
                 <div className="mt-5">
-                  <div className="flex justify-between items-center text-xs mb-2">
-                    <span className="uppercase tracking-widest text-neutral-400 text-[11px]">
-                      Color: <strong className="text-white">{currentColor}</strong>
+                  <div className="flex flex-wrap gap-2 justify-between items-center text-xs mb-2">
+                    <span className="uppercase tracking-widest text-muted-foreground text-[11px]">
+                      Color: <strong className="text-foreground">{currentColor}</strong>
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
                     {colors.map((c, i) => (
-                      <button
+                      <Button variant="atelier"
                         key={i}
                         onClick={() => setSelectedColor(c.name)}
                         className={`w-7 h-7 rounded-full border p-0.5 flex items-center justify-center transition-all ${
-                          currentColor === c.name ? "border-amber-300 scale-110" : "border-neutral-700 opacity-70 hover:opacity-100"
+                          currentColor === c.name ? "border-primary scale-110" : "border-border opacity-70 hover:opacity-100"
                         }`}
                         title={c.name}
                       >
@@ -186,7 +183,7 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
                           className="w-full h-full rounded-full"
                           style={{ backgroundColor: c.hex }}
                         />
-                      </button>
+                      </Button>
                     ))}
                   </div>
                 </div>
@@ -194,18 +191,18 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
 
               {/* Size Selector */}
               <div className="mt-5">
-                <div className="flex justify-between items-center text-xs mb-2">
-                  <span className="uppercase tracking-widest text-neutral-400 text-[11px]">
-                    Size: <strong className="text-white">{selectedSize || "Select"}</strong>
+                <div className="flex flex-wrap gap-2 justify-between items-center text-xs mb-2">
+                  <span className="uppercase tracking-widest text-muted-foreground text-[11px]">
+                    Size: <strong className="text-foreground">{selectedSize || "Select"}</strong>
                   </span>
                   {onOpenSizeGuide && (
-                    <button
+                    <Button variant="atelier"
                       onClick={onOpenSizeGuide}
-                      className="text-amber-200/90 hover:underline flex items-center gap-1 text-[11px] uppercase tracking-wider"
+                      className="text-primary/90 hover:underline flex items-center gap-1 text-[11px] uppercase tracking-wider"
                     >
                       <Ruler className="w-3.5 h-3.5" />
                       Size Guide
-                    </button>
+                    </Button>
                   )}
                 </div>
                 <div className="grid grid-cols-5 gap-2">
@@ -213,7 +210,7 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
                     const isSelected = selectedSize === s.size;
                     const isOutOfStock = s.stock === 0;
                     return (
-                      <button
+                      <Button variant="atelier"
                         key={s.size}
                         disabled={isOutOfStock}
                         onClick={() => {
@@ -222,27 +219,27 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
                         }}
                         className={`py-2 text-xs font-mono font-medium border text-center transition-colors ${
                           isOutOfStock
-                            ? "border-neutral-800 text-neutral-600 line-through bg-neutral-900/30 cursor-not-allowed"
+                            ? "border-border text-muted-foreground line-through bg-muted/30 cursor-not-allowed"
                             : isSelected
-                            ? "border-white bg-white text-black font-bold"
-                            : "border-neutral-700 bg-neutral-900 text-neutral-200 hover:border-neutral-400"
+                            ? "border-primary bg-primary text-primary-foreground font-bold"
+                            : "border-border bg-muted text-foreground hover:border-border"
                         }`}
                       >
                         {s.size}
-                      </button>
+                      </Button>
                     );
                   })}
                 </div>
-                {errorMsg && <p className="text-xs text-red-400 mt-2">{errorMsg}</p>}
+                {errorMsg && <p className="text-xs text-destructive mt-2">{errorMsg}</p>}
               </div>
 
               {/* Details Bullet points */}
               {detailsList.length > 0 && (
-                <div className="mt-5 pt-4 border-t border-neutral-900">
-                  <ul className="text-[11px] text-neutral-400 space-y-1">
+                <div className="mt-5 pt-4 border-t border-border">
+                  <ul className="text-[11px] text-muted-foreground space-y-1">
                     {detailsList.slice(0, 3).map((item, idx) => (
                       <li key={idx} className="flex items-center gap-1.5">
-                        <span className="w-1 h-1 rounded-full bg-amber-200" />
+                        <span className="w-1 h-1 rounded-full bg-primary" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -252,32 +249,32 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
             </div>
 
             {/* Bottom Actions */}
-            <div className="space-y-3 pt-4 border-t border-neutral-900">
-              <button
+            <div className="space-y-3 pt-4 border-t border-border">
+              <Button variant="atelier"
                 onClick={handleAddToCart}
                 disabled={added}
-                className="w-full py-3.5 bg-white text-black font-semibold text-xs tracking-[0.2em] uppercase hover:bg-neutral-200 transition-colors flex items-center justify-center gap-2"
+                className="w-full py-3.5 bg-primary text-primary-foreground font-semibold text-xs tracking-[0.2em] uppercase hover:bg-secondary transition-colors flex items-center justify-center gap-2"
               >
                 {added ? (
                   <>
-                    <Check className="w-4 h-4 text-emerald-600" />
+                    <Check className="w-4 h-4 text-success" />
                     <span>Added To Bag</span>
                   </>
                 ) : (
                   <span>Add To Shopping Bag</span>
                 )}
-              </button>
+              </Button>
 
-              <div className="flex justify-between items-center text-xs">
+              <div className="flex flex-wrap gap-2 justify-between items-center text-xs">
                 <Link
                   href={`/products/${product.slug}`}
                   onClick={onClose}
-                  className="text-neutral-400 hover:text-white uppercase tracking-widest text-[11px] inline-flex items-center gap-1"
+                  className="text-muted-foreground hover:text-foreground uppercase tracking-widest text-[11px] inline-flex items-center gap-1"
                 >
                   <span>View Full Tailoring Details</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
-                <span className="text-[10px] text-neutral-500 font-mono">
+                <span className="text-[10px] text-muted-foreground font-mono">
                   Material: {product.material}
                 </span>
               </div>

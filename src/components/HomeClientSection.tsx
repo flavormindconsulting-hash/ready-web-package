@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 
 import React, { useState } from "react";
 import Link from "@/compat/next-link";
@@ -25,46 +26,46 @@ export const HomeClientSection: React.FC<HomeClientSectionProps> = ({
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 w-full">
       {/* Header & Tabs */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-neutral-800 pb-6 mb-10 gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-border pb-6 mb-10 gap-4">
         <div>
-          <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-amber-300">
-            THE ARCHIVE
+          <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-primary">
+            THE HENRO SELECTION
           </span>
-          <h2 className="text-2xl sm:text-4xl font-editorial tracking-wide uppercase text-white mt-1">
+          <h2 className="text-2xl sm:text-4xl font-editorial tracking-wide uppercase text-foreground mt-1">
             Featured Essentials
           </h2>
         </div>
 
         {/* Tab switchers */}
-        <div className="flex items-center gap-6 text-xs uppercase tracking-[0.2em] font-medium">
-          <button
+        <div className="flex items-center gap-4 text-xs uppercase tracking-normal font-medium">
+          <Button variant="atelier"
             onClick={() => setActiveTab("featured")}
             className={`py-1 relative transition-colors ${
-              activeTab === "featured" ? "text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"
+              activeTab === "featured" ? "text-foreground font-semibold" : "text-muted-foreground hover:text-foreground"
             }`}
           >
-            Curated Drops ({featuredProducts.length})
+            New favourites ({featuredProducts.length})
             {activeTab === "featured" && (
-              <span className="absolute bottom-0 left-0 w-full h-[1px] bg-amber-300" />
+              <span className="absolute bottom-0 left-0 w-full h-[1px] bg-primary" />
             )}
-          </button>
+          </Button>
 
-          <button
+          <Button variant="atelier"
             onClick={() => setActiveTab("bestsellers")}
             className={`py-1 relative transition-colors ${
-              activeTab === "bestsellers" ? "text-white font-semibold" : "text-neutral-500 hover:text-neutral-300"
+              activeTab === "bestsellers" ? "text-foreground font-semibold" : "text-muted-foreground hover:text-foreground"
             }`}
           >
             Bestsellers ({bestsellers.length})
             {activeTab === "bestsellers" && (
-              <span className="absolute bottom-0 left-0 w-full h-[1px] bg-amber-300" />
+              <span className="absolute bottom-0 left-0 w-full h-[1px] bg-primary" />
             )}
-          </button>
+          </Button>
         </div>
       </div>
 
       {/* Grid of Product Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
         {displayList.map((product) => (
           <ProductCard
             key={product.id}
@@ -78,9 +79,9 @@ export const HomeClientSection: React.FC<HomeClientSectionProps> = ({
       <div className="mt-14 text-center">
         <Link
           href="/products"
-          className="inline-flex items-center gap-2 px-8 py-3.5 border border-neutral-700 bg-neutral-900/50 hover:bg-neutral-900 text-white text-xs font-semibold tracking-[0.25em] uppercase transition-colors"
+          className="inline-flex items-center gap-2 px-8 py-3.5 border border-border bg-muted/50 hover:bg-muted text-foreground text-xs font-semibold tracking-[0.25em] uppercase transition-colors"
         >
-          <span>Explore All 12 Tailored Shirts</span>
+          <span>Shop the full collection</span>
           <ArrowRight className="w-4 h-4" />
         </Link>
       </div>

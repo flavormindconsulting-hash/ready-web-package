@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 
 import React, { useState } from "react";
 import Image from "@/compat/next-image";
@@ -45,85 +46,85 @@ export const CartDrawer: React.FC = () => {
     <div className="fixed inset-0 z-50 overflow-hidden">
       {/* Dark backdrop */}
       <div
-        className="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity"
+        className="absolute inset-0 bg-overlay/80 backdrop-blur-sm transition-opacity"
         onClick={() => setIsCartOpen(false)}
       />
 
-      <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
-        <div className="w-screen max-w-md bg-neutral-950 border-l border-neutral-800 flex flex-col shadow-2xl animate-slide-in">
+      <div className="fixed inset-y-0 right-0 max-w-full flex pl-0 sm:pl-10">
+        <div className="w-screen max-w-md h-[100dvh] bg-background border-l border-border flex flex-col shadow-2xl animate-slide-in">
           
           {/* Header */}
-          <div className="p-6 border-b border-neutral-800 flex items-center justify-between">
+          <div className="p-6 border-b border-border flex items-center justify-between">
             <div>
-              <h2 className="text-sm font-semibold tracking-[0.2em] uppercase text-white">
+              <h2 className="text-sm font-semibold tracking-[0.2em] uppercase text-foreground">
                 Shopping Bag
               </h2>
-              <p className="text-xs text-neutral-400 mt-0.5">
+              <p className="text-xs text-muted-foreground mt-0.5">
                 {totalItems} {totalItems === 1 ? "piece" : "pieces"} selected
               </p>
             </div>
-            <button
+            <Button variant="atelier"
               onClick={() => setIsCartOpen(false)}
-              className="p-2 text-neutral-400 hover:text-white transition-colors"
+              className="p-2 text-muted-foreground hover:text-foreground transition-colors"
               aria-label="Close cart"
             >
               <X className="w-5 h-5" />
-            </button>
+            </Button>
           </div>
 
           {/* Free Shipping Tier Banner */}
-          <div className="bg-neutral-900/80 px-6 py-3 border-b border-neutral-800/80 text-xs">
-            <div className="flex items-center justify-between text-neutral-300 font-medium mb-1.5">
+          <div className="bg-muted/80 px-6 py-3 border-b border-border/80 text-xs">
+            <div className="flex items-center justify-between text-foreground font-medium mb-1.5">
               <span>
                 {amountNeededForFreeShipping > 0 ? (
                   <>
-                    Add <strong className="text-amber-200">₹{amountNeededForFreeShipping.toFixed(2)}</strong> for Complimentary Express Courier
+                    Add <strong className="text-primary">₹{amountNeededForFreeShipping.toFixed(2)}</strong> for Complimentary Express Courier
                   </>
                 ) : (
-                  <span className="text-emerald-400 flex items-center gap-1 font-semibold">
+                  <span className="text-success flex items-center gap-1 font-semibold">
                     <Sparkles className="w-3.5 h-3.5" />
                     Unlocked: Complimentary Worldwide Express Courier
                   </span>
                 )}
               </span>
-              <span className="text-neutral-500 font-mono text-[11px]">{freeShippingProgress}%</span>
+              <span className="text-muted-foreground font-mono text-[11px]">{freeShippingProgress}%</span>
             </div>
-            <div className="w-full bg-neutral-800 h-1.5 rounded-full overflow-hidden">
+            <div className="w-full bg-secondary h-1.5 rounded-full overflow-hidden">
               <div
-                className="bg-amber-300 h-full transition-all duration-500"
+                className="bg-primary h-full transition-all duration-500"
                 style={{ width: `${freeShippingProgress}%` }}
               />
             </div>
           </div>
 
           {/* Cart Item List */}
-          <div className="flex-1 overflow-y-auto p-6 space-y-6">
+          <div className="min-h-0 flex-1 overflow-y-auto p-4 sm:p-6 space-y-6">
             {cart.length === 0 ? (
               <div className="text-center py-16 space-y-4">
-                <div className="w-16 h-16 mx-auto rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center text-neutral-500">
+                <div className="w-16 h-16 mx-auto rounded-full bg-muted border border-border flex items-center justify-center text-muted-foreground">
                   <Tag className="w-7 h-7" />
                 </div>
-                <h3 className="text-base font-medium tracking-wider text-neutral-300">
+                <h3 className="text-base font-medium tracking-wider text-foreground">
                   Your bag is currently empty
                 </h3>
-                <p className="text-xs text-neutral-500 max-w-xs mx-auto leading-relaxed">
+                <p className="text-xs text-muted-foreground max-w-xs mx-auto leading-relaxed">
                   Discover our slow-woven Oxford shirts, French linen resort wear, and heavyweight overshirts.
                 </p>
-                <button
+                <Button variant="atelier"
                   onClick={() => setIsCartOpen(false)}
-                  className="mt-4 inline-flex items-center gap-2 px-6 py-2.5 bg-white text-black text-xs font-semibold tracking-widest uppercase hover:bg-neutral-200 transition-colors"
+                  className="mt-4 inline-flex items-center gap-2 px-6 py-2.5 bg-primary text-primary-foreground text-xs font-semibold tracking-widest uppercase hover:bg-secondary transition-colors"
                 >
                   <Link href="/products">Explore The Collection</Link>
-                </button>
+                </Button>
               </div>
             ) : (
               cart.map((item) => (
                 <div
                   key={item.id}
-                  className="flex gap-4 pb-6 border-b border-neutral-900 group"
+                  className="flex gap-4 pb-6 border-b border-border group"
                 >
                   {/* Thumbnail */}
-                  <div className="relative w-20 h-24 bg-neutral-900 overflow-hidden flex-shrink-0 border border-neutral-800">
+                  <div className="relative w-20 h-24 bg-muted overflow-hidden flex-shrink-0 border border-border">
                     <img
                       src={item.image}
                       alt={item.name}
@@ -132,57 +133,57 @@ export const CartDrawer: React.FC = () => {
                   </div>
 
                   {/* Info */}
-                  <div className="flex-1 flex flex-col justify-between">
+                  <div className="min-w-0 flex-1 flex flex-col justify-between">
                     <div>
                       <div className="flex justify-between items-start">
                         <Link
                           href={`/products/${item.slug}`}
                           onClick={() => setIsCartOpen(false)}
-                          className="text-xs font-medium uppercase tracking-wider text-neutral-200 hover:text-amber-200 transition-colors line-clamp-1"
+                          className="text-xs font-medium uppercase tracking-wider text-foreground hover:text-primary transition-colors line-clamp-1"
                         >
                           {item.name}
                         </Link>
-                        <button
+                        <Button variant="atelier"
                           onClick={() => removeFromCart(item.id)}
-                          className="text-neutral-500 hover:text-red-400 transition-colors ml-2 p-0.5"
+                          className="text-muted-foreground hover:text-destructive transition-colors ml-2 p-0.5"
                           title="Remove item"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
-                        </button>
+                        </Button>
                       </div>
 
-                      <div className="flex items-center gap-2 mt-1 text-[11px] text-neutral-400">
-                        <span className="bg-neutral-900 px-1.5 py-0.5 rounded border border-neutral-800 font-mono">
+                      <div className="flex items-center gap-2 mt-1 text-[11px] text-muted-foreground">
+                        <span className="bg-muted px-1.5 py-0.5 rounded border border-border font-mono">
                           Size {item.size}
                         </span>
                         <span>·</span>
-                        <span className="text-neutral-400">{item.color}</span>
+                        <span className="text-muted-foreground">{item.color}</span>
                       </div>
                     </div>
 
                     <div className="flex items-center justify-between pt-2">
                       {/* Quantity stepper */}
-                      <div className="flex items-center border border-neutral-800 rounded bg-neutral-900/60">
-                        <button
+                      <div className="flex items-center border border-border rounded bg-muted/60">
+                        <Button variant="atelier"
                           onClick={() => updateQuantity(item.id, -1)}
-                          className="w-6 h-6 flex items-center justify-center text-xs text-neutral-400 hover:text-white"
+                          className="w-8 h-8 flex items-center justify-center text-xs text-muted-foreground hover:text-foreground"
                           aria-label="Decrease quantity"
                         >
                           -
-                        </button>
-                        <span className="w-7 text-center text-xs font-mono text-neutral-200 font-semibold">
+                        </Button>
+                        <span className="w-7 text-center text-xs font-mono text-foreground font-semibold">
                           {item.quantity}
                         </span>
-                        <button
+                        <Button variant="atelier"
                           onClick={() => updateQuantity(item.id, 1)}
-                          className="w-6 h-6 flex items-center justify-center text-xs text-neutral-400 hover:text-white"
+                          className="w-8 h-8 flex items-center justify-center text-xs text-muted-foreground hover:text-foreground"
                           aria-label="Increase quantity"
                         >
                           +
-                        </button>
+                        </Button>
                       </div>
 
-                      <span className="text-xs font-mono font-medium text-neutral-200">
+                      <span className="text-xs font-mono font-medium text-foreground">
                         ₹{(item.price * item.quantity).toFixed(2)}
                       </span>
                     </div>
@@ -194,22 +195,22 @@ export const CartDrawer: React.FC = () => {
 
           {/* Footer with promo code & checkout */}
           {cart.length > 0 && (
-            <div className="p-6 border-t border-neutral-800 bg-neutral-950 space-y-4">
+            <div className="p-4 sm:p-6 pb-[max(1rem,env(safe-area-inset-bottom))] shrink-0 border-t border-border bg-background space-y-4">
               
               {/* Promo code bar */}
               <div>
                 {promoCode ? (
-                  <div className="flex items-center justify-between bg-neutral-900 px-3 py-2 border border-amber-900/50 rounded text-xs text-amber-200">
+                  <div className="flex items-center justify-between bg-muted px-3 py-2 border border-primary/50 rounded text-xs text-primary">
                     <span className="flex items-center gap-1.5 font-mono">
                       <Tag className="w-3.5 h-3.5" />
                       {promoCode} applied (-₹{discountAmount.toFixed(2)})
                     </span>
-                    <button
+                    <Button variant="atelier"
                       onClick={removePromoCode}
-                      className="text-neutral-400 hover:text-white text-[11px] underline"
+                      className="text-muted-foreground hover:text-foreground text-[11px] underline"
                     >
                       Remove
-                    </button>
+                    </Button>
                   </div>
                 ) : (
                   <form onSubmit={handleApplyPromo} className="flex gap-2">
@@ -218,20 +219,20 @@ export const CartDrawer: React.FC = () => {
                       value={promoInput}
                       onChange={(e) => setPromoInput(e.target.value)}
                       placeholder="Promo code (e.g. HENRO10)"
-                      className="flex-1 bg-neutral-900 border border-neutral-800 text-white text-xs px-3 py-2 rounded focus:outline-none focus:border-amber-300 placeholder-neutral-600 font-mono"
+                      className="min-w-0 flex-1 bg-muted border border-border text-foreground text-xs px-3 py-2 rounded focus:outline-none focus:border-primary placeholder-muted-foreground font-mono"
                     />
-                    <button
+                    <Button variant="atelier"
                       type="submit"
-                      className="px-3 py-2 bg-neutral-800 hover:bg-neutral-700 text-neutral-200 text-xs font-medium uppercase tracking-wider rounded transition-colors"
+                      className="px-3 py-2 bg-secondary hover:bg-secondary text-foreground text-xs font-medium uppercase tracking-wider rounded transition-colors"
                     >
                       Apply
-                    </button>
+                    </Button>
                   </form>
                 )}
                 {promoMessage && (
                   <p
                     className={`text-[11px] mt-1.5 ${
-                      promoMessage.error ? "text-red-400" : "text-emerald-400"
+                      promoMessage.error ? "text-destructive" : "text-success"
                     }`}
                   >
                     {promoMessage.text}
@@ -240,13 +241,13 @@ export const CartDrawer: React.FC = () => {
               </div>
 
               {/* Price breakdown */}
-              <div className="space-y-1.5 text-xs text-neutral-400 pt-2 border-t border-neutral-900 font-mono">
+              <div className="space-y-1.5 text-xs text-muted-foreground pt-2 border-t border-border font-mono">
                 <div className="flex justify-between">
                   <span>Subtotal</span>
                   <span>₹{subtotal.toFixed(2)}</span>
                 </div>
                 {discountAmount > 0 && (
-                  <div className="flex justify-between text-amber-300">
+                  <div className="flex justify-between text-primary">
                     <span>Voucher Discount</span>
                     <span>-₹{discountAmount.toFixed(2)}</span>
                   </div>
@@ -255,9 +256,9 @@ export const CartDrawer: React.FC = () => {
                   <span>Express Courier</span>
                   <span>{finalShipping === 0 ? "FREE" : `₹${finalShipping.toFixed(2)}`}</span>
                 </div>
-                <div className="flex justify-between text-sm text-white font-semibold pt-2 border-t border-neutral-800 font-sans tracking-wide">
+                <div className="flex justify-between text-sm text-foreground font-semibold pt-2 border-t border-border font-sans tracking-wide">
                   <span className="uppercase tracking-widest text-xs">Estimated Total</span>
-                  <span className="font-mono text-base text-amber-200">₹{grandTotal.toFixed(2)}</span>
+                  <span className="font-mono text-base text-primary">₹{grandTotal.toFixed(2)}</span>
                 </div>
               </div>
 
@@ -266,15 +267,15 @@ export const CartDrawer: React.FC = () => {
                 <Link
                   href="/checkout"
                   onClick={() => setIsCartOpen(false)}
-                  className="w-full flex items-center justify-center gap-2 py-3.5 bg-white text-black font-semibold text-xs tracking-[0.2em] uppercase hover:bg-neutral-200 transition-colors rounded shadow-lg"
+                  className="w-full flex items-center justify-center gap-2 py-3.5 bg-primary text-primary-foreground font-semibold text-xs tracking-[0.2em] uppercase hover:bg-secondary transition-colors rounded shadow-lg"
                 >
                   <span>Proceed to Checkout</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
 
-                <div className="flex items-center justify-center gap-4 text-[10px] text-neutral-500 uppercase tracking-widest pt-1">
+                <div className="flex flex-wrap items-center justify-center gap-2 text-[10px] text-muted-foreground uppercase tracking-widest pt-1">
                   <span className="flex items-center gap-1">
-                    <ShieldCheck className="w-3.5 h-3.5 text-neutral-400" />
+                    <ShieldCheck className="w-3.5 h-3.5 text-muted-foreground" />
                     Encrypted Atelier Checkout
                   </span>
                   <span>·</span>
