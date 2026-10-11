@@ -646,7 +646,7 @@ export const AdminClient: React.FC = () => {
                 <div className="space-y-2">
                   <Button variant="atelier"
                     onClick={openAddModal}
-                    className="w-full py-3 bg-primary text-primary-foreground font-semibold text-xs tracking-[0.2em] uppercase hover:bg-secondary transition-colors flex items-center justify-center gap-2 rounded"
+                    className="w-full py-3 bg-primary text-primary-foreground font-semibold text-xs tracking-normal uppercase hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 rounded"
                   >
                     <Plus className="w-4 h-4" />
                     <span>Commission New Shirt</span>

@@ -194,7 +194,7 @@ export default function OrderSuccessPage({ order, items }: { order: Order; items
 
               <Link
                 href="/products"
-                className="w-full py-3.5 bg-primary text-primary-foreground font-semibold text-xs tracking-[0.2em] uppercase hover:bg-secondary transition-colors flex items-center justify-center gap-2"
+                className="w-full py-3.5 bg-primary text-primary-foreground font-semibold text-xs tracking-normal uppercase hover:bg-primary/90 transition-colors flex items-center justify-center gap-2"
               >
                 <span>Continue Shopping</span>
                 <ArrowRight className="w-4 h-4" />

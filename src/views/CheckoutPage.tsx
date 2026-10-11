@@ -164,7 +164,7 @@ export default function CheckoutPage() {
         </p>
         <Link
           href="/products"
-          className="px-8 py-3.5 bg-primary text-primary-foreground font-semibold text-xs tracking-[0.2em] uppercase hover:bg-secondary transition-colors"
+          className="px-8 py-3.5 bg-primary text-primary-foreground font-semibold text-xs tracking-normal uppercase hover:bg-primary/90 transition-colors"
         >
           Explore Shirts
         </Link>
@@ -646,7 +646,7 @@ export default function CheckoutPage() {
                 <Button variant="atelier"
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-4 bg-primary text-primary-foreground font-semibold text-xs tracking-[0.25em] uppercase hover:bg-secondary transition-all flex items-center justify-center gap-2 shadow-2xl disabled:opacity-50"
+                  className="w-full py-4 bg-primary text-primary-foreground font-semibold text-xs tracking-normal uppercase hover:bg-primary/90 transition-all flex items-center justify-center gap-2 shadow-2xl disabled:opacity-50"
                 >
                   {isSubmitting ? (
                     <span>Securing Order...</span>
