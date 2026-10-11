@@ -548,6 +548,7 @@ export const ProductsClientCatalog: React.FC<ProductsClientCatalogProps> = ({
 
       {/* Quick View Modal */}
       <QuickViewModal
+        key={quickViewProduct?.id ?? 'empty'}
         product={quickViewProduct}
         onClose={() => setQuickViewProduct(null)}
         onOpenSizeGuide={() => {

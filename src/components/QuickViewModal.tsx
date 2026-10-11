@@ -74,6 +74,7 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
       true
     );
 
+    onClose();
     setAdded(true);
     setTimeout(() => {
       setAdded(false);

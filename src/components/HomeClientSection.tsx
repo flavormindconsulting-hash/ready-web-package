@@ -88,6 +88,7 @@ export const HomeClientSection: React.FC<HomeClientSectionProps> = ({
 
       {/* Quick View Modal */}
       <QuickViewModal
+        key={quickViewProduct?.id ?? 'empty'}
         product={quickViewProduct}
         onClose={() => setQuickViewProduct(null)}
         onOpenSizeGuide={() => {

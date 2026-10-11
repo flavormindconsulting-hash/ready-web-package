@@ -14,11 +14,11 @@ export const Route = createFileRoute("/products/$slug")({
           { property: "og:type", content: "website" },
           { name: "twitter:card", content: "summary_large_image" },
         ] }
-      : { meta: [{ title: "Shirt Not Found | HENRO" }, { name: "robots", content: "noindex" }] },
+      : { meta: [{ title: "Shirt Not Found | HENRO" }, { name: "description", content: "This shirt is not available. Explore the HENRO collection." }, { property: "og:title", content: "Shirt Not Found | HENRO" }, { property: "og:description", content: "Explore the HENRO shirt collection." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex" }] },
   notFoundComponent: () => (
     <div className="max-w-xl mx-auto py-32 text-center space-y-4">
       <h1 className="text-3xl font-editorial">Shirt not found</h1>
-      <Link to="/products" className="text-amber-300 underline">Back to the collection</Link>
+      <Link to="/products" className="text-primary underline">Back to the collection</Link>
     </div>
   ),
   component: () => {

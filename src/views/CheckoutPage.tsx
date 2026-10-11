@@ -201,6 +201,10 @@ export default function CheckoutPage() {
           </div>
         </div>
 
+        <div className="lg:hidden border-b border-border pb-5 mb-6 flex justify-between items-center gap-3">
+          <span className="text-sm">{cart.length} {cart.length === 1 ? 'shirt' : 'shirts'} in your bag</span>
+          <a href="#order-summary" className="text-sm font-semibold text-primary underline underline-offset-4">₹{grandTotal.toFixed(2)} <span className="text-xs font-normal">View summary</span></a>
+        </div>
         <form onSubmit={handlePlaceOrder}>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
             
@@ -529,7 +533,7 @@ export default function CheckoutPage() {
             </div>
 
             {/* Right Column: Order Summary (5 cols) */}
-            <div className="lg:col-span-5">
+            <div id="order-summary" className="lg:col-span-5 scroll-mt-24">
               <div className="lg:sticky lg:top-28 bg-muted/60 border border-border rounded p-6 space-y-6">
                 
                 <h3 className="text-xs font-semibold uppercase tracking-widest text-foreground border-b border-border pb-3">
