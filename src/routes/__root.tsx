@@ -44,6 +44,17 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
   const router = useRouter();
   useEffect(() => {
     reportLovableError(error, { boundary: "tanstack_root_error_component" });
+
+    const message = error instanceof Error ? error.message : String(error);
+    const isStaleChunkError = /failed to fetch dynamically imported module|importing a module script failed|failed to load module script/i.test(message);
+    if (isStaleChunkError) {
+      const retryKey = "henro:chunk-refresh-at";
+      const previousAttempt = Number(window.sessionStorage.getItem(retryKey));
+      if (!Number.isFinite(previousAttempt) || Date.now() - previousAttempt > 30_000) {
+        window.sessionStorage.setItem(retryKey, String(Date.now()));
+        window.location.reload();
+      }
+    }
   }, [error]);
 
   return (
