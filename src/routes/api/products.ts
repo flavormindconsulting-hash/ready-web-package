@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { requireAdmin, db, rows, toCamel, toSnake, json } from "@/lib/store.server";
+import { sizeValidationError } from "@/lib/product-sizes";
 
 const str = (v: unknown, d: unknown) => (typeof v === "string" ? v : JSON.stringify(v ?? d));
 export const Route = createFileRoute("/api/products")({
@@ -28,6 +29,11 @@ export const Route = createFileRoute("/api/products")({
       const denied = await requireAdmin(request); if (denied) return denied;
       try {
         const b = await request.json();
+        const sizes = typeof b.sizes === "string" ? JSON.parse(b.sizes) : b.sizes ?? [];
+        if (!Array.isArray(sizes) || sizes.some((row) => !row || typeof row.size !== "string"))
+          return json({ error: "Invalid sizes." }, { status: 400 });
+        const sizeError = sizeValidationError(sizes);
+        if (sizeError) return json({ error: sizeError }, { status: 400 });
         const slug = b.slug || String(b.name).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
         const c = await db();
         const r = await c.from("products").insert(toSnake({
@@ -36,7 +42,7 @@ export const Route = createFileRoute("/api/products")({
           fit: b.fit || "Tailored Fit", material: b.material || "100% Organic Cotton",
           careInstructions: b.careInstructions || "Machine wash cold. Hang dry.",
           details: str(b.details, []), images: str(b.images, []), colors: str(b.colors, []),
-          sizes: str(b.sizes, [{ size: "S", stock: 10 }, { size: "M", stock: 15 }, { size: "L", stock: 15 }, { size: "XL", stock: 8 }]),
+          sizes: JSON.stringify(sizes),
           isFeatured: Boolean(b.isFeatured), isNew: Boolean(b.isNew), isBestseller: Boolean(b.isBestseller), inStock: b.inStock !== false,
         })).select().single();
         if (r.error) throw r.error;

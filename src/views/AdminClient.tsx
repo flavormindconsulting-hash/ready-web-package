@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 
 import { adminFetch } from "@/lib/admin-fetch";
-import React, { useState, useEffect } from "react";
+import { STANDARD_SIZES, nextAvailableSize, sizeValidationError } from "@/lib/product-sizes";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "@/compat/next-link";
 import { Product, Order, Review, ProductSize, ProductColor } from "@/lib/types";
 import {
@@ -22,6 +23,7 @@ import {
   Search,
   AlertCircle,
   Filter,
+  Upload,
 } from "lucide-react";
 
 interface Stats {
@@ -78,6 +80,8 @@ export const AdminClient: React.FC = () => {
   const [formSaving, setFormSaving] = useState(false);
   const [formError, setFormError] = useState("");
   const [actionSuccess, setActionSuccess] = useState("");
+  const [photoUploading, setPhotoUploading] = useState(false);
+  const photoInput = useRef<HTMLInputElement>(null);
 
   const fetchData = async () => {
     setRefreshing(true);
@@ -119,7 +123,7 @@ export const AdminClient: React.FC = () => {
       material: "100% Giza 87 Egyptian Cotton",
       careInstructions: "Machine wash cold 30°C. Hang dry.",
       details: "Albini Italian mill fabric\nMother-of-pearl Troca buttons\nSplit back yoke",
-      images: "/products/classic-white-oxford.jpg",
+      images: "",
       colors: "White:#FFFFFF, Blue:#BFD7EA",
       sizes: [
         { size: "S", stock: 10 },
@@ -208,10 +212,38 @@ export const AdminClient: React.FC = () => {
   };
 
   const handleAddSizeRow = () => {
-    setFormData({
-      ...formData,
-      sizes: [...formData.sizes, { size: "NEW", stock: 5 }],
-    });
+    const size = nextAvailableSize(formData.sizes);
+    if (!size) return;
+    setFormData({ ...formData, sizes: [...formData.sizes, { size, stock: 0 }] });
+  };
+
+  const handleUploadPhotos = async (files: FileList | null) => {
+    if (!files?.length) return;
+    setPhotoUploading(true);
+    setFormError("");
+    try {
+      for (const file of Array.from(files)) {
+        if (file.size > 10 * 1024 * 1024) throw new Error(`${file.name}: maximum photo size is 10 MB.`);
+        const body = new FormData();
+        body.append("photo", file);
+        const response = await adminFetch("/api/admin/product-photos", { method: "POST", body });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error || "Photo upload failed.");
+        setFormData((current) => ({ ...current, images: [current.images.trim(), result.url].filter(Boolean).join("\n") }));
+      }
+    } catch (error) {
+      setFormError(error instanceof Error ? error.message : "Photo upload failed.");
+    } finally {
+      setPhotoUploading(false);
+      if (photoInput.current) photoInput.current.value = "";
+    }
+  };
+
+  const handleSizeChange = (index: number, size: string) => {
+    setFormData((current) => ({
+      ...current,
+      sizes: current.sizes.map((row, i) => i === index ? { ...row, size } : row),
+    }));
   };
 
   const handleRemoveSizeRow = (index: number) => {
@@ -221,6 +253,9 @@ export const AdminClient: React.FC = () => {
 
   const handleSaveProduct = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (photoUploading) return;
+    const sizeError = sizeValidationError(formData.sizes);
+    if (sizeError) { setFormError(sizeError); return; }
     if (!formData.name || !formData.price || !formData.description) {
       setFormError("Please fill in required fields: Name, Price, and Description.");
       return;
@@ -1038,7 +1073,7 @@ export const AdminClient: React.FC = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
           <div
             className="fixed inset-0 bg-overlay/85 backdrop-blur-sm"
-            onClick={() => setIsModalOpen(false)}
+            onClick={() => { if (!photoUploading && !formSaving) setIsModalOpen(false); }}
           />
 
           <div className="relative w-full max-w-3xl bg-background border border-border p-6 sm:p-8 rounded z-10 shadow-2xl animate-fade-in my-8 max-h-[90vh] overflow-y-auto">
@@ -1053,6 +1088,7 @@ export const AdminClient: React.FC = () => {
                 </p>
               </div>
               <Button variant="atelier"
+                disabled={photoUploading || formSaving}
                 onClick={() => setIsModalOpen(false)}
                 className="p-1 text-muted-foreground hover:text-foreground"
               >
@@ -1187,6 +1223,7 @@ export const AdminClient: React.FC = () => {
                   <Button variant="atelier"
                     type="button"
                     onClick={handleAddSizeRow}
+                    disabled={!nextAvailableSize(formData.sizes)}
                     className="text-[10px] font-mono text-primary hover:underline uppercase flex items-center gap-1"
                   >
                     <Plus className="w-3 h-3" /> Add Size Option
@@ -1197,11 +1234,20 @@ export const AdminClient: React.FC = () => {
                   {formData.sizes.map((s, idx) => (
                     <div key={idx} className="p-2 bg-background border border-border rounded">
                       <div className="flex justify-between items-center mb-1">
-                        <span className="font-mono text-xs font-bold text-foreground">{s.size}</span>
+                        <select
+                          aria-label={`Size option ${idx + 1}`}
+                          value={s.size}
+                          onChange={(e) => handleSizeChange(idx, e.target.value)}
+                          className="min-w-0 bg-muted border border-border rounded p-1 text-xs font-bold text-foreground"
+                        >
+                          {!STANDARD_SIZES.some((size) => size === s.size) && <option value={s.size}>Choose size</option>}
+                          {STANDARD_SIZES.map((size) => <option key={size} value={size} disabled={formData.sizes.some((row, i) => i !== idx && row.size === size)}>{size}</option>)}
+                        </select>
                         {formData.sizes.length > 1 && (
                           <Button variant="atelier"
                             type="button"
                             onClick={() => handleRemoveSizeRow(idx)}
+                            aria-label={`Remove size option ${idx + 1}`}
                             className="text-muted-foreground hover:text-destructive"
                           >
                             <X className="w-3 h-3" />
@@ -1214,6 +1260,7 @@ export const AdminClient: React.FC = () => {
                       <input
                         type="number"
                         min="0"
+                        aria-label={`Stock for size option ${idx + 1}`}
                         value={s.stock}
                         onChange={(e) => handleStockChange(idx, parseInt(e.target.value) || 0)}
                         className="w-full bg-muted border border-border rounded px-2 py-1 text-xs text-foreground font-mono text-center"
@@ -1255,6 +1302,21 @@ export const AdminClient: React.FC = () => {
               {/* Row 6: Images & Color Variants */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
+                  <div className="flex items-center justify-between gap-2 mb-3">
+                    <h4 className="text-xs font-semibold uppercase text-foreground">Product photos</h4>
+                    <input ref={photoInput} type="file" accept="image/jpeg,image/png,image/webp" multiple className="hidden" aria-label="Upload product photos" onChange={(e) => handleUploadPhotos(e.target.files)} />
+                    <Button variant="atelier" type="button" disabled={photoUploading || formSaving} onClick={() => photoInput.current?.click()} className="flex items-center gap-2 border border-border rounded px-3 py-2 text-xs">
+                      <Upload className="w-4 h-4" />{photoUploading ? "Uploading…" : "Upload photos"}
+                    </Button>
+                  </div>
+                  <div className="grid grid-cols-3 gap-2 mb-3">
+                    {formData.images.split("\n").map((url) => url.trim()).filter(Boolean).map((url, index) => (
+                      <div key={`${url}-${index}`} className="relative aspect-[3/4] overflow-hidden rounded border border-border bg-muted">
+                        <img src={url} alt={`Product photo ${index + 1}`} className="h-full w-full object-cover" />
+                        <Button variant="atelier" type="button" disabled={photoUploading || formSaving} aria-label={`Remove photo ${index + 1}`} onClick={() => setFormData((current) => ({ ...current, images: current.images.split("\n").map((value) => value.trim()).filter(Boolean).filter((_, i) => i !== index).join("\n") }))} className="absolute top-1 right-1 bg-background text-foreground p-1 rounded"><X className="w-4 h-4" /></Button>
+                      </div>
+                    ))}
+                  </div>
                   <label className="block text-[11px] uppercase tracking-wider text-muted-foreground mb-1">
                     Image URLs (One per line)
                   </label>
@@ -1331,6 +1393,7 @@ export const AdminClient: React.FC = () => {
               <div className="flex justify-end gap-3 pt-4 border-t border-border">
                 <Button variant="atelier"
                   type="button"
+                  disabled={photoUploading || formSaving}
                   onClick={() => setIsModalOpen(false)}
                   className="px-5 py-2.5 bg-muted text-muted-foreground hover:text-foreground text-xs uppercase tracking-wider rounded"
                 >
@@ -1338,7 +1401,7 @@ export const AdminClient: React.FC = () => {
                 </Button>
                 <Button variant="atelier"
                   type="submit"
-                  disabled={formSaving}
+                  disabled={formSaving || photoUploading}
                   className="px-8 py-2.5 bg-primary text-primary-foreground font-semibold text-xs uppercase tracking-widest hover:bg-secondary transition-colors rounded shadow-lg"
                 >
                   {formSaving ? "Saving..." : editingProduct ? "Save Changes" : "Create Shirt"}
