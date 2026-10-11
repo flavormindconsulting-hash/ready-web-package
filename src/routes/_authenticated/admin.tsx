@@ -12,6 +12,8 @@ export const Route = createFileRoute("/_authenticated/admin")({
       { name: "description", content: "Owner console to manage the HENRO catalog, orders and reviews." },
       { property: "og:title", content: "Atelier Command & Control | HENRO" },
       { property: "og:description", content: "HENRO store administration." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { name: "robots", content: "noindex" },
     ],
   }),

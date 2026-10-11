@@ -9,6 +9,8 @@ export const Route = createFileRoute("/auth")({
       { name: "description", content: "Sign in to manage the HENRO atelier." },
       { property: "og:title", content: "Owner Sign In | HENRO" },
       { property: "og:description", content: "Sign in to manage the HENRO atelier." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { name: "robots", content: "noindex" },
     ],
   }),

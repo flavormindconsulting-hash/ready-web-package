@@ -11,6 +11,8 @@ export const Route = createFileRoute("/products/$slug")({
           { name: "description", content: loaderData.product.description },
           { property: "og:title", content: `${loaderData.product.name} | HENRO Atelier` },
           { property: "og:description", content: loaderData.product.description },
+          { property: "og:type", content: "website" },
+          { name: "twitter:card", content: "summary_large_image" },
         ] }
       : { meta: [{ title: "Shirt Not Found | HENRO" }, { name: "robots", content: "noindex" }] },
   notFoundComponent: () => (
