@@ -87,6 +87,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({
   };
 
   const handleAddToCart = () => {
+    if (!product.inStock || !sizes.some((s) => s.stock > 0)) return;
     if (!selectedSize) {
       setSizeError("Please select a size to proceed");
       return;
@@ -404,6 +405,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({
                 {/* Add to Bag Button */}
                 <Button variant="atelier"
                   onClick={handleAddToCart}
+                  disabled={!product.inStock || !sizes.some((s) => s.stock > 0)}
                   className="flex-1 py-4 bg-primary text-primary-foreground font-semibold text-xs tracking-normal uppercase hover:bg-secondary transition-all flex items-center justify-center gap-2 shadow-xl"
                 >
                   {addedSuccess ? (
@@ -412,7 +414,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({
                       <span>Added to bag</span>
                     </>
                   ) : (
-                    <span>Add to bag</span>
+                    <span>{product.inStock && sizes.some((s) => s.stock > 0) ? "Add to bag" : "Currently unavailable"}</span>
                   )}
                 </Button>
               </div>

@@ -1,5 +1,6 @@
 # HENRO refresh
 - [x] Import the selected logo and shirt photographs.
-- [ ] Refresh storefront, navigation, and shopping surfaces to match the brand.
-- [ ] Verify shopping interactions and phone layouts.
-- [ ] Add seven new uploaded shirt designs to the catalog with confirmed prices and availability.
+- [x] Refresh storefront, navigation, and shopping surfaces to match the brand.
+- [x] Verify shopping interactions and phone layouts.
+- [x] Add seven uploaded shirt designs to the catalog at ₹1,999 each.
+- [ ] Enable purchasing for the seven shirts — waiting for sizes and stock from the owner.

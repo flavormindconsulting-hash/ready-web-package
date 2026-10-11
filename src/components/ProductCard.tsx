@@ -116,13 +116,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }
         {/* Quick Add Size Bar (appears on hover) */}
         <div className="absolute bottom-0 inset-x-0 p-3 bg-background/95 border-t border-border translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-10">
           <p className="text-[10px] font-medium tracking-widest uppercase text-muted-foreground mb-1.5 text-center">
-            Quick Add To Bag
+            {product.inStock && sizes.some((s) => s.stock > 0) ? "Quick Add To Bag" : "Currently unavailable"}
           </p>
           <div className="flex items-center justify-center gap-1.5">
             {sizes.map((s) => (
               <Button variant="atelier"
                 key={s.size}
-                disabled={s.stock === 0}
+                disabled={!product.inStock || s.stock === 0}
                 onClick={(e) => handleQuickAdd(s.size, e)}
                 className={`min-w-8 h-8 px-1.5 text-[11px] font-mono font-medium border transition-colors flex items-center justify-center ${
                   s.stock === 0

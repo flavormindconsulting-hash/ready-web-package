@@ -54,6 +54,7 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
   const currentColor = selectedColor || colors[0]?.name || "Standard";
 
   const handleAddToCart = () => {
+    if (!product.inStock || !sizes.some((s) => s.stock > 0)) return;
     if (!selectedSize) {
       setErrorMsg("Please select a size");
       return;
@@ -253,7 +254,7 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
             <div className="space-y-3 pt-4 border-t border-border">
               <Button variant="atelier"
                 onClick={handleAddToCart}
-                disabled={added}
+                disabled={added || !product.inStock || !sizes.some((s) => s.stock > 0)}
                 className="w-full py-3.5 bg-primary text-primary-foreground font-semibold text-xs tracking-normal uppercase hover:bg-primary/90 transition-colors flex items-center justify-center gap-2"
               >
                 {added ? (
@@ -262,7 +263,7 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
                     <span>Added To Bag</span>
                   </>
                 ) : (
-                  <span>Add To Shopping Bag</span>
+                  <span>{product.inStock && sizes.some((s) => s.stock > 0) ? "Add To Shopping Bag" : "Currently unavailable"}</span>
                 )}
               </Button>
 
