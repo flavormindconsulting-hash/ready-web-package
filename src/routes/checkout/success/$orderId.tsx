@@ -16,7 +16,7 @@ export const Route = createFileRoute("/checkout/success/$orderId")({
   notFoundComponent: () => (
     <div className="max-w-xl mx-auto py-32 text-center space-y-4">
       <h1 className="text-3xl font-editorial">Order not found</h1>
-      <Link to="/" className="text-amber-300 underline">Return home</Link>
+      <Link to="/" className="text-primary underline">Return home</Link>
     </div>
   ),
   component: () => {

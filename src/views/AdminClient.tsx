@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 
 import { adminFetch } from "@/lib/admin-fetch";
 import React, { useState, useEffect } from "react";
@@ -7,7 +8,7 @@ import {
   SlidersHorizontal,
   Package,
   ShoppingBag,
-  DollarSign,
+  IndianRupee,
   TrendingUp,
   Plus,
   Edit2,
@@ -200,7 +201,9 @@ export const AdminClient: React.FC = () => {
 
   const handleStockChange = (index: number, stock: number) => {
     const updated = [...formData.sizes];
-    updated[index]!.stock = Math.max(0, stock);
+    const row = updated[index];
+    if (!row) return;
+    row.stock = Math.max(0, stock);
     setFormData({ ...formData, sizes: updated });
   };
 
@@ -399,20 +402,20 @@ export const AdminClient: React.FC = () => {
   });
 
   return (
-    <div className="bg-neutral-950 text-neutral-100 min-h-screen">
+    <div className="bg-background text-foreground min-h-screen">
       
       {/* Top Admin Navigation Header */}
-      <div className="border-b border-neutral-800 bg-neutral-900/60 sticky top-20 z-30 backdrop-blur-md">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div className="border-b border-border bg-muted/60 sticky top-20 z-30 backdrop-blur-md">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-16 py-3 grid grid-cols-[minmax(0,1fr)_auto] gap-3 items-center">
           
-          <div className="flex items-center gap-4">
+          <div className="flex min-w-0 items-center gap-2">
             <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse" />
-              <span className="font-editorial text-lg tracking-widest text-white uppercase">
+              <span className="w-2.5 h-2.5 rounded-full bg-primary animate-pulse" />
+              <span className="font-editorial text-lg tracking-widest text-foreground uppercase">
                 HENRO
               </span>
-              <span className="text-[10px] font-mono tracking-widest text-amber-300 bg-amber-950/60 border border-amber-800/80 px-2 py-0.5 rounded">
-                ATELIER COMMAND
+              <span className="text-[10px] font-mono tracking-widest text-primary bg-warning-soft/60 border border-primary/80 px-2 py-0.5 rounded">
+                ADMIN
               </span>
             </div>
 
@@ -424,42 +427,42 @@ export const AdminClient: React.FC = () => {
                 { id: "orders", label: `Orders (${ordersList.length})` },
                 { id: "reviews", label: `Reviews (${reviewsList.length})` },
               ].map((tab) => (
-                <button
+                <Button variant="atelier"
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id as any)}
                   className={`px-3 py-1.5 rounded transition-colors ${
                     activeTab === tab.id
-                      ? "bg-white text-black font-semibold"
-                      : "text-neutral-400 hover:text-white hover:bg-neutral-800"
+                      ? "bg-primary text-primary-foreground font-semibold"
+                      : "text-muted-foreground hover:text-foreground hover:bg-secondary"
                   }`}
                 >
                   {tab.label}
-                </button>
+                </Button>
               ))}
             </div>
           </div>
 
           <div className="flex items-center gap-3">
-            <button
+            <Button variant="atelier"
               onClick={fetchData}
               disabled={refreshing}
               title="Refresh Atelier Data"
-              className="p-2 text-neutral-400 hover:text-white bg-neutral-800/60 hover:bg-neutral-800 rounded transition-colors"
+              className="p-2 text-muted-foreground hover:text-foreground bg-secondary/60 hover:bg-secondary rounded transition-colors"
             >
-              <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? "animate-spin text-amber-300" : ""}`} />
-            </button>
+              <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? "animate-spin text-primary" : ""}`} />
+            </Button>
 
-            <button
+            <Button variant="atelier"
               onClick={handleReseedDb}
               title="Reset Demo Dataset"
-              className="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 text-[10px] font-mono uppercase tracking-wider bg-neutral-800/80 hover:bg-neutral-800 text-neutral-300 rounded border border-neutral-700"
+              className="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 text-[10px] font-mono uppercase tracking-wider bg-secondary/80 hover:bg-secondary text-foreground rounded border border-border"
             >
               Reset Seed
-            </button>
+            </Button>
 
             <Link
               href="/products"
-              className="inline-flex items-center gap-1 px-3 py-1.5 bg-neutral-800 hover:bg-neutral-700 text-neutral-200 text-xs font-medium uppercase tracking-wider rounded transition-colors"
+              className="inline-flex items-center gap-1 px-3 py-1.5 bg-secondary hover:bg-secondary text-foreground text-xs font-medium uppercase tracking-wider rounded transition-colors"
             >
               <span>Storefront</span>
               <ExternalLink className="w-3.5 h-3.5" />
@@ -468,22 +471,22 @@ export const AdminClient: React.FC = () => {
         </div>
 
         {/* Mobile Tabs */}
-        <div className="flex md:hidden border-t border-neutral-800/60 overflow-x-auto p-2 gap-2 text-xs font-mono">
+        <div className="flex md:hidden border-t border-border/60 overflow-x-auto p-2 gap-2 text-xs font-mono">
           {[
             { id: "overview", label: "Overview" },
             { id: "products", label: `Shirts (${productsList.length})` },
             { id: "orders", label: `Orders (${ordersList.length})` },
             { id: "reviews", label: `Reviews (${reviewsList.length})` },
           ].map((tab) => (
-            <button
+            <Button variant="atelier"
               key={tab.id}
               onClick={() => setActiveTab(tab.id as any)}
               className={`px-3 py-1 rounded whitespace-nowrap ${
-                activeTab === tab.id ? "bg-white text-black font-bold" : "text-neutral-400"
+                activeTab === tab.id ? "bg-primary text-primary-foreground font-bold" : "text-muted-foreground"
               }`}
             >
               {tab.label}
-            </button>
+            </Button>
           ))}
         </div>
       </div>
@@ -493,14 +496,14 @@ export const AdminClient: React.FC = () => {
         
         {/* Success toast banner */}
         {actionSuccess && (
-          <div className="mb-6 p-4 bg-emerald-950/80 border border-emerald-800 rounded text-emerald-300 text-xs flex items-center justify-between font-mono animate-fade-in">
+          <div className="mb-6 p-4 bg-success-soft/80 border border-success rounded text-success text-xs flex items-center justify-between font-mono animate-fade-in">
             <span className="flex items-center gap-2">
-              <Check className="w-4 h-4 text-emerald-400" />
+              <Check className="w-4 h-4 text-success" />
               {actionSuccess}
             </span>
-            <button onClick={() => setActionSuccess("")} className="text-emerald-500 hover:text-white">
+            <Button variant="atelier" onClick={() => setActionSuccess("")} className="text-success hover:text-foreground">
               <X className="w-4 h-4" />
-            </button>
+            </Button>
           </div>
         )}
 
@@ -510,55 +513,55 @@ export const AdminClient: React.FC = () => {
             {/* Top Stat Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               
-              <div className="p-6 bg-neutral-900/50 border border-neutral-800 rounded space-y-2">
-                <div className="flex items-center justify-between text-neutral-400 text-xs font-mono uppercase">
+              <div className="p-6 bg-muted/50 border border-border rounded space-y-2">
+                <div className="flex items-center justify-between text-muted-foreground text-xs font-mono uppercase">
                   <span>Gross Atelier Revenue</span>
-                  <DollarSign className="w-4 h-4 text-amber-300" />
+                  <IndianRupee className="w-4 h-4 text-primary" />
                 </div>
-                <div className="text-2xl sm:text-3xl font-mono font-bold text-white">
+                <div className="text-2xl sm:text-3xl font-mono font-bold text-foreground">
                   ₹{stats ? stats.totalRevenue.toFixed(2) : "0.00"}
                 </div>
-                <div className="text-[11px] text-emerald-400 flex items-center gap-1 font-mono">
+                <div className="text-[11px] text-success flex items-center gap-1 font-mono">
                   <TrendingUp className="w-3 h-3" />
                   <span>Real commissions via checkout</span>
                 </div>
               </div>
 
-              <div className="p-6 bg-neutral-900/50 border border-neutral-800 rounded space-y-2">
-                <div className="flex items-center justify-between text-neutral-400 text-xs font-mono uppercase">
+              <div className="p-6 bg-muted/50 border border-border rounded space-y-2">
+                <div className="flex items-center justify-between text-muted-foreground text-xs font-mono uppercase">
                   <span>Total Commissions</span>
-                  <ShoppingBag className="w-4 h-4 text-amber-300" />
+                  <ShoppingBag className="w-4 h-4 text-primary" />
                 </div>
-                <div className="text-2xl sm:text-3xl font-mono font-bold text-white">
+                <div className="text-2xl sm:text-3xl font-mono font-bold text-foreground">
                   {stats ? stats.totalOrders : 0}
                 </div>
-                <div className="text-[11px] text-neutral-400 font-mono">
+                <div className="text-[11px] text-muted-foreground font-mono">
                   Processed in atelier queue
                 </div>
               </div>
 
-              <div className="p-6 bg-neutral-900/50 border border-neutral-800 rounded space-y-2">
-                <div className="flex items-center justify-between text-neutral-400 text-xs font-mono uppercase">
+              <div className="p-6 bg-muted/50 border border-border rounded space-y-2">
+                <div className="flex items-center justify-between text-muted-foreground text-xs font-mono uppercase">
                   <span>Average Commission (AOV)</span>
-                  <TrendingUp className="w-4 h-4 text-amber-300" />
+                  <TrendingUp className="w-4 h-4 text-primary" />
                 </div>
-                <div className="text-2xl sm:text-3xl font-mono font-bold text-white">
+                <div className="text-2xl sm:text-3xl font-mono font-bold text-foreground">
                   ₹{stats ? stats.avgOrderValue.toFixed(2) : "0.00"}
                 </div>
-                <div className="text-[11px] text-neutral-400 font-mono">
+                <div className="text-[11px] text-muted-foreground font-mono">
                   Per gentleman order
                 </div>
               </div>
 
-              <div className="p-6 bg-neutral-900/50 border border-neutral-800 rounded space-y-2">
-                <div className="flex items-center justify-between text-neutral-400 text-xs font-mono uppercase">
+              <div className="p-6 bg-muted/50 border border-border rounded space-y-2">
+                <div className="flex items-center justify-between text-muted-foreground text-xs font-mono uppercase">
                   <span>Active Catalog Pieces</span>
-                  <Package className="w-4 h-4 text-amber-300" />
+                  <Package className="w-4 h-4 text-primary" />
                 </div>
-                <div className="text-2xl sm:text-3xl font-mono font-bold text-white">
+                <div className="text-2xl sm:text-3xl font-mono font-bold text-foreground">
                   {stats ? stats.totalProducts : 0}
                 </div>
-                <div className="text-[11px] text-amber-300 font-mono">
+                <div className="text-[11px] text-primary font-mono">
                   {reviewsList.length} verified client reviews
                 </div>
               </div>
@@ -569,27 +572,27 @@ export const AdminClient: React.FC = () => {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
               
               {/* Recent Orders (8 cols) */}
-              <div className="lg:col-span-8 p-6 bg-neutral-900/40 border border-neutral-800 rounded space-y-4">
-                <div className="flex items-center justify-between border-b border-neutral-800 pb-3">
-                  <h3 className="text-xs font-semibold uppercase tracking-widest text-white">
+              <div className="lg:col-span-8 p-6 bg-muted/40 border border-border rounded space-y-4">
+                <div className="flex items-center justify-between border-b border-border pb-3">
+                  <h3 className="text-xs font-semibold uppercase tracking-widest text-foreground">
                     Recent Atelier Commissions
                   </h3>
-                  <button
+                  <Button variant="atelier"
                     onClick={() => setActiveTab("orders")}
-                    className="text-xs text-amber-300 font-mono hover:underline uppercase"
+                    className="text-xs text-primary font-mono hover:underline uppercase"
                   >
                     View All Orders →
-                  </button>
+                  </Button>
                 </div>
 
                 {ordersList.length === 0 ? (
-                  <p className="text-xs text-neutral-500 py-6 text-center font-mono">
+                  <p className="text-xs text-muted-foreground py-6 text-center font-mono">
                     No orders placed yet. Test the checkout flow to see live commissions appear here!
                   </p>
                 ) : (
                   <div className="overflow-x-auto">
                     <table className="w-full text-xs text-left">
-                      <thead className="text-[10px] uppercase font-mono text-neutral-500 border-b border-neutral-800">
+                      <thead className="text-[10px] uppercase font-mono text-muted-foreground border-b border-border">
                         <tr>
                           <th className="py-2">Order</th>
                           <th className="py-2">Gentleman</th>
@@ -598,32 +601,32 @@ export const AdminClient: React.FC = () => {
                           <th className="py-2">Date</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-neutral-900 font-mono">
+                      <tbody className="divide-y divide-border font-mono">
                         {ordersList.slice(0, 5).map((order) => (
-                          <tr key={order.id} className="hover:bg-neutral-900/60">
-                            <td className="py-3 font-semibold text-white">
+                          <tr key={order.id} className="hover:bg-muted/60">
+                            <td className="py-3 font-semibold text-foreground">
                               {order.orderNumber}
                             </td>
-                            <td className="py-3 text-neutral-300">
+                            <td className="py-3 text-foreground">
                               {order.customerName}
                             </td>
-                            <td className="py-3 text-amber-200">
+                            <td className="py-3 text-primary">
                               ₹{parseFloat(order.total).toFixed(2)}
                             </td>
                             <td className="py-3">
                               <span
                                 className={`px-2 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wider ${
                                   order.status === "Delivered"
-                                    ? "bg-emerald-950 text-emerald-400 border border-emerald-800"
+                                    ? "bg-success-soft text-success border border-success"
                                     : order.status === "Shipped"
-                                    ? "bg-blue-950 text-blue-400 border border-blue-800"
-                                    : "bg-amber-950 text-amber-300 border border-amber-800"
+                                    ? "bg-secondary text-primary border border-primary"
+                                    : "bg-warning-soft text-primary border border-primary"
                                 }`}
                               >
                                 {order.status}
                               </span>
                             </td>
-                            <td className="py-3 text-neutral-500 text-[11px]">
+                            <td className="py-3 text-muted-foreground text-[11px]">
                               {new Date(order.createdAt).toLocaleDateString()}
                             </td>
                           </tr>
@@ -635,44 +638,44 @@ export const AdminClient: React.FC = () => {
               </div>
 
               {/* Quick Actions Card (4 cols) */}
-              <div className="lg:col-span-4 p-6 bg-neutral-900/40 border border-neutral-800 rounded space-y-4">
-                <h3 className="text-xs font-semibold uppercase tracking-widest text-white border-b border-neutral-800 pb-3">
+              <div className="lg:col-span-4 p-6 bg-muted/40 border border-border rounded space-y-4">
+                <h3 className="text-xs font-semibold uppercase tracking-widest text-foreground border-b border-border pb-3">
                   Quick Atelier Actions
                 </h3>
 
                 <div className="space-y-2">
-                  <button
+                  <Button variant="atelier"
                     onClick={openAddModal}
-                    className="w-full py-3 bg-white text-black font-semibold text-xs tracking-[0.2em] uppercase hover:bg-neutral-200 transition-colors flex items-center justify-center gap-2 rounded"
+                    className="w-full py-3 bg-primary text-primary-foreground font-semibold text-xs tracking-normal uppercase hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 rounded"
                   >
                     <Plus className="w-4 h-4" />
                     <span>Commission New Shirt</span>
-                  </button>
+                  </Button>
 
-                  <button
+                  <Button variant="atelier"
                     onClick={() => setActiveTab("products")}
-                    className="w-full py-2.5 bg-neutral-800 hover:bg-neutral-750 text-neutral-200 text-xs font-mono uppercase tracking-wider rounded border border-neutral-700 flex items-center justify-center gap-2 transition-colors"
+                    className="w-full py-2.5 bg-secondary hover:bg-secondary text-foreground text-xs font-mono uppercase tracking-wider rounded border border-border flex items-center justify-center gap-2 transition-colors"
                   >
                     <span>Manage Sizes & Prices</span>
-                  </button>
+                  </Button>
 
-                  <button
+                  <Button variant="atelier"
                     onClick={() => setActiveTab("orders")}
-                    className="w-full py-2.5 bg-neutral-800 hover:bg-neutral-750 text-neutral-200 text-xs font-mono uppercase tracking-wider rounded border border-neutral-700 flex items-center justify-center gap-2 transition-colors"
+                    className="w-full py-2.5 bg-secondary hover:bg-secondary text-foreground text-xs font-mono uppercase tracking-wider rounded border border-border flex items-center justify-center gap-2 transition-colors"
                   >
                     <span>Update Delivery Statuses</span>
-                  </button>
+                  </Button>
 
-                  <button
+                  <Button variant="atelier"
                     onClick={handleReseedDb}
-                    className="w-full py-2.5 bg-neutral-950 hover:bg-neutral-900 text-neutral-400 hover:text-white text-xs font-mono uppercase tracking-wider rounded border border-neutral-800 flex items-center justify-center gap-2 transition-colors"
+                    className="w-full py-2.5 bg-background hover:bg-muted text-muted-foreground hover:text-foreground text-xs font-mono uppercase tracking-wider rounded border border-border flex items-center justify-center gap-2 transition-colors"
                   >
-                    <RefreshCw className="w-3.5 h-3.5 text-amber-300" />
+                    <RefreshCw className="w-3.5 h-3.5 text-primary" />
                     <span>Reset Demo Catalog</span>
-                  </button>
+                  </Button>
                 </div>
 
-                <div className="pt-2 text-[11px] text-neutral-500 leading-relaxed font-mono">
+                <div className="pt-2 text-[11px] text-muted-foreground leading-relaxed font-mono">
                   Tip: Changes made in the catalog (pricing, sizes, inventory counts) reflect instantly across the storefront, size pickers, and checkout.
                 </div>
               </div>
@@ -685,24 +688,24 @@ export const AdminClient: React.FC = () => {
         {activeTab === "products" && (
           <div className="space-y-6 animate-fade-in">
             {/* Top Bar: Search, Category filter, and Add Shirt Button */}
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 bg-neutral-900/50 border border-neutral-800 rounded">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 bg-muted/50 border border-border rounded">
               
               <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
                 <div className="relative flex-1 sm:w-64">
-                  <Search className="w-3.5 h-3.5 text-neutral-500 absolute left-3 top-2.5" />
+                  <Search className="w-3.5 h-3.5 text-muted-foreground absolute left-3 top-2.5" />
                   <input
                     type="text"
                     value={productSearch}
                     onChange={(e) => setProductSearch(e.target.value)}
                     placeholder="Search shirts by name, fit..."
-                    className="w-full bg-neutral-950 border border-neutral-800 rounded pl-9 pr-3 py-1.5 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-amber-300"
+                    className="w-full bg-background border border-border rounded pl-9 pr-3 py-1.5 text-xs text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary"
                   />
                 </div>
 
                 <select
                   value={productCategoryFilter}
                   onChange={(e) => setProductCategoryFilter(e.target.value)}
-                  className="bg-neutral-950 border border-neutral-800 rounded px-3 py-1.5 text-xs text-neutral-200 uppercase tracking-wider focus:outline-none"
+                  className="bg-background border border-border rounded px-3 py-1.5 text-xs text-foreground uppercase tracking-wider focus:outline-none"
                 >
                   <option value="All">All Typologies</option>
                   <option value="Oxford & Formal">Oxford & Formal</option>
@@ -713,19 +716,19 @@ export const AdminClient: React.FC = () => {
                 </select>
               </div>
 
-              <button
+              <Button variant="atelier"
                 onClick={openAddModal}
-                className="w-full sm:w-auto px-5 py-2 bg-white text-black font-semibold text-xs uppercase tracking-widest hover:bg-neutral-200 transition-colors flex items-center justify-center gap-2 rounded"
+                className="w-full sm:w-auto px-5 py-2 bg-primary text-primary-foreground font-semibold text-xs uppercase tracking-widest hover:bg-secondary transition-colors flex items-center justify-center gap-2 rounded"
               >
                 <Plus className="w-4 h-4" />
                 <span>Add New Shirt</span>
-              </button>
+              </Button>
             </div>
 
             {/* Products Table */}
-            <div className="overflow-x-auto border border-neutral-800 rounded bg-neutral-900/30">
+            <div className="overflow-x-auto border border-border rounded bg-muted/30">
               <table className="w-full text-xs text-left">
-                <thead className="bg-neutral-900/80 text-[10px] uppercase font-mono tracking-widest text-neutral-400 border-b border-neutral-800">
+                <thead className="bg-muted/80 text-[10px] uppercase font-mono tracking-widest text-muted-foreground border-b border-border">
                   <tr>
                     <th className="py-3 px-4">Shirt</th>
                     <th className="py-3 px-4">Typology / Fit</th>
@@ -735,7 +738,7 @@ export const AdminClient: React.FC = () => {
                     <th className="py-3 px-4 text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-neutral-900">
+                <tbody className="divide-y divide-border">
                   {filteredAdminProducts.map((p) => {
                     let images: string[] = [];
                     try {
@@ -754,12 +757,12 @@ export const AdminClient: React.FC = () => {
                     const totalStock = sizes.reduce((sum, s) => sum + s.stock, 0);
 
                     return (
-                      <tr key={p.id} className="hover:bg-neutral-900/60 transition-colors">
+                      <tr key={p.id} className="hover:bg-muted/60 transition-colors">
                         
                         {/* Thumbnail & Title */}
                         <td className="py-3 px-4">
                           <div className="flex items-center gap-3">
-                            <div className="w-12 h-14 bg-neutral-900 border border-neutral-800 overflow-hidden flex-shrink-0">
+                            <div className="w-12 h-14 bg-muted border border-border overflow-hidden flex-shrink-0">
                               <img
                                 src={images[0] || "/products/classic-white-oxford.jpg"}
                                 alt={p.name}
@@ -769,12 +772,12 @@ export const AdminClient: React.FC = () => {
                             <div>
                               <Link
                                 href={`/products/${p.slug}`}
-                                className="font-semibold text-white uppercase hover:text-amber-200 transition-colors flex items-center gap-1"
+                                className="font-semibold text-foreground uppercase hover:text-primary transition-colors flex items-center gap-1"
                               >
                                 {p.name}
-                                <ExternalLink className="w-3 h-3 text-neutral-500" />
+                                <ExternalLink className="w-3 h-3 text-muted-foreground" />
                               </Link>
-                              <p className="text-[11px] text-neutral-400 italic line-clamp-1">
+                              <p className="text-[11px] text-muted-foreground italic line-clamp-1">
                                 {p.subtitle || p.material}
                               </p>
                             </div>
@@ -783,17 +786,17 @@ export const AdminClient: React.FC = () => {
 
                         {/* Category & Fit */}
                         <td className="py-3 px-4 font-mono text-[11px]">
-                          <div className="text-neutral-200">{p.category}</div>
-                          <div className="text-amber-300/80">{p.fit}</div>
+                          <div className="text-foreground">{p.category}</div>
+                          <div className="text-primary/80">{p.fit}</div>
                         </td>
 
                         {/* Price */}
                         <td className="py-3 px-4 font-mono">
-                          <div className="font-semibold text-white">
+                          <div className="font-semibold text-foreground">
                             ₹{parseFloat(p.price).toFixed(2)}
                           </div>
                           {p.compareAtPrice && (
-                            <div className="text-[11px] text-neutral-500 line-through">
+                            <div className="text-[11px] text-muted-foreground line-through">
                               ₹{parseFloat(p.compareAtPrice).toFixed(2)}
                             </div>
                           )}
@@ -807,51 +810,51 @@ export const AdminClient: React.FC = () => {
                                 key={s.size}
                                 className={`text-[10px] px-1.5 py-0.5 rounded border ${
                                   s.stock > 0
-                                    ? "bg-neutral-900 border-neutral-700 text-neutral-200"
-                                    : "bg-red-950/40 border-red-900 text-red-400 line-through"
+                                    ? "bg-muted border-border text-foreground"
+                                    : "bg-danger-soft/40 border-destructive text-destructive line-through"
                                 }`}
                               >
                                 {s.size}: <strong>{s.stock}</strong>
                               </span>
                             ))}
                           </div>
-                          <div className="text-[10px] text-neutral-500 mt-1">
+                          <div className="text-[10px] text-muted-foreground mt-1">
                             Total Units: {totalStock}
                           </div>
                         </td>
 
                         {/* In Stock Toggle */}
                         <td className="py-3 px-4">
-                          <button
+                          <Button variant="atelier"
                             onClick={() => handleToggleStock(p)}
                             className={`px-2.5 py-1 rounded text-[10px] font-mono uppercase tracking-wider font-semibold border transition-colors ${
                               p.inStock
-                                ? "bg-emerald-950 text-emerald-400 border-emerald-800"
-                                : "bg-red-950 text-red-400 border-red-800"
+                                ? "bg-success-soft text-success border-success"
+                                : "bg-danger-soft text-destructive border-destructive"
                             }`}
                           >
                             {p.inStock ? "In Stock" : "Archived"}
-                          </button>
+                          </Button>
                         </td>
 
                         {/* Actions */}
                         <td className="py-3 px-4 text-right">
                           <div className="flex items-center justify-end gap-2">
-                            <button
+                            <Button variant="atelier"
                               onClick={() => openEditModal(p)}
-                              className="p-1.5 text-neutral-400 hover:text-white bg-neutral-800 hover:bg-neutral-700 rounded transition-colors"
+                              className="p-1.5 text-muted-foreground hover:text-foreground bg-secondary hover:bg-secondary rounded transition-colors"
                               title="Edit shirt sizes, prices, details"
                             >
                               <Edit2 className="w-3.5 h-3.5" />
-                            </button>
+                            </Button>
 
-                            <button
+                            <Button variant="atelier"
                               onClick={() => handleDeleteProduct(p.id, p.name)}
-                              className="p-1.5 text-neutral-400 hover:text-red-400 bg-neutral-800 hover:bg-red-950/60 rounded transition-colors"
+                              className="p-1.5 text-muted-foreground hover:text-destructive bg-secondary hover:bg-danger-soft/60 rounded transition-colors"
                               title="Delete shirt"
                             >
                               <Trash2 className="w-3.5 h-3.5" />
-                            </button>
+                            </Button>
                           </div>
                         </td>
 
@@ -867,18 +870,18 @@ export const AdminClient: React.FC = () => {
         {/* TAB 3: ORDERS MANAGEMENT */}
         {activeTab === "orders" && (
           <div className="space-y-6 animate-fade-in">
-            <div className="flex items-center justify-between p-4 bg-neutral-900/50 border border-neutral-800 rounded text-xs font-mono">
-              <span className="uppercase text-neutral-400">
-                Atelier Client Commissions: <strong className="text-white">{ordersList.length}</strong>
+            <div className="flex flex-wrap gap-3 items-center justify-between p-4 bg-muted/50 border border-border rounded text-xs font-mono">
+              <span className="uppercase text-muted-foreground">
+                Atelier Client Commissions: <strong className="text-foreground">{ordersList.length}</strong>
               </span>
-              <span className="text-neutral-500">
+              <span className="text-muted-foreground">
                 Update status from 'Processing' to 'Shipped' or 'Delivered'
               </span>
             </div>
 
-            <div className="overflow-x-auto border border-neutral-800 rounded bg-neutral-900/30">
+            <div className="overflow-x-auto border border-border rounded bg-muted/30">
               <table className="w-full text-xs text-left">
-                <thead className="bg-neutral-900/80 text-[10px] uppercase font-mono tracking-widest text-neutral-400 border-b border-neutral-800">
+                <thead className="bg-muted/80 text-[10px] uppercase font-mono tracking-widest text-muted-foreground border-b border-border">
                   <tr>
                     <th className="py-3 px-4">Order Ref</th>
                     <th className="py-3 px-4">Client Contact</th>
@@ -888,37 +891,37 @@ export const AdminClient: React.FC = () => {
                     <th className="py-3 px-4">Destination</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-neutral-900">
+                <tbody className="divide-y divide-border">
                   {ordersList.map((order) => (
-                    <tr key={order.id} className="hover:bg-neutral-900/60 transition-colors">
-                      <td className="py-3 px-4 font-mono font-bold text-amber-300">
+                    <tr key={order.id} className="hover:bg-muted/60 transition-colors">
+                      <td className="py-3 px-4 font-mono font-bold text-primary">
                         {order.orderNumber}
                       </td>
 
                       <td className="py-3 px-4">
-                        <div className="font-semibold text-white">{order.customerName}</div>
-                        <div className="text-[11px] font-mono text-neutral-400">{order.customerEmail}</div>
+                        <div className="font-semibold text-foreground">{order.customerName}</div>
+                        <div className="text-[11px] font-mono text-muted-foreground">{order.customerEmail}</div>
                       </td>
 
                       <td className="py-3 px-4 text-xs font-mono">
                         {order.items && order.items.length > 0 ? (
                           <div className="space-y-1">
                             {order.items.map((it) => (
-                              <div key={it.id} className="text-neutral-300">
+                              <div key={it.id} className="text-foreground">
                                 • {it.productName} ({it.size}) × {it.quantity}
                               </div>
                             ))}
                           </div>
                         ) : (
-                          <span className="text-neutral-500">View items</span>
+                          <span className="text-muted-foreground">View items</span>
                         )}
                       </td>
 
                       <td className="py-3 px-4 font-mono">
-                        <div className="text-white font-semibold">
+                        <div className="text-foreground font-semibold">
                           ₹{parseFloat(order.total).toFixed(2)}
                         </div>
-                        <div className="text-[10px] text-neutral-500">
+                        <div className="text-[10px] text-muted-foreground">
                           {order.shippingMethod}
                         </div>
                       </td>
@@ -929,25 +932,25 @@ export const AdminClient: React.FC = () => {
                           onChange={(e) => handleUpdateOrderStatus(order.id, e.target.value)}
                           className={`px-2.5 py-1 rounded text-xs font-mono uppercase font-semibold border cursor-pointer focus:outline-none ${
                             order.status === "Delivered"
-                              ? "bg-emerald-950 text-emerald-400 border-emerald-800"
+                              ? "bg-success-soft text-success border-success"
                               : order.status === "Shipped"
-                              ? "bg-blue-950 text-blue-400 border-blue-800"
+                              ? "bg-secondary text-primary border-primary"
                               : order.status === "Processing"
-                              ? "bg-amber-950 text-amber-300 border-amber-800"
-                              : "bg-neutral-900 text-neutral-300 border-neutral-700"
+                              ? "bg-warning-soft text-primary border-primary"
+                              : "bg-muted text-foreground border-border"
                           }`}
                         >
-                          <option value="Pending" className="bg-neutral-900 text-white">Pending</option>
-                          <option value="Processing" className="bg-neutral-900 text-white">Processing</option>
-                          <option value="Shipped" className="bg-neutral-900 text-white">Shipped</option>
-                          <option value="Delivered" className="bg-neutral-900 text-white">Delivered</option>
-                          <option value="Cancelled" className="bg-neutral-900 text-white">Cancelled</option>
+                          <option value="Pending" className="bg-muted text-foreground">Pending</option>
+                          <option value="Processing" className="bg-muted text-foreground">Processing</option>
+                          <option value="Shipped" className="bg-muted text-foreground">Shipped</option>
+                          <option value="Delivered" className="bg-muted text-foreground">Delivered</option>
+                          <option value="Cancelled" className="bg-muted text-foreground">Cancelled</option>
                         </select>
                       </td>
 
-                      <td className="py-3 px-4 font-mono text-[11px] text-neutral-400">
+                      <td className="py-3 px-4 font-mono text-[11px] text-muted-foreground">
                         <div>{order.shippingCity}, {order.shippingCountry}</div>
-                        <div className="text-neutral-500">{order.shippingPostalCode}</div>
+                        <div className="text-muted-foreground">{order.shippingPostalCode}</div>
                       </td>
                     </tr>
                   ))}
@@ -960,18 +963,18 @@ export const AdminClient: React.FC = () => {
         {/* TAB 4: REVIEWS MANAGEMENT */}
         {activeTab === "reviews" && (
           <div className="space-y-6 animate-fade-in">
-            <div className="flex items-center justify-between p-4 bg-neutral-900/50 border border-neutral-800 rounded text-xs font-mono">
-              <span className="uppercase text-neutral-400">
-                Client Reviews Archive: <strong className="text-white">{reviewsList.length}</strong>
+            <div className="flex flex-wrap gap-3 items-center justify-between p-4 bg-muted/50 border border-border rounded text-xs font-mono">
+              <span className="uppercase text-muted-foreground">
+                Client Reviews Archive: <strong className="text-foreground">{reviewsList.length}</strong>
               </span>
-              <span className="text-neutral-500">
+              <span className="text-muted-foreground">
                 Verified buyer reviews and fit feedback notes
               </span>
             </div>
 
-            <div className="overflow-x-auto border border-neutral-800 rounded bg-neutral-900/30">
+            <div className="overflow-x-auto border border-border rounded bg-muted/30">
               <table className="w-full text-xs text-left">
-                <thead className="bg-neutral-900/80 text-[10px] uppercase font-mono tracking-widest text-neutral-400 border-b border-neutral-800">
+                <thead className="bg-muted/80 text-[10px] uppercase font-mono tracking-widest text-muted-foreground border-b border-border">
                   <tr>
                     <th className="py-3 px-4">Shirt</th>
                     <th className="py-3 px-4">Reviewer</th>
@@ -981,44 +984,44 @@ export const AdminClient: React.FC = () => {
                     <th className="py-3 px-4 text-right">Action</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-neutral-900">
+                <tbody className="divide-y divide-border">
                   {reviewsList.map((rev) => (
-                    <tr key={rev.id} className="hover:bg-neutral-900/60">
-                      <td className="py-3 px-4 font-medium text-white max-w-xs">
+                    <tr key={rev.id} className="hover:bg-muted/60">
+                      <td className="py-3 px-4 font-medium text-foreground max-w-xs">
                         {rev.productName || `Product #${rev.productId}`}
                       </td>
 
-                      <td className="py-3 px-4 font-mono text-neutral-300">
+                      <td className="py-3 px-4 font-mono text-foreground">
                         {rev.authorName}
                       </td>
 
                       <td className="py-3 px-4">
-                        <div className="flex text-amber-300">
+                        <div className="flex text-primary">
                           {[...Array(rev.rating)].map((_, i) => (
-                            <Star key={i} className="w-3 h-3 fill-amber-300" />
+                            <Star key={i} className="w-3 h-3 fill-primary" />
                           ))}
                         </div>
                       </td>
 
                       <td className="py-3 px-4 max-w-sm">
-                        <div className="font-semibold text-neutral-200">"{rev.title}"</div>
-                        <p className="text-[11px] text-neutral-400 line-clamp-2 mt-0.5">
+                        <div className="font-semibold text-foreground">"{rev.title}"</div>
+                        <p className="text-[11px] text-muted-foreground line-clamp-2 mt-0.5">
                           {rev.comment}
                         </p>
                       </td>
 
-                      <td className="py-3 px-4 font-mono text-[11px] text-amber-200">
+                      <td className="py-3 px-4 font-mono text-[11px] text-primary">
                         {rev.fitFeedback || "True to size"}
                       </td>
 
                       <td className="py-3 px-4 text-right">
-                        <button
+                        <Button variant="atelier"
                           onClick={() => handleDeleteReview(rev.id)}
-                          className="p-1.5 text-neutral-400 hover:text-red-400 bg-neutral-800 hover:bg-red-950/60 rounded transition-colors"
+                          className="p-1.5 text-muted-foreground hover:text-destructive bg-secondary hover:bg-danger-soft/60 rounded transition-colors"
                           title="Delete review"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
-                        </button>
+                        </Button>
                       </td>
                     </tr>
                   ))}
@@ -1034,31 +1037,31 @@ export const AdminClient: React.FC = () => {
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
           <div
-            className="fixed inset-0 bg-black/85 backdrop-blur-sm"
+            className="fixed inset-0 bg-overlay/85 backdrop-blur-sm"
             onClick={() => setIsModalOpen(false)}
           />
 
-          <div className="relative w-full max-w-3xl bg-neutral-950 border border-neutral-800 p-6 sm:p-8 rounded z-10 shadow-2xl animate-fade-in my-8 max-h-[90vh] overflow-y-auto">
+          <div className="relative w-full max-w-3xl bg-background border border-border p-6 sm:p-8 rounded z-10 shadow-2xl animate-fade-in my-8 max-h-[90vh] overflow-y-auto">
             
-            <div className="flex items-center justify-between pb-4 border-b border-neutral-800 mb-6">
+            <div className="flex items-center justify-between pb-4 border-b border-border mb-6">
               <div>
-                <h3 className="text-base font-editorial uppercase tracking-wider text-white">
+                <h3 className="text-base font-editorial uppercase tracking-wider text-foreground">
                   {editingProduct ? `Edit: ${editingProduct.name}` : "Commission New Shirt into Catalog"}
                 </h3>
-                <p className="text-xs text-neutral-400 mt-0.5">
+                <p className="text-xs text-muted-foreground mt-0.5">
                   Set prices, adjust size inventories, and define sartorial specs.
                 </p>
               </div>
-              <button
+              <Button variant="atelier"
                 onClick={() => setIsModalOpen(false)}
-                className="p-1 text-neutral-400 hover:text-white"
+                className="p-1 text-muted-foreground hover:text-foreground"
               >
                 <X className="w-5 h-5" />
-              </button>
+              </Button>
             </div>
 
             {formError && (
-              <div className="mb-4 p-3 bg-red-950/80 border border-red-800 rounded text-red-300 text-xs font-mono">
+              <div className="mb-4 p-3 bg-danger-soft/80 border border-destructive rounded text-destructive text-xs font-mono">
                 {formError}
               </div>
             )}
@@ -1068,7 +1071,7 @@ export const AdminClient: React.FC = () => {
               {/* Row 1: Name & Subtitle */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[11px] uppercase tracking-wider text-neutral-400 mb-1">
+                  <label className="block text-[11px] uppercase tracking-wider text-muted-foreground mb-1">
                     Shirt Name *
                   </label>
                   <input
@@ -1077,12 +1080,12 @@ export const AdminClient: React.FC = () => {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="e.g. The Grandview Oxford Shirt"
-                    className="w-full bg-neutral-900 border border-neutral-800 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-300"
+                    className="w-full bg-muted border border-border rounded px-3 py-2 text-xs text-foreground focus:outline-none focus:border-primary"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[11px] uppercase tracking-wider text-neutral-400 mb-1">
+                  <label className="block text-[11px] uppercase tracking-wider text-muted-foreground mb-1">
                     Fabric Subtitle
                   </label>
                   <input
@@ -1090,7 +1093,7 @@ export const AdminClient: React.FC = () => {
                     value={formData.subtitle}
                     onChange={(e) => setFormData({ ...formData, subtitle: e.target.value })}
                     placeholder="e.g. 120/2 double-twisted Albini cotton"
-                    className="w-full bg-neutral-900 border border-neutral-800 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-300"
+                    className="w-full bg-muted border border-border rounded px-3 py-2 text-xs text-foreground focus:outline-none focus:border-primary"
                   />
                 </div>
               </div>
@@ -1098,13 +1101,13 @@ export const AdminClient: React.FC = () => {
               {/* Row 2: Category, Fit, Material */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-[11px] uppercase tracking-wider text-neutral-400 mb-1">
+                  <label className="block text-[11px] uppercase tracking-wider text-muted-foreground mb-1">
                     Typology / Category
                   </label>
                   <select
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    className="w-full bg-neutral-900 border border-neutral-800 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-300"
+                    className="w-full bg-muted border border-border rounded px-3 py-2 text-xs text-foreground focus:outline-none focus:border-primary"
                   >
                     <option value="Oxford & Formal">Oxford & Formal</option>
                     <option value="Linen & Resort">Linen & Resort</option>
@@ -1115,13 +1118,13 @@ export const AdminClient: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-[11px] uppercase tracking-wider text-neutral-400 mb-1">
+                  <label className="block text-[11px] uppercase tracking-wider text-muted-foreground mb-1">
                     Fit Silhouette
                   </label>
                   <select
                     value={formData.fit}
                     onChange={(e) => setFormData({ ...formData, fit: e.target.value })}
-                    className="w-full bg-neutral-900 border border-neutral-800 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-300"
+                    className="w-full bg-muted border border-border rounded px-3 py-2 text-xs text-foreground focus:outline-none focus:border-primary"
                   >
                     <option value="Tailored Fit">Tailored Fit</option>
                     <option value="Relaxed Fit">Relaxed Fit</option>
@@ -1131,7 +1134,7 @@ export const AdminClient: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-[11px] uppercase tracking-wider text-neutral-400 mb-1">
+                  <label className="block text-[11px] uppercase tracking-wider text-muted-foreground mb-1">
                     Material Composition
                   </label>
                   <input
@@ -1139,7 +1142,7 @@ export const AdminClient: React.FC = () => {
                     value={formData.material}
                     onChange={(e) => setFormData({ ...formData, material: e.target.value })}
                     placeholder="100% Giza 87 Egyptian Cotton"
-                    className="w-full bg-neutral-900 border border-neutral-800 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-300"
+                    className="w-full bg-muted border border-border rounded px-3 py-2 text-xs text-foreground focus:outline-none focus:border-primary"
                   />
                 </div>
               </div>
@@ -1147,7 +1150,7 @@ export const AdminClient: React.FC = () => {
               {/* Row 3: Price & Compare-At Price */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[11px] uppercase tracking-wider text-neutral-400 mb-1">
+                  <label className="block text-[11px] uppercase tracking-wider text-muted-foreground mb-1">
                     Selling Price (₹) *
                   </label>
                   <input
@@ -1156,12 +1159,12 @@ export const AdminClient: React.FC = () => {
                     required
                     value={formData.price}
                     onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                    className="w-full bg-neutral-900 border border-neutral-800 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-300 font-mono"
+                    className="w-full bg-muted border border-border rounded px-3 py-2 text-xs text-foreground focus:outline-none focus:border-primary font-mono"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[11px] uppercase tracking-wider text-neutral-400 mb-1">
+                  <label className="block text-[11px] uppercase tracking-wider text-muted-foreground mb-1">
                     Compare-At Price (₹, strike-through)
                   </label>
                   <input
@@ -1170,42 +1173,42 @@ export const AdminClient: React.FC = () => {
                     value={formData.compareAtPrice}
                     onChange={(e) => setFormData({ ...formData, compareAtPrice: e.target.value })}
                     placeholder="Optional compare price"
-                    className="w-full bg-neutral-900 border border-neutral-800 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-300 font-mono"
+                    className="w-full bg-muted border border-border rounded px-3 py-2 text-xs text-foreground focus:outline-none focus:border-primary font-mono"
                   />
                 </div>
               </div>
 
               {/* Row 4: SIZES & STOCK MATRIX (Crucial Requirement!) */}
-              <div className="p-4 bg-neutral-900/60 border border-neutral-800 rounded space-y-3">
-                <div className="flex items-center justify-between border-b border-neutral-800 pb-2">
-                  <h4 className="text-xs font-semibold uppercase tracking-widest text-amber-200">
+              <div className="p-4 bg-muted/60 border border-border rounded space-y-3">
+                <div className="flex items-center justify-between border-b border-border pb-2">
+                  <h4 className="text-xs font-semibold uppercase tracking-widest text-primary">
                     Sizes & Inventory Allocation
                   </h4>
-                  <button
+                  <Button variant="atelier"
                     type="button"
                     onClick={handleAddSizeRow}
-                    className="text-[10px] font-mono text-amber-300 hover:underline uppercase flex items-center gap-1"
+                    className="text-[10px] font-mono text-primary hover:underline uppercase flex items-center gap-1"
                   >
                     <Plus className="w-3 h-3" /> Add Size Option
-                  </button>
+                  </Button>
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
                   {formData.sizes.map((s, idx) => (
-                    <div key={idx} className="p-2 bg-neutral-950 border border-neutral-800 rounded">
+                    <div key={idx} className="p-2 bg-background border border-border rounded">
                       <div className="flex justify-between items-center mb-1">
-                        <span className="font-mono text-xs font-bold text-white">{s.size}</span>
+                        <span className="font-mono text-xs font-bold text-foreground">{s.size}</span>
                         {formData.sizes.length > 1 && (
-                          <button
+                          <Button variant="atelier"
                             type="button"
                             onClick={() => handleRemoveSizeRow(idx)}
-                            className="text-neutral-500 hover:text-red-400"
+                            className="text-muted-foreground hover:text-destructive"
                           >
                             <X className="w-3 h-3" />
-                          </button>
+                          </Button>
                         )}
                       </div>
-                      <label className="block text-[9px] uppercase tracking-wider text-neutral-500 mb-0.5">
+                      <label className="block text-[9px] uppercase tracking-wider text-muted-foreground mb-0.5">
                         Units in Stock
                       </label>
                       <input
@@ -1213,7 +1216,7 @@ export const AdminClient: React.FC = () => {
                         min="0"
                         value={s.stock}
                         onChange={(e) => handleStockChange(idx, parseInt(e.target.value) || 0)}
-                        className="w-full bg-neutral-900 border border-neutral-800 rounded px-2 py-1 text-xs text-white font-mono text-center"
+                        className="w-full bg-muted border border-border rounded px-2 py-1 text-xs text-foreground font-mono text-center"
                       />
                     </div>
                   ))}
@@ -1223,7 +1226,7 @@ export const AdminClient: React.FC = () => {
               {/* Row 5: Description & Tailoring bullets */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[11px] uppercase tracking-wider text-neutral-400 mb-1">
+                  <label className="block text-[11px] uppercase tracking-wider text-muted-foreground mb-1">
                     Editorial Description *
                   </label>
                   <textarea
@@ -1231,12 +1234,12 @@ export const AdminClient: React.FC = () => {
                     required
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                    className="w-full bg-neutral-900 border border-neutral-800 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-300 leading-relaxed"
+                    className="w-full bg-muted border border-border rounded px-3 py-2 text-xs text-foreground focus:outline-none focus:border-primary leading-relaxed"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[11px] uppercase tracking-wider text-neutral-400 mb-1">
+                  <label className="block text-[11px] uppercase tracking-wider text-muted-foreground mb-1">
                     Tailoring Details (One per line)
                   </label>
                   <textarea
@@ -1244,7 +1247,7 @@ export const AdminClient: React.FC = () => {
                     value={formData.details}
                     onChange={(e) => setFormData({ ...formData, details: e.target.value })}
                     placeholder="Albini Italian mill fabric&#10;Mother-of-pearl Troca buttons&#10;Split back yoke"
-                    className="w-full bg-neutral-900 border border-neutral-800 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-300 leading-relaxed font-mono"
+                    className="w-full bg-muted border border-border rounded px-3 py-2 text-xs text-foreground focus:outline-none focus:border-primary leading-relaxed font-mono"
                   />
                 </div>
               </div>
@@ -1252,7 +1255,7 @@ export const AdminClient: React.FC = () => {
               {/* Row 6: Images & Color Variants */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[11px] uppercase tracking-wider text-neutral-400 mb-1">
+                  <label className="block text-[11px] uppercase tracking-wider text-muted-foreground mb-1">
                     Image URLs (One per line)
                   </label>
                   <textarea
@@ -1260,12 +1263,12 @@ export const AdminClient: React.FC = () => {
                     value={formData.images}
                     onChange={(e) => setFormData({ ...formData, images: e.target.value })}
                     placeholder="/products/classic-white-oxford.jpg&#10;https://..."
-                    className="w-full bg-neutral-900 border border-neutral-800 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-300 font-mono text-[11px]"
+                    className="w-full bg-muted border border-border rounded px-3 py-2 text-xs text-foreground focus:outline-none focus:border-primary font-mono text-[11px]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[11px] uppercase tracking-wider text-neutral-400 mb-1">
+                  <label className="block text-[11px] uppercase tracking-wider text-muted-foreground mb-1">
                     Color Swatches (Format: Name:#HEX, Name:#HEX)
                   </label>
                   <input
@@ -1273,24 +1276,24 @@ export const AdminClient: React.FC = () => {
                     value={formData.colors}
                     onChange={(e) => setFormData({ ...formData, colors: e.target.value })}
                     placeholder="Crisp White:#FFFFFF, French Blue:#4682B4"
-                    className="w-full bg-neutral-900 border border-neutral-800 rounded px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-300 font-mono text-[11px]"
+                    className="w-full bg-muted border border-border rounded px-3 py-2 text-xs text-foreground focus:outline-none focus:border-primary font-mono text-[11px]"
                   />
-                  <p className="text-[10px] text-neutral-500 mt-1">
+                  <p className="text-[10px] text-muted-foreground mt-1">
                     e.g. Pure White:#FFFFFF, Sky Blue:#C5D9E8, Olive:#556B2F
                   </p>
                 </div>
               </div>
 
               {/* Row 7: Flags (Featured, Bestseller, New, In Stock) */}
-              <div className="flex flex-wrap items-center gap-6 pt-2 border-t border-neutral-900">
+              <div className="flex flex-wrap items-center gap-6 pt-2 border-t border-border">
                 <label className="flex items-center gap-2 cursor-pointer text-xs">
                   <input
                     type="checkbox"
                     checked={formData.isFeatured}
                     onChange={(e) => setFormData({ ...formData, isFeatured: e.target.checked })}
-                    className="w-4 h-4 rounded border-neutral-700 bg-neutral-900 text-amber-300"
+                    className="w-4 h-4 rounded border-border bg-muted text-primary"
                   />
-                  <span className="uppercase text-neutral-300">Featured Atelier Piece</span>
+                  <span className="uppercase text-foreground">Featured Atelier Piece</span>
                 </label>
 
                 <label className="flex items-center gap-2 cursor-pointer text-xs">
@@ -1298,9 +1301,9 @@ export const AdminClient: React.FC = () => {
                     type="checkbox"
                     checked={formData.isNew}
                     onChange={(e) => setFormData({ ...formData, isNew: e.target.checked })}
-                    className="w-4 h-4 rounded border-neutral-700 bg-neutral-900 text-amber-300"
+                    className="w-4 h-4 rounded border-border bg-muted text-primary"
                   />
-                  <span className="uppercase text-neutral-300">New 2026 Drop</span>
+                  <span className="uppercase text-foreground">New 2026 Drop</span>
                 </label>
 
                 <label className="flex items-center gap-2 cursor-pointer text-xs">
@@ -1308,9 +1311,9 @@ export const AdminClient: React.FC = () => {
                     type="checkbox"
                     checked={formData.isBestseller}
                     onChange={(e) => setFormData({ ...formData, isBestseller: e.target.checked })}
-                    className="w-4 h-4 rounded border-neutral-700 bg-neutral-900 text-amber-300"
+                    className="w-4 h-4 rounded border-border bg-muted text-primary"
                   />
-                  <span className="uppercase text-neutral-300">Bestseller Badge</span>
+                  <span className="uppercase text-foreground">Bestseller Badge</span>
                 </label>
 
                 <label className="flex items-center gap-2 cursor-pointer text-xs">
@@ -1318,28 +1321,28 @@ export const AdminClient: React.FC = () => {
                     type="checkbox"
                     checked={formData.inStock}
                     onChange={(e) => setFormData({ ...formData, inStock: e.target.checked })}
-                    className="w-4 h-4 rounded border-neutral-700 bg-neutral-900 text-amber-300"
+                    className="w-4 h-4 rounded border-border bg-muted text-primary"
                   />
-                  <span className="uppercase text-emerald-400 font-medium">In-Stock Status</span>
+                  <span className="uppercase text-success font-medium">In-Stock Status</span>
                 </label>
               </div>
 
               {/* Submit / Cancel Buttons */}
-              <div className="flex justify-end gap-3 pt-4 border-t border-neutral-800">
-                <button
+              <div className="flex justify-end gap-3 pt-4 border-t border-border">
+                <Button variant="atelier"
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-5 py-2.5 bg-neutral-900 text-neutral-400 hover:text-white text-xs uppercase tracking-wider rounded"
+                  className="px-5 py-2.5 bg-muted text-muted-foreground hover:text-foreground text-xs uppercase tracking-wider rounded"
                 >
                   Cancel
-                </button>
-                <button
+                </Button>
+                <Button variant="atelier"
                   type="submit"
                   disabled={formSaving}
-                  className="px-8 py-2.5 bg-white text-black font-semibold text-xs uppercase tracking-widest hover:bg-neutral-200 transition-colors rounded shadow-lg"
+                  className="px-8 py-2.5 bg-primary text-primary-foreground font-semibold text-xs uppercase tracking-widest hover:bg-secondary transition-colors rounded shadow-lg"
                 >
                   {formSaving ? "Saving..." : editingProduct ? "Save Changes" : "Create Shirt"}
-                </button>
+                </Button>
               </div>
 
             </form>

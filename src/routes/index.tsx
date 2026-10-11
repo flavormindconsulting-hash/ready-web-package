@@ -5,10 +5,10 @@ import { getHomeData } from "@/lib/store.functions";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "HENRO | Haute Shirting for Men" },
-      { name: "description", content: "Bespoke Italian cotton oxfords, Normandy washed linen resort shirts, and heavyweight overshirts crafted for the modern man." },
-      { property: "og:title", content: "HENRO | Haute Shirting for Men" },
-      { property: "og:description", content: "Bespoke Italian cotton oxfords, Normandy linen resort shirts and heavyweight overshirts." },
+      { title: "HENRO | Signature Shirts & Everyday Essentials" },
+      { name: "description", content: "Discover HENRO shirts, from crisp white classics to relaxed olive styles and everyday layers. A signature of your own." },
+      { property: "og:title", content: "HENRO | Signature Shirts & Everyday Essentials" },
+      { property: "og:description", content: "Discover signature HENRO shirts and considered everyday layers." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

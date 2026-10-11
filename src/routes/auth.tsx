@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
@@ -47,28 +48,28 @@ function AuthPage() {
     }
   }
 
-  const input = "w-full bg-neutral-900 border border-neutral-800 rounded px-4 py-3 text-sm text-white placeholder:text-neutral-600 focus:outline-none focus:border-amber-300/60";
+  const input = "w-full bg-muted border border-border rounded px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/60";
   return (
     <div className="min-h-[75vh] flex items-center justify-center px-4 py-16">
       <div className="w-full max-w-sm space-y-8">
         <div className="text-center space-y-2">
-          <p className="text-[10px] font-mono tracking-[0.3em] text-amber-300 uppercase">Atelier Command</p>
-          <h1 className="text-4xl font-editorial text-white">{mode === "signin" ? "Owner Sign In" : "Create Owner Account"}</h1>
-          <p className="text-sm text-neutral-400">Manage the HENRO catalog, orders and reviews.</p>
+          <p className="text-[10px] font-mono tracking-[0.3em] text-primary uppercase">Atelier Command</p>
+          <h1 className="text-4xl font-editorial text-foreground">{mode === "signin" ? "Owner Sign In" : "Create Owner Account"}</h1>
+          <p className="text-sm text-muted-foreground">Manage the HENRO catalog, orders and reviews.</p>
         </div>
         <form onSubmit={submit} className="space-y-4">
           <input className={input} type="email" required autoComplete="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
           <input className={input} type="password" required minLength={8} autoComplete={mode === "signin" ? "current-password" : "new-password"} placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-          {msg && <p className={`text-xs ${msg.ok ? "text-emerald-400" : "text-red-400"}`}>{msg.text}</p>}
-          <button disabled={busy} className="w-full bg-white text-black py-3 text-xs font-bold tracking-[0.25em] uppercase hover:bg-neutral-200 transition-colors disabled:opacity-50">
+          {msg && <p className={`text-xs ${msg.ok ? "text-success" : "text-destructive"}`}>{msg.text}</p>}
+          <Button variant="atelier" disabled={busy} className="w-full bg-primary text-primary-foreground py-3 text-xs font-bold tracking-[0.25em] uppercase hover:bg-secondary transition-colors disabled:opacity-50">
             {busy ? "Please wait..." : mode === "signin" ? "Sign In" : "Create Account"}
-          </button>
+          </Button>
         </form>
-        <p className="text-center text-xs text-neutral-500">
+        <p className="text-center text-xs text-muted-foreground">
           {mode === "signin" ? "First time here? " : "Already have an account? "}
-          <button type="button" onClick={() => { setMode(mode === "signin" ? "signup" : "signin"); setMsg(null); }} className="text-amber-300 hover:text-amber-200">
+          <Button variant="atelier" type="button" onClick={() => { setMode(mode === "signin" ? "signup" : "signin"); setMsg(null); }} className="text-primary hover:text-primary">
             {mode === "signin" ? "Create the owner account" : "Sign in"}
-          </button>
+          </Button>
         </p>
       </div>
     </div>

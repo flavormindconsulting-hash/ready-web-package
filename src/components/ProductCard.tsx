@@ -1,3 +1,5 @@
+import { productImages } from "@/lib/brand-media";
+import { Button } from "@/components/ui/button";
 
 import React, { useState } from "react";
 import Link from "@/compat/next-link";
@@ -17,12 +19,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }
   const [addedAnimation, setAddedAnimation] = useState(false);
 
   // Parse images, sizes, colors
-  let images: string[] = [];
-  try {
-    images = typeof product.images === "string" ? JSON.parse(product.images) : product.images;
-  } catch {
-    images = [product.images];
-  }
+  const images = productImages(product);
 
   let sizes: ProductSize[] = [];
   try {
@@ -67,12 +64,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }
 
   return (
     <div
-      className="group relative flex flex-col bg-neutral-950 transition-all duration-300"
+      className="group relative flex flex-col bg-background transition-all duration-300"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Image container */}
-      <div className="relative aspect-[3/4] w-full overflow-hidden bg-neutral-900 border border-neutral-800/60">
+      <div className="relative aspect-[3/4] w-full overflow-hidden bg-muted border border-border/60">
         <Link href={`/products/${product.slug}`} className="block w-full h-full">
           <img
             src={isHovered && secondaryImage ? secondaryImage : primaryImage}
@@ -85,17 +82,17 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }
         {/* Badges */}
         <div className="absolute top-3 left-3 flex flex-col gap-1.5 z-10 pointer-events-none">
           {product.isBestseller && (
-            <span className="bg-neutral-900/90 text-amber-200 text-[9px] font-semibold tracking-widest uppercase px-2 py-0.5 border border-amber-800/40 backdrop-blur-sm">
+            <span className="bg-muted/90 text-primary text-[9px] font-semibold tracking-widest uppercase px-2 py-0.5 border border-primary/40 backdrop-blur-sm">
               BESTSELLER
             </span>
           )}
           {product.isNew && (
-            <span className="bg-white/90 text-black text-[9px] font-semibold tracking-widest uppercase px-2 py-0.5 backdrop-blur-sm">
+            <span className="bg-primary/90 text-primary-foreground text-[9px] font-semibold tracking-widest uppercase px-2 py-0.5 backdrop-blur-sm">
               NEW DROP
             </span>
           )}
           {product.compareAtPrice && parseFloat(product.compareAtPrice) > parseFloat(product.price) && (
-            <span className="bg-neutral-950/90 text-neutral-300 text-[9px] font-mono tracking-wider uppercase px-2 py-0.5 border border-neutral-800">
+            <span className="bg-background/90 text-foreground text-[9px] font-mono tracking-wider uppercase px-2 py-0.5 border border-border">
               SALE
             </span>
           )}
@@ -103,39 +100,39 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }
 
         {/* Quick View Button */}
         {onQuickView && (
-          <button
+          <Button variant="atelier"
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
               onQuickView(product);
             }}
             aria-label="Quick preview"
-            className="absolute top-3 right-3 p-2 bg-neutral-900/80 hover:bg-neutral-900 text-neutral-300 hover:text-white rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 backdrop-blur-sm z-10 border border-neutral-700/60 shadow-lg"
+            className="absolute top-3 right-3 p-2 bg-muted/80 hover:bg-muted text-foreground hover:text-foreground rounded-full opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-300 backdrop-blur-sm z-10 border border-border/60 shadow-lg"
           >
             <Eye className="w-4 h-4" />
-          </button>
+          </Button>
         )}
 
         {/* Quick Add Size Bar (appears on hover) */}
-        <div className="absolute bottom-0 inset-x-0 p-3 bg-gradient-to-t from-neutral-950 via-neutral-950/90 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-10">
-          <p className="text-[10px] font-medium tracking-widest uppercase text-neutral-400 mb-1.5 text-center">
+        <div className="absolute bottom-0 inset-x-0 p-3 bg-background/95 border-t border-border translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-10">
+          <p className="text-[10px] font-medium tracking-widest uppercase text-muted-foreground mb-1.5 text-center">
             Quick Add To Bag
           </p>
           <div className="flex items-center justify-center gap-1.5">
             {sizes.map((s) => (
-              <button
+              <Button variant="atelier"
                 key={s.size}
                 disabled={s.stock === 0}
                 onClick={(e) => handleQuickAdd(s.size, e)}
                 className={`min-w-8 h-8 px-1.5 text-[11px] font-mono font-medium border transition-colors flex items-center justify-center ${
                   s.stock === 0
-                    ? "border-neutral-800 text-neutral-600 line-through cursor-not-allowed bg-neutral-900/40"
-                    : "border-neutral-700 bg-neutral-900/90 text-neutral-200 hover:border-white hover:bg-white hover:text-black"
+                    ? "border-border text-muted-foreground line-through cursor-not-allowed bg-muted/40"
+                    : "border-border bg-muted/90 text-foreground hover:border-primary hover:bg-primary hover:text-primary-foreground"
                 }`}
                 title={s.stock === 0 ? "Out of stock" : `Add size ${s.size}`}
               >
                 {s.size}
-              </button>
+              </Button>
             ))}
           </div>
         </div>
@@ -149,12 +146,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }
             {colors.map((c, i) => (
               <span
                 key={i}
-                className="w-2.5 h-2.5 rounded-full border border-neutral-700 shadow-sm"
+                className="w-2.5 h-2.5 rounded-full border border-border shadow-sm"
                 style={{ backgroundColor: c.hex }}
                 title={c.name}
               />
             ))}
-            <span className="text-[10px] text-neutral-500 uppercase tracking-widest ml-1 font-mono">
+            <span className="text-[10px] text-muted-foreground uppercase tracking-widest ml-1 font-mono">
               {colors.length} {colors.length === 1 ? "shade" : "shades"}
             </span>
           </div>
@@ -163,29 +160,29 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }
         {/* Title */}
         <Link
           href={`/products/${product.slug}`}
-          className="text-xs font-medium tracking-wide uppercase text-neutral-200 hover:text-amber-200 transition-colors line-clamp-1"
+          className="text-sm font-semibold tracking-normal text-foreground hover:text-primary transition-colors line-clamp-2"
         >
           {product.name}
         </Link>
 
         {/* Subtitle / Fabric origin */}
         {product.subtitle && (
-          <p className="text-[11px] text-neutral-400 tracking-wide line-clamp-1 font-serif italic">
+          <p className="text-[11px] text-muted-foreground tracking-wide line-clamp-2 font-sans">
             {product.subtitle}
           </p>
         )}
 
         {/* Price */}
         <div className="flex items-center gap-2 pt-0.5">
-          <span className="text-xs font-mono font-semibold text-white">
+          <span className="text-xs font-mono font-semibold text-foreground">
             ₹{parseFloat(product.price).toFixed(2)}
           </span>
           {product.compareAtPrice && parseFloat(product.compareAtPrice) > parseFloat(product.price) && (
-            <span className="text-xs font-mono text-neutral-500 line-through">
+            <span className="text-xs font-mono text-muted-foreground line-through">
               ₹{parseFloat(product.compareAtPrice).toFixed(2)}
             </span>
           )}
-          <span className="text-[10px] text-neutral-400 font-sans tracking-widest uppercase ml-auto">
+          <span className="text-[10px] text-muted-foreground font-sans tracking-widest uppercase ml-auto">
             {product.fit}
           </span>
         </div>
