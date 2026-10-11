@@ -160,7 +160,7 @@ export default function OrderSuccessPage({ order, items }: { order: Order; items
               </div>
               <div className="flex justify-between text-white font-semibold text-sm pt-2 border-t border-neutral-800">
                 <span className="uppercase tracking-widest font-sans text-xs">Total Charged</span>
-                <span className="font-mono text-amber-200">${parseFloat(order.total).toFixed(2)}</span>
+                <span className="font-mono text-amber-200">₹{parseFloat(order.total).toFixed(2)}</span>
               </div>
             </div>
           </div>
