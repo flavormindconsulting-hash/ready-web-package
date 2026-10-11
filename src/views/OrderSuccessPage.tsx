@@ -126,7 +126,7 @@ export default function OrderSuccessPage({ order, items }: { order: Order; items
                     <div className="flex justify-between items-center text-xs font-mono">
                       <span className="text-neutral-500">Qty: {item.quantity}</span>
                       <span className="text-white font-semibold">
-                        ${(parseFloat(item.price) * item.quantity).toFixed(2)}
+                        ₹{(parseFloat(item.price) * item.quantity).toFixed(2)}
                       </span>
                     </div>
                   </div>
@@ -138,12 +138,12 @@ export default function OrderSuccessPage({ order, items }: { order: Order; items
             <div className="space-y-1.5 text-xs font-mono text-neutral-400 pt-4 border-t border-neutral-800">
               <div className="flex justify-between">
                 <span>Subtotal</span>
-                <span>${parseFloat(order.subtotal).toFixed(2)}</span>
+                <span>₹{parseFloat(order.subtotal).toFixed(2)}</span>
               </div>
               {parseFloat(order.discount) > 0 && (
                 <div className="flex justify-between text-amber-300">
                   <span>Promotional Voucher</span>
-                  <span>-${parseFloat(order.discount).toFixed(2)}</span>
+                  <span>-₹{parseFloat(order.discount).toFixed(2)}</span>
                 </div>
               )}
               <div className="flex justify-between">
@@ -151,12 +151,12 @@ export default function OrderSuccessPage({ order, items }: { order: Order; items
                 <span>
                   {parseFloat(order.shippingCost) === 0
                     ? "FREE"
-                    : `$${parseFloat(order.shippingCost).toFixed(2)}`}
+                    : `₹₹{parseFloat(order.shippingCost).toFixed(2)}`}
                 </span>
               </div>
               <div className="flex justify-between">
                 <span>Sales Tax</span>
-                <span>${parseFloat(order.tax).toFixed(2)}</span>
+                <span>₹{parseFloat(order.tax).toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-white font-semibold text-sm pt-2 border-t border-neutral-800">
                 <span className="uppercase tracking-widest font-sans text-xs">Total Charged</span>

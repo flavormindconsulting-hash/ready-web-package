@@ -151,11 +151,11 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
 
               <div className="flex items-center gap-3 mt-3">
                 <span className="text-lg font-mono font-semibold text-white">
-                  ${parseFloat(product.price).toFixed(2)}
+                  ₹{parseFloat(product.price).toFixed(2)}
                 </span>
                 {product.compareAtPrice && parseFloat(product.compareAtPrice) > parseFloat(product.price) && (
                   <span className="text-sm font-mono text-neutral-500 line-through">
-                    ${parseFloat(product.compareAtPrice).toFixed(2)}
+                    ₹{parseFloat(product.compareAtPrice).toFixed(2)}
                   </span>
                 )}
               </div>

@@ -516,7 +516,7 @@ export const AdminClient: React.FC = () => {
                   <DollarSign className="w-4 h-4 text-amber-300" />
                 </div>
                 <div className="text-2xl sm:text-3xl font-mono font-bold text-white">
-                  ${stats ? stats.totalRevenue.toFixed(2) : "0.00"}
+                  ₹{stats ? stats.totalRevenue.toFixed(2) : "0.00"}
                 </div>
                 <div className="text-[11px] text-emerald-400 flex items-center gap-1 font-mono">
                   <TrendingUp className="w-3 h-3" />
@@ -543,7 +543,7 @@ export const AdminClient: React.FC = () => {
                   <TrendingUp className="w-4 h-4 text-amber-300" />
                 </div>
                 <div className="text-2xl sm:text-3xl font-mono font-bold text-white">
-                  ${stats ? stats.avgOrderValue.toFixed(2) : "0.00"}
+                  ₹{stats ? stats.avgOrderValue.toFixed(2) : "0.00"}
                 </div>
                 <div className="text-[11px] text-neutral-400 font-mono">
                   Per gentleman order
@@ -608,7 +608,7 @@ export const AdminClient: React.FC = () => {
                               {order.customerName}
                             </td>
                             <td className="py-3 text-amber-200">
-                              ${parseFloat(order.total).toFixed(2)}
+                              ₹{parseFloat(order.total).toFixed(2)}
                             </td>
                             <td className="py-3">
                               <span
@@ -790,11 +790,11 @@ export const AdminClient: React.FC = () => {
                         {/* Price */}
                         <td className="py-3 px-4 font-mono">
                           <div className="font-semibold text-white">
-                            ${parseFloat(p.price).toFixed(2)}
+                            ₹{parseFloat(p.price).toFixed(2)}
                           </div>
                           {p.compareAtPrice && (
                             <div className="text-[11px] text-neutral-500 line-through">
-                              ${parseFloat(p.compareAtPrice).toFixed(2)}
+                              ₹{parseFloat(p.compareAtPrice).toFixed(2)}
                             </div>
                           )}
                         </td>
@@ -916,7 +916,7 @@ export const AdminClient: React.FC = () => {
 
                       <td className="py-3 px-4 font-mono">
                         <div className="text-white font-semibold">
-                          ${parseFloat(order.total).toFixed(2)}
+                          ₹{parseFloat(order.total).toFixed(2)}
                         </div>
                         <div className="text-[10px] text-neutral-500">
                           {order.shippingMethod}
@@ -1148,7 +1148,7 @@ export const AdminClient: React.FC = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-[11px] uppercase tracking-wider text-neutral-400 mb-1">
-                    Selling Price ($ USD) *
+                    Selling Price (₹) *
                   </label>
                   <input
                     type="number"
@@ -1162,7 +1162,7 @@ export const AdminClient: React.FC = () => {
 
                 <div>
                   <label className="block text-[11px] uppercase tracking-wider text-neutral-400 mb-1">
-                    Compare-At Price ($ USD strike-through)
+                    Compare-At Price (₹, strike-through)
                   </label>
                   <input
                     type="number"

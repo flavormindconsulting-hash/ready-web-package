@@ -49,7 +49,7 @@ export const Footer: React.FC = () => {
                 Complimentary Courier
               </h4>
               <p className="text-xs text-neutral-500 mt-0.5">
-                On all worldwide orders over $150
+                On all worldwide orders over ₹150
               </p>
             </div>
           </div>

@@ -44,7 +44,7 @@ export const Header: React.FC = () => {
         <div className="bg-neutral-900 border-b border-neutral-800 text-neutral-300 text-[11px] tracking-widest uppercase py-2 px-4 flex items-center justify-between text-center transition-all duration-300">
           <div className="hidden sm:block w-6" />
           <div className="flex-1 text-center font-medium">
-            <span>COMPLIMENTARY WORLDWIDE COURIER OVER $150</span>
+            <span>COMPLIMENTARY WORLDWIDE COURIER OVER ₹150</span>
             <span className="mx-2 text-neutral-600">·</span>
             <span className="text-amber-200/90 font-semibold">CODE 'HENRO10' FOR 10% OFF</span>
             <span className="mx-2 text-neutral-600 hidden md:inline">·</span>
