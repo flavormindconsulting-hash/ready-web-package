@@ -1,5 +1,5 @@
 # HENRO refresh
-- [ ] Add and verify subtle entrance, scroll-reveal, and shirt-photo animations.
+- [x] Add and verify subtle entrance, scroll-reveal, and shirt-photo animations.
 - [x] Refine typography, enlarge the header logo, and blend the footer eagle into its background.
 - [x] Apply a polished dark theme and both supplied logos; verify shopping and phone layouts.
 - [ ] Correct admin size entry and verify saved labels — controls and tests complete; signed-in owner verification pending.
