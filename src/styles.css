@@ -171,8 +171,8 @@
   --danger-soft: oklch(0.96 0.02 25);
   --overlay: oklch(0.18 0.025 252);
   --campaign-scrim: linear-gradient(90deg, oklch(0.18 0.025 252 / 66%) 0%, oklch(0.18 0.025 252 / 35%) 35%, transparent 70%);
-  --font-sans: 'Manrope', sans-serif;
-  --font-display: 'Outfit', sans-serif;
+  --font-sans: 'DM Sans', sans-serif;
+  --font-display: 'Sora', sans-serif;
   --font-serif: var(--font-display);
 }
 @theme inline {
@@ -186,6 +186,7 @@
   --font-display: var(--font-display);
 }
 body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+h1, h2, h3 { font-family: var(--font-display); letter-spacing: 0; }
 .font-editorial { font-family: var(--font-display); letter-spacing: 0; }
 .text-gold { color: var(--primary); }
 .bg-gold { background: var(--primary); }
@@ -196,7 +197,6 @@ button { cursor: pointer; }
 :focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; }
 .campaign { height: min(680px, calc(100svh - 185px)); min-height: 440px; }
 .campaign-scrim { background: var(--campaign-scrim); }
-.brand-logo { width: 82px; height: 64px; object-fit: contain; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
 .animate-fade-in { animation: fadeIn .4s ease-out; }
@@ -205,7 +205,6 @@ button { cursor: pointer; }
   input:not([type=checkbox]):not([type=radio]), select, textarea { font-size: 16px; }
   .campaign { height: calc(100svh - 190px); min-height: 460px; max-height: 640px; }
   .campaign-scrim { background: linear-gradient(0deg, var(--overlay), transparent 85%); }
-  .brand-logo { width: 66px; height: 52px; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
@@ -245,7 +244,11 @@ button { cursor: pointer; }
   --color-brand-gold: var(--brand-gold);
   --color-campaign-foreground: var(--campaign-foreground);
 }
-.brand-logo { width: 76px; height: 76px; object-fit: contain; }
+.brand-logo { width: 104px; height: 104px; object-fit: contain; }
+.footer-emblem {
+  mix-blend-mode: screen;
+  filter: contrast(1.5);
+}
 @media (max-width: 639px) {
-  .brand-logo { width: 64px; height: 64px; }
+  .brand-logo { width: 88px; height: 88px; }
 }

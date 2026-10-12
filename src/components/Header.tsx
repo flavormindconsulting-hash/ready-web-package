@@ -33,7 +33,7 @@ export const Header: React.FC = () => {
       <span className="hidden sm:inline"> &nbsp; / &nbsp; COMPLIMENTARY SHIPPING OVER ₹150</span>
     </div>
     <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-md border-b border-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 h-20 grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 h-24 sm:h-28 grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3">
         <div className="min-w-0">
           <Button variant="ghost" size="icon" className="lg:hidden" aria-label="Open menu" onClick={() => setMenu(true)}><Menu /></Button>
           <nav className="hidden lg:flex gap-6 text-xs font-semibold uppercase">
