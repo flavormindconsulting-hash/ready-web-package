@@ -38,9 +38,9 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="bg-background text-foreground border-t border-border mt-0">
+    <footer className="isolate bg-background text-foreground border-t border-border mt-0">
       <div className="max-w-7xl mx-auto px-6 sm:px-8 py-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-        <div><img src={eagleLogo.url} alt="HENRO gold eagle logo" className="w-44 h-44 object-contain" /><p className="text-sm text-muted-foreground mt-4 max-w-xs">A signature of your own.<br />Considered shirts for everyday life.</p></div>
+        <div><img src={eagleLogo.url} alt="HENRO gold eagle logo" className="footer-emblem w-44 h-44 object-contain" /><p className="text-sm text-muted-foreground mt-4 max-w-xs">A signature of your own.<br />Considered shirts for everyday life.</p></div>
         <div><h3 className="text-sm font-semibold mb-5">The collection</h3><nav className="flex flex-col gap-3 text-xs opacity-80"><Link href="/products">All shirts</Link><Link href="/products?category=Oxford+%26+Formal">Oxford & formal</Link><Link href="/products?category=Linen+%26+Resort">Linen & resort</Link><Link href="/products?category=Overshirts">Overshirts</Link></nav></div>
         <div><h3 className="text-sm font-semibold mb-5">Your HENRO</h3><nav className="flex flex-col gap-3 text-xs opacity-80"><Link href="/checkout">Shopping bag & checkout</Link><Link href="/admin">Owner sign in</Link><span>Complimentary shipping over ₹150</span><span>30-day returns</span></nav></div>
         <div><h3 className="font-display text-xl mb-3">Stay in the know.</h3><p className="text-xs opacity-75 mb-5">New collections. Fresh perspectives.</p><form onSubmit={handleNewsletter}><div className="flex border-b border-border"><input type="email" aria-label="Newsletter email" required value={email} onChange={e => setEmail(e.target.value)} placeholder="Your email address" className="min-w-0 flex-1 bg-transparent text-sm py-3 placeholder:text-muted-foreground outline-none" /><Button variant="atelier" type="submit" disabled={submitting} aria-label="Subscribe" className="px-3"><ArrowRight className="size-5" /></Button></div>{status && <p className="text-xs mt-3" role="status">{status.message}</p>}</form></div>
