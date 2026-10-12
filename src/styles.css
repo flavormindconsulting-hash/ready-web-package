@@ -210,3 +210,42 @@ button { cursor: pointer; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
 }
+
+/* HENRO nocturne: neutral black, silver typography, restrained emblem gold. */
+:root, .dark {
+  --background: oklch(0 0 0);
+  --foreground: oklch(0.94 0.004 85);
+  --card: oklch(0.17 0.002 250);
+  --card-foreground: var(--foreground);
+  --popover: oklch(0.18 0.002 250);
+  --popover-foreground: var(--foreground);
+  --primary: oklch(0.9 0.006 85);
+  --primary-foreground: oklch(0.16 0.003 250);
+  --secondary: oklch(0.27 0.004 250);
+  --secondary-foreground: var(--foreground);
+  --muted: oklch(0.19 0.002 250);
+  --muted-foreground: oklch(0.7 0.006 85);
+  --accent: oklch(0.26 0.018 80);
+  --accent-foreground: oklch(0.82 0.07 80);
+  --border: oklch(0.3 0.003 250);
+  --input: var(--border);
+  --ring: oklch(0.76 0.075 80);
+  --brand-gold: oklch(0.76 0.075 80);
+  --campaign-foreground: oklch(0.98 0.003 85);
+  --success: oklch(0.76 0.13 155);
+  --success-soft: oklch(0.23 0.035 155);
+  --warning: oklch(0.8 0.11 85);
+  --warning-soft: oklch(0.24 0.035 85);
+  --danger-soft: oklch(0.24 0.045 25);
+  --destructive: oklch(0.73 0.17 25);
+  --overlay: oklch(0.1 0 0);
+  --campaign-scrim: linear-gradient(90deg, oklch(0 0 0 / 75%), oklch(0 0 0 / 32%) 45%, transparent 75%);
+}
+@theme inline {
+  --color-brand-gold: var(--brand-gold);
+  --color-campaign-foreground: var(--campaign-foreground);
+}
+.brand-logo { width: 76px; height: 76px; object-fit: contain; }
+@media (max-width: 639px) {
+  .brand-logo { width: 64px; height: 64px; }
+}
