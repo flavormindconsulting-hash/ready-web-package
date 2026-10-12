@@ -14,7 +14,6 @@ interface ProductCardProps {
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }) => {
   const { addToCart } = useCart();
-  const [isHovered, setIsHovered] = useState(false);
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [addedAnimation, setAddedAnimation] = useState(false);
 
@@ -64,19 +63,19 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }
 
   return (
     <div
-      className="group relative flex flex-col bg-background transition-all duration-300"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      data-reveal
+      className="product-motion group relative flex flex-col bg-background transition-all duration-300"
     >
       {/* Image container */}
       <div className="relative aspect-[3/4] w-full overflow-hidden bg-muted border border-border/60">
-        <Link href={`/products/${product.slug}`} className="block w-full h-full">
+        <Link href={`/products/${product.slug}`} className="product-photo-link relative block w-full h-full">
           <img
-            src={isHovered && secondaryImage ? secondaryImage : primaryImage}
+            src={primaryImage}
             alt={product.name}
             className="w-full h-full object-cover object-center transition-all duration-700 ease-out group-hover:scale-105"
             loading="lazy"
           />
+          {secondaryImage !== primaryImage && <img src={secondaryImage} alt="" aria-hidden="true" loading="lazy" className="product-photo-alternate absolute inset-0 w-full h-full object-cover object-center" />}
         </Link>
 
         {/* Badges */}

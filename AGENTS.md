@@ -16,3 +16,4 @@
 - Admin access: `/admin` sits under the `_authenticated` gate; admin `/api/*` handlers call `requireAdmin` (bearer + `has_role`), and the client sends the session via `adminFetch`. The first account to open `/admin` claims the single admin role through the `claim_store_admin` database function.
 - Brand media is centralized in a browser-safe presentation module; replace only original demo image paths so owner-edited photography remains authoritative.
 - Storefront styling uses semantic global tokens and the shared Button, keeping shopping and owner surfaces consistent without changing store pricing or permissions.
+- Storefront motion uses CSS transforms and a home-scoped IntersectionObserver with visible server-rendered fallbacks and reduced-motion support, keeping animations lightweight and accessible.
