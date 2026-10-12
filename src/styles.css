@@ -249,6 +249,34 @@ button { cursor: pointer; }
   mix-blend-mode: screen;
   filter: contrast(1.5);
 }
+@keyframes campaignSettle {
+  from { transform: scale(1.055); }
+  to { transform: scale(1); }
+}
+@keyframes campaignEntrance {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.campaign-image { animation: campaignSettle 1.8s cubic-bezier(.2,.65,.3,1) both; }
+.campaign-copy > * { animation: campaignEntrance .8s cubic-bezier(.2,.65,.3,1) both; }
+.campaign-copy > :nth-child(2) { animation-delay: .1s; }
+.campaign-copy > :nth-child(3) { animation-delay: .2s; }
+.campaign-copy > :nth-child(4) { animation-delay: .3s; }
+.campaign-copy > :nth-child(5) { animation-delay: .4s; }
+.reveal-ready { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.65,.3,1); }
+.reveal-ready.is-revealed { opacity: 1; transform: translateY(0); }
+.editorial-motion:nth-child(2), .product-motion:nth-child(2n) { transition-delay: .08s; }
+.editorial-motion:nth-child(3), .product-motion:nth-child(3n) { transition-delay: .16s; }
+.editorial-arrow { transition: transform .3s ease; }
+.product-photo-alternate { opacity: 0; transition: opacity .55s ease, transform .7s ease; }
+@media (hover: hover) {
+  .editorial-motion:hover .editorial-arrow { transform: translateX(4px); }
+  .product-photo-link:hover .product-photo-alternate { opacity: 1; transform: scale(1.05); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal-ready { opacity: 1; transform: none; }
+  .campaign-image, .campaign-copy > * { animation: none; }
+}
 @media (max-width: 639px) {
   .brand-logo { width: 88px; height: 88px; }
 }
