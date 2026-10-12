@@ -1,7 +1,7 @@
 # HENRO refresh
-- [ ] Apply a polished dark theme and both supplied logos; verify shopping and phone layouts.
-- [ ] Correct admin size entry and verify saved labels.
-- [ ] Add and verify owner-only product photo uploads.
+- [x] Apply a polished dark theme and both supplied logos; verify shopping and phone layouts.
+- [ ] Correct admin size entry and verify saved labels — controls and tests complete; signed-in owner verification pending.
+- [ ] Add and verify owner-only product photo uploads — implementation complete; signed-in owner verification pending.
 - [x] Import the selected logo and shirt photographs.
 - [x] Refresh storefront, navigation, and shopping surfaces to match the brand.
 - [x] Verify shopping interactions and phone layouts.
