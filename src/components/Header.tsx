@@ -3,7 +3,7 @@ import Link from '@/compat/next-link';
 import { usePathname } from '@/compat/next-navigation';
 import { useCart } from '@/lib/cart-context';
 import { Button } from '@/components/ui/button';
-import logo from '@/assets/henro-logo.png';
+import modernLogo from '@/assets/henro-modern-logo.png.asset.json';
 import { ShoppingBag, Search, Menu, X, ArrowRight, UserRound } from 'lucide-react';
 
 const links = [
@@ -28,8 +28,8 @@ export const Header: React.FC = () => {
     return () => { document.body.style.overflow = old; window.removeEventListener('keydown', close); };
   }, [menu]);
   return <>
-    <div className="bg-primary text-primary-foreground text-center text-[10px] sm:text-xs py-2.5 px-4">
-      <span>YOUR FIRST HENRO. 10% OFF WITH HENRO10</span>
+    <div className="bg-muted text-muted-foreground border-b border-border text-center text-[10px] sm:text-xs py-2.5 px-4">
+      <span>YOUR FIRST HENRO. 10% OFF WITH <span className="text-brand-gold">HENRO10</span></span>
       <span className="hidden sm:inline"> &nbsp; / &nbsp; COMPLIMENTARY SHIPPING OVER ₹150</span>
     </div>
     <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-md border-b border-border">
@@ -40,7 +40,7 @@ export const Header: React.FC = () => {
             {links.slice(0,2).map(l => <Link key={l.href} href={l.href} className="hover:text-muted-foreground">{l.label}</Link>)}
           </nav>
         </div>
-        <Link href="/" aria-label="HENRO home"><img src={logo} alt="HENRO" className="brand-logo" /></Link>
+        <Link href="/" aria-label="HENRO home"><img src={modernLogo.url} alt="HENRO modern logo" className="brand-logo" /></Link>
         <div className="min-w-0 flex justify-end items-center gap-0 sm:gap-2">
           <nav className="hidden xl:flex text-xs font-semibold uppercase gap-5 mr-4">{links.slice(2).map(l => <Link key={l.href} href={l.href}>{l.label}</Link>)}</nav>
           <Button variant="ghost" size="icon" aria-label="Search collection" title="Search" onClick={() => setSearch(!search)}><Search /></Button>
@@ -58,7 +58,7 @@ export const Header: React.FC = () => {
     {menu && <div className="fixed inset-0 z-50 lg:hidden" role="dialog" aria-modal="true" aria-label="Main menu">
       <div className="absolute inset-0 bg-overlay/60" onClick={() => setMenu(false)} />
       <div className="relative bg-background w-[min(88vw,360px)] h-[100dvh] p-6 flex flex-col">
-        <div className="flex justify-between items-center border-b border-border pb-5"><img src={logo} alt="HENRO" className="brand-logo" /><Button variant="ghost" size="icon" aria-label="Close menu" onClick={() => setMenu(false)}><X /></Button></div>
+        <div className="flex justify-between items-center border-b border-border pb-5"><img src={modernLogo.url} alt="HENRO modern logo" className="brand-logo" /><Button variant="ghost" size="icon" aria-label="Close menu" onClick={() => setMenu(false)}><X /></Button></div>
         <nav className="mt-6 flex-1">{links.map(l => <Link key={l.href} href={l.href} onClick={() => setMenu(false)} className="flex items-center justify-between py-5 border-b border-border font-display text-lg">{l.label}<ArrowRight className="size-4" /></Link>)}</nav>
         <Link href="/admin" onClick={() => setMenu(false)} className="flex gap-2 items-center text-xs py-5"><UserRound className="size-4" />Owner sign in</Link>
         <p className="text-xs text-muted-foreground">HENRO / A signature of your own.</p>
