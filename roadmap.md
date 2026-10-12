@@ -1,4 +1,5 @@
 # HENRO refresh
+- [ ] Apply a polished dark theme and both supplied logos; verify shopping and phone layouts.
 - [ ] Correct admin size entry and verify saved labels.
 - [ ] Add and verify owner-only product photo uploads.
 - [x] Import the selected logo and shirt photographs.
