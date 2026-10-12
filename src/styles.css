@@ -244,7 +244,7 @@ button { cursor: pointer; }
   --color-brand-gold: var(--brand-gold);
   --color-campaign-foreground: var(--campaign-foreground);
 }
-.brand-logo { width: 104px; height: 104px; object-fit: contain; }
+.brand-logo { width: 104px; height: 104px; object-fit: contain; mix-blend-mode: screen; }
 .footer-emblem {
   mix-blend-mode: screen;
   filter: contrast(1.5);
