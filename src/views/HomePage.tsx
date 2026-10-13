@@ -7,6 +7,7 @@ import { brandMedia } from '@/lib/brand-media';
 import campaign from '@/assets/henro-campaign.jpg';
 import eagleLogo from '@/assets/henro-eagle-logo.jpg.asset.json';
 import { useEffect, useRef } from 'react';
+import { GoldEagleFlight } from '@/components/GoldEagleFlight';
 
 export default function HomePage({ featuredProducts, bestsellers }: { featuredProducts: Product[]; bestsellers: Product[] }) {
   const storefront = useRef<HTMLDivElement>(null);
@@ -35,6 +36,7 @@ export default function HomePage({ featuredProducts, bestsellers }: { featuredPr
     <section className="campaign relative overflow-hidden flex items-end sm:items-center">
       <picture><source media="(max-width: 639px)" srcSet={brandMedia.olive} /><img src={campaign} alt="HENRO olive shirt styled on a city street" className="campaign-image absolute inset-0 w-full h-full object-cover object-[65%_center]" fetchPriority="high" /></picture>
       <div className="absolute inset-0 campaign-scrim" />
+      <GoldEagleFlight />
       <div className="relative max-w-7xl mx-auto px-6 sm:px-8 py-10 sm:py-16 w-full text-campaign-foreground">
         <div className="campaign-copy max-w-lg">
           <p className="text-xs uppercase mb-5 text-brand-gold">HENRO / THE EVERYDAY EDIT</p>
