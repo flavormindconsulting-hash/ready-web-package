@@ -18,3 +18,4 @@
 - Storefront styling uses semantic global tokens and the shared Button, keeping shopping and owner surfaces consistent without changing store pricing or permissions.
 - Storefront motion uses CSS transforms and a home-scoped IntersectionObserver with visible server-rendered fallbacks and reduced-motion support, keeping animations lightweight and accessible.
 - The decorative homepage eagle uses a separate token-colored SVG with CSS wing and flight motion, plays once per browser session, and remains static for reduced motion; supplied logos remain unchanged.
+- The homepage hero background is an owner-supplied looping video (separate desktop/mobile CDN assets, muted autoplay loop) shown above a static image fallback that remains visible under reduced motion; campaign text stays in markup, never baked into the video.
