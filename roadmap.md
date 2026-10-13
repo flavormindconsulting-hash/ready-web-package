@@ -1,4 +1,5 @@
 # HENRO refresh
+- [ ] Animate and verify the street banner with moving subject and background traffic — blocked: video generation requires approximately 3.65 workspace credits; current balance is insufficient. Existing banner remains unchanged.
 - [x] Add and verify a one-time gold eagle flight on the homepage.
 - [x] Add and verify subtle entrance, scroll-reveal, and shirt-photo animations.
 - [x] Refine typography, enlarge the header logo, and blend the footer eagle into its background.
