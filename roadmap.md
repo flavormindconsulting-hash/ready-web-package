@@ -1,6 +1,6 @@
 # HENRO refresh
 - [x] Replace the street banner with owner-created hero videos for desktop and mobile, with static fallbacks.
-- [x] Add and verify a one-time gold eagle flight on the homepage.
+- [x] Remove the flying eagle animation from the homepage at the owner's request; the static eagle emblem stays.
 - [x] Add and verify subtle entrance, scroll-reveal, and shirt-photo animations.
 - [x] Refine typography, enlarge the header logo, and blend the footer eagle into its background.
 - [x] Apply a polished dark theme and both supplied logos; verify shopping and phone layouts.
