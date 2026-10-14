@@ -9,7 +9,6 @@ import heroDesktop from '@/assets/henro-hero-desktop.webm.asset.json';
 import heroMobile from '@/assets/henro-hero-mobile.webm.asset.json';
 import eagleLogo from '@/assets/henro-eagle-logo.jpg.asset.json';
 import { useEffect, useRef } from 'react';
-import { GoldEagleFlight } from '@/components/GoldEagleFlight';
 
 export default function HomePage({ featuredProducts, bestsellers }: { featuredProducts: Product[]; bestsellers: Product[] }) {
   const storefront = useRef<HTMLDivElement>(null);
@@ -40,7 +39,6 @@ export default function HomePage({ featuredProducts, bestsellers }: { featuredPr
       <video className="campaign-video campaign-video-desktop" src={heroDesktop.url} poster={campaign} autoPlay muted loop playsInline preload="auto" aria-hidden="true" />
       <video className="campaign-video campaign-video-mobile" src={heroMobile.url} poster={brandMedia.olive} autoPlay muted loop playsInline preload="auto" aria-hidden="true" />
       <div className="absolute inset-0 campaign-scrim" />
-      <GoldEagleFlight />
       <div className="relative max-w-7xl mx-auto px-6 sm:px-8 py-10 sm:py-16 w-full text-campaign-foreground">
         <div className="campaign-copy max-w-lg">
           <p className="text-xs uppercase mb-5 text-brand-gold">HENRO / THE EVERYDAY EDIT</p>
