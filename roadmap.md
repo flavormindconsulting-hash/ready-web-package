@@ -7,6 +7,11 @@
 - [x] Apply a polished dark theme and both supplied logos; verify shopping and phone layouts.
 - [ ] Correct admin size entry and verify saved labels — controls and tests complete; signed-in owner verification pending.
 - [ ] Add and verify owner-only product photo uploads — implementation complete; signed-in owner verification pending.
+# Netlify migration (owner wants no Lovable monthly fees)
+- [x] Add netlify.toml and .nvmrc so the GitHub build works on Netlify (Node 22, `npm run build`, publish `dist`).
+- [ ] Generate database export (schema + data) from the built-in backend for the owner's own project.
+- [ ] Guide the owner to create a free backend account and Netlify site, import the data, and set the environment variables.
+- [ ] Verify the Netlify deployment serves the storefront, catalog, checkout, and admin sign-in.
 - [x] Import the selected logo and shirt photographs.
 - [x] Refresh storefront, navigation, and shopping surfaces to match the brand.
 - [x] Verify shopping interactions and phone layouts.
