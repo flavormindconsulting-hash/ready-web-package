@@ -19,3 +19,4 @@
 - Storefront motion uses CSS transforms and a home-scoped IntersectionObserver with visible server-rendered fallbacks and reduced-motion support, keeping animations lightweight and accessible.
 - The homepage carries no decorative animated eagle mascot; the supplied logos stay static and appear only in the header, footer, and details section.
 - The homepage hero background is an owner-supplied looping video (separate desktop/mobile CDN assets, muted autoplay loop) shown above a static image fallback that remains visible under reduced motion; campaign text stays in markup, never baked into the video.
+- StoreEntrance wraps the storefront with a once-per-session homepage opening film while the store loads underneath; ended, skip, playback failure, and a safety timeout reveal the store immediately, with reduced-motion and direct inner-page visits bypassing the film.

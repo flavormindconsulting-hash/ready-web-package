@@ -16,6 +16,7 @@ import { CartProvider } from "@/lib/cart-context";
 import { Header } from "@/components/Header";
 import { CartDrawer } from "@/components/CartDrawer";
 import { Footer } from "@/components/Footer";
+import { StoreEntrance } from "@/components/StoreEntrance";
 
 function NotFoundComponent() {
   return (
@@ -133,12 +134,14 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <CartProvider>
+        <StoreEntrance>
         <Header />
         <main className="flex-1">
           <Outlet />
         </main>
         <CartDrawer />
         <Footer />
+        </StoreEntrance>
       </CartProvider>
     </QueryClientProvider>
   );
