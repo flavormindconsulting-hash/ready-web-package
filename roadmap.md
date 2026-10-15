@@ -1,5 +1,5 @@
 # HENRO refresh
-- [ ] Add the uploaded opening video before the website and verify automatic entry when it finishes.
+- [x] Add the uploaded opening video before the website and verify automatic entry when it finishes on desktop and phones.
 - [x] Replace the street banner with owner-created hero videos for desktop and mobile, with static fallbacks.
 - [x] Remove the flying eagle animation from the homepage at the owner's request; the static eagle emblem stays.
 - [x] Add and verify subtle entrance, scroll-reveal, and shirt-photo animations.
