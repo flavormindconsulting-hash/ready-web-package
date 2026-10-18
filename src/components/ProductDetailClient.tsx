@@ -427,7 +427,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({
                 </div>
                 <div className="flex items-center gap-2 p-2 bg-muted/40 border border-border rounded">
                   <RefreshCw className="w-3.5 h-3.5 text-primary" />
-                  <span>30-Day Atelier Returns</span>
+                  <span>7-Day Returns</span>
                 </div>
               </div>
             </div>
@@ -581,7 +581,7 @@ export const ProductDetailClient: React.FC<ProductDetailClientProps> = ({
                 100% Fit Guarantee
               </h4>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                If the shirt does not drape to your exact preference, our London & New York ateliers provide complimentary size swaps within 30 days.
+                If the shirt does not drape to your exact preference, write to us at support@henro.in and we will arrange a complimentary size swap within 7 days of delivery.
               </p>
             </div>
           </div>

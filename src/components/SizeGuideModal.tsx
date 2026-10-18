@@ -182,7 +182,7 @@ export const SizeGuideModal: React.FC<SizeGuideModalProps> = ({ isOpen, onClose 
                   Size {predictedSize}
                 </strong>
                 <p className="text-[11px] text-muted-foreground mt-0.5">
-                  Calculated based on {fitPreference} drape guarantee with 30-day free sizing exchange.
+                  Calculated based on {fitPreference} drape guarantee with 7-day free sizing exchange.
                 </p>
               </div>
               <Check className="w-5 h-5 text-primary flex-shrink-0" />

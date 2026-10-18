@@ -660,7 +660,7 @@ export default function CheckoutPage() {
 
                 <div className="flex items-center justify-center gap-2 text-[10px] text-muted-foreground font-mono tracking-widest uppercase">
                   <ShieldCheck className="w-3.5 h-3.5 text-muted-foreground" />
-                  <span>Complimentary 30-Day Exchanges</span>
+                  <span>Complimentary 7-Day Exchanges</span>
                 </div>
 
               </div>

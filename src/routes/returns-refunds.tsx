@@ -4,9 +4,9 @@ export const Route = createFileRoute("/returns-refunds")({
   head: () => ({
     meta: [
       { title: "Return & Refund Policy | HENRO" },
-      { name: "description", content: "HENRO's 30-day return and refund policy — how to return a shirt and how refunds are processed." },
+      { name: "description", content: "HENRO's 7-day return and refund policy — how to return a shirt and how refunds are processed." },
       { property: "og:title", content: "Return & Refund Policy | HENRO" },
-      { property: "og:description", content: "HENRO's 30-day return and refund policy — how to return a shirt and how refunds are processed." },
+      { property: "og:description", content: "HENRO's 7-day return and refund policy — how to return a shirt and how refunds are processed." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -32,12 +32,12 @@ function ReturnsPage() {
         <p className="text-xs text-muted-foreground">Last updated: October 2026</p>
       </header>
 
-      <Section title="1. 30-day returns">
-        <p>If you are not happy with your purchase, you can return it within <strong className="text-foreground">30 days of delivery</strong> for a refund or exchange, provided the item is unworn, unwashed, and in its original condition with tags attached.</p>
+      <Section title="1. 7-day returns">
+        <p>If you are not happy with your purchase, you can return it within <strong className="text-foreground">7 days of delivery</strong> for a refund or exchange, provided the item is unworn, unwashed, and in its original condition with tags attached.</p>
       </Section>
 
       <Section title="2. How to start a return">
-        <p>Email us at the address listed on this website with your order number (it starts with "HN-") and the reason for the return. We will reply with return instructions and the return shipping address within 2 working days.</p>
+        <p>Email <a className="text-primary underline underline-offset-4" href="mailto:support@henro.in">support@henro.in</a> with your order number (it starts with "HN-") and the reason for the return. We will reply with return instructions and the return shipping address within 2 working days.</p>
       </Section>
 
       <Section title="3. Condition of returned items">
@@ -61,7 +61,8 @@ function ReturnsPage() {
       </Section>
 
       <Section title="8. Contact">
-        <p>For any return, exchange or refund question, email us at the address listed on this website and mention your order number.</p>
+        <p>For any return, exchange or refund question, email <a className="text-primary underline underline-offset-4" href="mailto:support@henro.in">support@henro.in</a> and mention your order number.</p>
+        <p className="pt-1">HENRO — G - 601, Happy Residency, opposite to Rebounce, Vesu, Surat (Gujarat) - 395007, India.</p>
       </Section>
     </div>
   );
