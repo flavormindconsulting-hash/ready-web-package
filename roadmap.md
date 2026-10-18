@@ -18,3 +18,4 @@
 - [x] Add seven uploaded shirt designs to the catalog at ₹1,999 each.
 - [ ] Enable purchasing for the remaining earlier shirts — waiting for sizes and stock from the owner; white and graphic denim are now available.
 - [x] Add the latest shirt photos at ₹1,999 with S–XXL; update matching existing designs without duplicates.
+- [x] Add Privacy Policy, Terms & Conditions, Return & Refund (7-day window) and Contact pages with the owner's Surat address and support@henro.in; verify wording across storefront, footer and checkout.
