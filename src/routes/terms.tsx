@@ -33,7 +33,7 @@ function TermsPage() {
       </header>
 
       <Section title="1. About these terms">
-        <p>These terms govern your use of the HENRO website and any purchase you make from us. By placing an order, you agree to these terms. HENRO is operated from India and these terms are governed by Indian law.</p>
+        <p>These terms govern your use of the HENRO website and any purchase you make from us. By placing an order, you agree to these terms. HENRO is operated from G - 601, Happy Residency, opposite to Rebounce, Vesu, Surat (Gujarat) - 395007, India, and these terms are governed by Indian law.</p>
       </Section>
 
       <Section title="2. Products and pricing">
@@ -66,7 +66,8 @@ function TermsPage() {
       </Section>
 
       <Section title="9. Contact and grievances">
-        <p>For any question, complaint or grievance about your order or these terms, contact us at the email address listed on this website. We aim to resolve complaints within 7 working days.</p>
+        <p>For any question, complaint or grievance about your order or these terms, email <a className="text-primary underline underline-offset-4" href="mailto:support@henro.in">support@henro.in</a>. We aim to resolve complaints within 7 working days.</p>
+        <p>You can also write to us at: HENRO — G - 601, Happy Residency, opposite to Rebounce, Vesu, Surat (Gujarat) - 395007, India.</p>
       </Section>
     </div>
   );

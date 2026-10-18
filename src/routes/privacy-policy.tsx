@@ -33,7 +33,7 @@ function PrivacyPolicyPage() {
       </header>
 
       <Section title="1. Who we are">
-        <p>HENRO ("we", "us", "our") is an online clothing store selling shirts through this website. This policy explains what personal information we collect when you visit or shop with us, and how we use it, in line with the Digital Personal Data Protection Act, 2023 (India).</p>
+        <p>HENRO ("we", "us", "our") is an online clothing store selling shirts through this website, operated from G - 601, Happy Residency, opposite to Rebounce, Vesu, Surat (Gujarat) - 395007, India. This policy explains what personal information we collect when you visit or shop with us, and how we use it, in line with the Digital Personal Data Protection Act, 2023 (India).</p>
       </Section>
 
       <Section title="2. Information we collect">
@@ -56,7 +56,7 @@ function PrivacyPolicyPage() {
       </Section>
 
       <Section title="6. Your rights">
-        <p>You may ask us to see, correct, or delete your personal information at any time by contacting us at the email address shown on our Contact section. We will respond within a reasonable time.</p>
+        <p>You may ask us to see, correct, or delete your personal information at any time by emailing <a className="text-primary underline underline-offset-4" href="mailto:support@henro.in">support@henro.in</a>. We will respond within a reasonable time.</p>
       </Section>
 
       <Section title="7. Cookies">
@@ -68,7 +68,8 @@ function PrivacyPolicyPage() {
       </Section>
 
       <Section title="9. Contact">
-        <p>For any privacy question or request, email us at the address listed in the website footer or on our contact page.</p>
+        <p>For any privacy question or request, email <a className="text-primary underline underline-offset-4" href="mailto:support@henro.in">support@henro.in</a>.</p>
+        <p>You can also write to us at: HENRO — G - 601, Happy Residency, opposite to Rebounce, Vesu, Surat (Gujarat) - 395007, India.</p>
       </Section>
     </div>
   );
