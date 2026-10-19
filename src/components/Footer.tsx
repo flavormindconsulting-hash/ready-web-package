@@ -67,6 +67,27 @@ export const Footer: React.FC = () => {
         <div><h3 className="text-sm font-semibold mb-5">Your HENRO</h3><nav className="flex flex-col gap-3 text-xs opacity-80"><Link href="/checkout">Shopping bag & checkout</Link><Link href="/admin">Owner sign in</Link><span>Complimentary shipping over ₹150</span><span>7-day returns</span></nav></div>
         <div><h3 className="font-display text-xl mb-3">Stay in the know.</h3><p className="text-xs opacity-75 mb-5">New collections. Fresh perspectives.</p><form onSubmit={handleNewsletter}><div className="flex border-b border-border"><input type="email" aria-label="Newsletter email" required value={email} onChange={e => setEmail(e.target.value)} placeholder="Your email address" className="min-w-0 flex-1 bg-transparent text-sm py-3 placeholder:text-muted-foreground outline-none" /><Button variant="atelier" type="submit" disabled={submitting} aria-label="Subscribe" className="px-3"><ArrowRight className="size-5" /></Button></div>{status && <p className="text-xs mt-3" role="status">{status.message}</p>}</form></div>
       </div>
+      {socialLinks.length > 0 && (
+        <div className="max-w-7xl mx-auto border-t border-border px-6 sm:px-8 py-6 flex items-center justify-center gap-5">
+          {socialLinks.map((link) => {
+            const Icon = SOCIAL_ICONS[link.platform];
+            if (!Icon) return null;
+            return (
+              <a
+                key={link.platform}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`HENRO on ${link.label}`}
+                title={link.label}
+                className="text-muted-foreground hover:text-brand-gold transition-colors"
+              >
+                <Icon className="size-5" />
+              </a>
+            );
+          })}
+        </div>
+      )}
       <div className="max-w-7xl mx-auto border-t border-border px-6 sm:px-8 py-6 flex flex-wrap gap-x-6 gap-y-3 justify-between text-[10px] text-muted-foreground"><span>© {new Date().getFullYear()} HENRO. All rights reserved.</span><nav className="flex flex-wrap gap-x-5 gap-y-2"><Link href="/contact">Contact</Link><Link href="/privacy-policy">Privacy Policy</Link><Link href="/terms">Terms &amp; Conditions</Link><Link href="/returns-refunds">Return &amp; Refund Policy</Link></nav><span>INDIAN RUPEES / INR ₹</span></div>
       <div className="max-w-7xl mx-auto border-t border-border px-6 sm:px-8 py-5 text-[10px] leading-relaxed text-muted-foreground"><p className="font-semibold uppercase tracking-[0.18em] text-foreground/70 mb-1">Registered office</p><p>HENRO — G - 601, Happy Residency, opposite to Rebounce, Vesu, Surat (Gujarat) - 395007, India</p><p className="mt-1">Support: <a className="underline underline-offset-4" href="mailto:support@henro.in">support@henro.in</a></p></div>
     </footer>

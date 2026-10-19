@@ -35,7 +35,7 @@ interface Stats {
 }
 
 export const AdminClient: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<"overview" | "products" | "orders" | "reviews">("overview");
+  const [activeTab, setActiveTab] = useState<"overview" | "products" | "orders" | "reviews" | "social">("overview");
   const [stats, setStats] = useState<Stats | null>(null);
   const [productsList, setProductsList] = useState<Product[]>([]);
   const [ordersList, setOrdersList] = useState<Order[]>([]);
