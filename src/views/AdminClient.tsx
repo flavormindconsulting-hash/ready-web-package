@@ -40,6 +40,8 @@ export const AdminClient: React.FC = () => {
   const [productsList, setProductsList] = useState<Product[]>([]);
   const [ordersList, setOrdersList] = useState<Order[]>([]);
   const [reviewsList, setReviewsList] = useState<(Review & { productName?: string })[]>([]);
+  const [socialLinks, setSocialLinks] = useState<{ platform: string; label: string; url: string; isEnabled: boolean }[]>([]);
+  const [socialSaving, setSocialSaving] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -86,17 +88,19 @@ export const AdminClient: React.FC = () => {
   const fetchData = async () => {
     setRefreshing(true);
     try {
-      const [statsRes, productsRes, ordersRes, reviewsRes] = await Promise.all([
+      const [statsRes, productsRes, ordersRes, reviewsRes, socialRes] = await Promise.all([
         adminFetch("/api/admin/stats"),
         adminFetch("/api/products"),
         adminFetch("/api/admin/orders"),
         adminFetch("/api/reviews"),
+        adminFetch("/api/admin/social-links"),
       ]);
 
       if (statsRes.ok) setStats(await statsRes.json());
       if (productsRes.ok) setProductsList(await productsRes.json());
       if (ordersRes.ok) setOrdersList(await ordersRes.json());
       if (reviewsRes.ok) setReviewsList(await reviewsRes.json());
+      if (socialRes.ok) setSocialLinks(await socialRes.json());
     } catch (err) {
       console.error("Admin fetch error:", err);
     } finally {
@@ -461,6 +465,7 @@ export const AdminClient: React.FC = () => {
                 { id: "products", label: `Catalog (${productsList.length})` },
                 { id: "orders", label: `Orders (${ordersList.length})` },
                 { id: "reviews", label: `Reviews (${reviewsList.length})` },
+                { id: "social", label: "Social Links" },
               ].map((tab) => (
                 <Button variant="atelier"
                   key={tab.id}
@@ -512,6 +517,7 @@ export const AdminClient: React.FC = () => {
             { id: "products", label: `Shirts (${productsList.length})` },
             { id: "orders", label: `Orders (${ordersList.length})` },
             { id: "reviews", label: `Reviews (${reviewsList.length})` },
+            { id: "social", label: "Social" },
           ].map((tab) => (
             <Button variant="atelier"
               key={tab.id}
