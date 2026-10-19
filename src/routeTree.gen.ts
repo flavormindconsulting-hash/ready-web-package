@@ -22,12 +22,14 @@ import { Route as ApiHealthRouteImport } from './routes/api/health'
 import { Route as ApiNewsletterRouteImport } from './routes/api/newsletter'
 import { Route as ApiProductsRouteImport } from './routes/api/products'
 import { Route as ApiReviewsRouteImport } from './routes/api/reviews'
+import { Route as ApiSocialLinksRouteImport } from './routes/api/social-links'
 import { Route as CheckoutIndexRouteImport } from './routes/checkout/index'
 import { Route as ProductsIndexRouteImport } from './routes/products/index'
 import { Route as ProductsSlugRouteImport } from './routes/products/$slug'
 import { Route as ApiAdminOrdersRouteImport } from './routes/api/admin/orders'
 import { Route as ApiAdminProductPhotosRouteImport } from './routes/api/admin/product-photos'
 import { Route as ApiAdminSeedRouteImport } from './routes/api/admin/seed'
+import { Route as ApiAdminSocialLinksRouteImport } from './routes/api/admin/social-links'
 import { Route as ApiAdminStatsRouteImport } from './routes/api/admin/stats'
 import { Route as ApiOrdersIdRouteImport } from './routes/api/orders.$id'
 import { Route as ApiProductsIdRouteImport } from './routes/api/products.$id'
@@ -101,6 +103,11 @@ const ApiReviewsRoute = ApiReviewsRouteImport.update({
   path: '/api/reviews',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiSocialLinksRoute = ApiSocialLinksRouteImport.update({
+  id: '/api/social-links',
+  path: '/api/social-links',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CheckoutIndexRoute = CheckoutIndexRouteImport.update({
   id: '/checkout/',
   path: '/checkout/',
@@ -129,6 +136,11 @@ const ApiAdminProductPhotosRoute = ApiAdminProductPhotosRouteImport.update({
 const ApiAdminSeedRoute = ApiAdminSeedRouteImport.update({
   id: '/api/admin/seed',
   path: '/api/admin/seed',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAdminSocialLinksRoute = ApiAdminSocialLinksRouteImport.update({
+  id: '/api/admin/social-links',
+  path: '/api/admin/social-links',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAdminStatsRoute = ApiAdminStatsRouteImport.update({
@@ -186,12 +198,14 @@ export interface FileRoutesByFullPath {
   '/api/newsletter': typeof ApiNewsletterRoute
   '/api/products': typeof ApiProductsRouteWithChildren
   '/api/reviews': typeof ApiReviewsRoute
+  '/api/social-links': typeof ApiSocialLinksRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/checkout/': typeof CheckoutIndexRoute
   '/products/': typeof ProductsIndexRoute
   '/api/admin/orders': typeof ApiAdminOrdersRouteWithChildren
   '/api/admin/product-photos': typeof ApiAdminProductPhotosRoute
   '/api/admin/seed': typeof ApiAdminSeedRoute
+  '/api/admin/social-links': typeof ApiAdminSocialLinksRoute
   '/api/admin/stats': typeof ApiAdminStatsRoute
   '/api/orders/$id': typeof ApiOrdersIdRoute
   '/api/products/$id': typeof ApiProductsIdRoute
@@ -214,12 +228,14 @@ export interface FileRoutesByTo {
   '/api/newsletter': typeof ApiNewsletterRoute
   '/api/products': typeof ApiProductsRouteWithChildren
   '/api/reviews': typeof ApiReviewsRoute
+  '/api/social-links': typeof ApiSocialLinksRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/checkout': typeof CheckoutIndexRoute
   '/products': typeof ProductsIndexRoute
   '/api/admin/orders': typeof ApiAdminOrdersRouteWithChildren
   '/api/admin/product-photos': typeof ApiAdminProductPhotosRoute
   '/api/admin/seed': typeof ApiAdminSeedRoute
+  '/api/admin/social-links': typeof ApiAdminSocialLinksRoute
   '/api/admin/stats': typeof ApiAdminStatsRoute
   '/api/orders/$id': typeof ApiOrdersIdRoute
   '/api/products/$id': typeof ApiProductsIdRoute
@@ -244,12 +260,14 @@ export interface FileRoutesById {
   '/api/newsletter': typeof ApiNewsletterRoute
   '/api/products': typeof ApiProductsRouteWithChildren
   '/api/reviews': typeof ApiReviewsRoute
+  '/api/social-links': typeof ApiSocialLinksRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/checkout/': typeof CheckoutIndexRoute
   '/products/': typeof ProductsIndexRoute
   '/api/admin/orders': typeof ApiAdminOrdersRouteWithChildren
   '/api/admin/product-photos': typeof ApiAdminProductPhotosRoute
   '/api/admin/seed': typeof ApiAdminSeedRoute
+  '/api/admin/social-links': typeof ApiAdminSocialLinksRoute
   '/api/admin/stats': typeof ApiAdminStatsRoute
   '/api/orders/$id': typeof ApiOrdersIdRoute
   '/api/products/$id': typeof ApiProductsIdRoute
@@ -274,12 +292,14 @@ export interface FileRouteTypes {
     | '/api/newsletter'
     | '/api/products'
     | '/api/reviews'
+    | '/api/social-links'
     | '/products/$slug'
     | '/checkout/'
     | '/products/'
     | '/api/admin/orders'
     | '/api/admin/product-photos'
     | '/api/admin/seed'
+    | '/api/admin/social-links'
     | '/api/admin/stats'
     | '/api/orders/$id'
     | '/api/products/$id'
@@ -302,12 +322,14 @@ export interface FileRouteTypes {
     | '/api/newsletter'
     | '/api/products'
     | '/api/reviews'
+    | '/api/social-links'
     | '/products/$slug'
     | '/checkout'
     | '/products'
     | '/api/admin/orders'
     | '/api/admin/product-photos'
     | '/api/admin/seed'
+    | '/api/admin/social-links'
     | '/api/admin/stats'
     | '/api/orders/$id'
     | '/api/products/$id'
@@ -331,12 +353,14 @@ export interface FileRouteTypes {
     | '/api/newsletter'
     | '/api/products'
     | '/api/reviews'
+    | '/api/social-links'
     | '/products/$slug'
     | '/checkout/'
     | '/products/'
     | '/api/admin/orders'
     | '/api/admin/product-photos'
     | '/api/admin/seed'
+    | '/api/admin/social-links'
     | '/api/admin/stats'
     | '/api/orders/$id'
     | '/api/products/$id'
@@ -360,12 +384,14 @@ export interface RootRouteChildren {
   ApiNewsletterRoute: typeof ApiNewsletterRoute
   ApiProductsRoute: typeof ApiProductsRouteWithChildren
   ApiReviewsRoute: typeof ApiReviewsRoute
+  ApiSocialLinksRoute: typeof ApiSocialLinksRoute
   ProductsSlugRoute: typeof ProductsSlugRoute
   CheckoutIndexRoute: typeof CheckoutIndexRoute
   ProductsIndexRoute: typeof ProductsIndexRoute
   ApiAdminOrdersRoute: typeof ApiAdminOrdersRouteWithChildren
   ApiAdminProductPhotosRoute: typeof ApiAdminProductPhotosRoute
   ApiAdminSeedRoute: typeof ApiAdminSeedRoute
+  ApiAdminSocialLinksRoute: typeof ApiAdminSocialLinksRoute
   ApiAdminStatsRoute: typeof ApiAdminStatsRoute
   ApiOrdersIdRoute: typeof ApiOrdersIdRoute
   CheckoutSuccessOrderIdRoute: typeof CheckoutSuccessOrderIdRoute
@@ -466,6 +492,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiReviewsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/social-links': {
+      id: '/api/social-links'
+      path: '/api/social-links'
+      fullPath: '/api/social-links'
+      preLoaderRoute: typeof ApiSocialLinksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/checkout/': {
       id: '/checkout/'
       path: '/checkout'
@@ -506,6 +539,13 @@ declare module '@tanstack/react-router' {
       path: '/api/admin/seed'
       fullPath: '/api/admin/seed'
       preLoaderRoute: typeof ApiAdminSeedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/social-links': {
+      id: '/api/admin/social-links'
+      path: '/api/admin/social-links'
+      fullPath: '/api/admin/social-links'
+      preLoaderRoute: typeof ApiAdminSocialLinksRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/admin/stats': {
@@ -617,12 +657,14 @@ const rootRouteChildren: RootRouteChildren = {
   ApiNewsletterRoute: ApiNewsletterRoute,
   ApiProductsRoute: ApiProductsRouteWithChildren,
   ApiReviewsRoute: ApiReviewsRoute,
+  ApiSocialLinksRoute: ApiSocialLinksRoute,
   ProductsSlugRoute: ProductsSlugRoute,
   CheckoutIndexRoute: CheckoutIndexRoute,
   ProductsIndexRoute: ProductsIndexRoute,
   ApiAdminOrdersRoute: ApiAdminOrdersRouteWithChildren,
   ApiAdminProductPhotosRoute: ApiAdminProductPhotosRoute,
   ApiAdminSeedRoute: ApiAdminSeedRoute,
+  ApiAdminSocialLinksRoute: ApiAdminSocialLinksRoute,
   ApiAdminStatsRoute: ApiAdminStatsRoute,
   ApiOrdersIdRoute: ApiOrdersIdRoute,
   CheckoutSuccessOrderIdRoute: CheckoutSuccessOrderIdRoute,

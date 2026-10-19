@@ -35,11 +35,13 @@ interface Stats {
 }
 
 export const AdminClient: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<"overview" | "products" | "orders" | "reviews">("overview");
+  const [activeTab, setActiveTab] = useState<"overview" | "products" | "orders" | "reviews" | "social">("overview");
   const [stats, setStats] = useState<Stats | null>(null);
   const [productsList, setProductsList] = useState<Product[]>([]);
   const [ordersList, setOrdersList] = useState<Order[]>([]);
   const [reviewsList, setReviewsList] = useState<(Review & { productName?: string })[]>([]);
+  const [socialLinks, setSocialLinks] = useState<{ platform: string; label: string; url: string; isEnabled: boolean }[]>([]);
+  const [socialSaving, setSocialSaving] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -86,17 +88,19 @@ export const AdminClient: React.FC = () => {
   const fetchData = async () => {
     setRefreshing(true);
     try {
-      const [statsRes, productsRes, ordersRes, reviewsRes] = await Promise.all([
+      const [statsRes, productsRes, ordersRes, reviewsRes, socialRes] = await Promise.all([
         adminFetch("/api/admin/stats"),
         adminFetch("/api/products"),
         adminFetch("/api/admin/orders"),
         adminFetch("/api/reviews"),
+        adminFetch("/api/admin/social-links"),
       ]);
 
       if (statsRes.ok) setStats(await statsRes.json());
       if (productsRes.ok) setProductsList(await productsRes.json());
       if (ordersRes.ok) setOrdersList(await ordersRes.json());
       if (reviewsRes.ok) setReviewsList(await reviewsRes.json());
+      if (socialRes.ok) setSocialLinks(await socialRes.json());
     } catch (err) {
       console.error("Admin fetch error:", err);
     } finally {
@@ -108,6 +112,31 @@ export const AdminClient: React.FC = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  const saveSocialLink = async (link: { platform: string; url: string; isEnabled: boolean }) => {
+    setSocialSaving(link.platform);
+    try {
+      const res = await adminFetch("/api/admin/social-links", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ platform: link.platform, url: link.url, isEnabled: link.isEnabled }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setActionSuccess(`${link.platform} social link saved.`);
+      } else {
+        setActionSuccess("");
+        alert(data.error || "Could not save social link.");
+      }
+    } catch {
+      alert("Network error while saving social link.");
+    } finally {
+      setSocialSaving(null);
+    }
+  };
+
+  const updateSocialLink = (platform: string, patch: Partial<{ url: string; isEnabled: boolean }>) =>
+    setSocialLinks((prev) => prev.map((l) => (l.platform === platform ? { ...l, ...patch } : l)));
 
   const openAddModal = () => {
     setEditingProduct(null);
@@ -461,6 +490,7 @@ export const AdminClient: React.FC = () => {
                 { id: "products", label: `Catalog (${productsList.length})` },
                 { id: "orders", label: `Orders (${ordersList.length})` },
                 { id: "reviews", label: `Reviews (${reviewsList.length})` },
+                { id: "social", label: "Social Links" },
               ].map((tab) => (
                 <Button variant="atelier"
                   key={tab.id}
@@ -512,6 +542,7 @@ export const AdminClient: React.FC = () => {
             { id: "products", label: `Shirts (${productsList.length})` },
             { id: "orders", label: `Orders (${ordersList.length})` },
             { id: "reviews", label: `Reviews (${reviewsList.length})` },
+            { id: "social", label: "Social" },
           ].map((tab) => (
             <Button variant="atelier"
               key={tab.id}
@@ -1062,6 +1093,60 @@ export const AdminClient: React.FC = () => {
                   ))}
                 </tbody>
               </table>
+            </div>
+          </div>
+        )}
+
+        {/* TAB 5: SOCIAL LINKS */}
+        {activeTab === "social" && (
+          <div className="space-y-6 animate-fade-in">
+            <div className="flex flex-wrap gap-3 items-center justify-between p-4 bg-muted/50 border border-border rounded text-xs font-mono">
+              <span className="uppercase text-muted-foreground">
+                Social Media Links: <strong className="text-foreground">{socialLinks.filter((l) => l.isEnabled && l.url).length}</strong> visible in footer
+              </span>
+              <span className="text-muted-foreground">
+                Add your page link and switch it on — only switched-on icons appear on the website footer.
+              </span>
+            </div>
+
+            <div className="border border-border rounded bg-muted/30 divide-y divide-border">
+              {socialLinks.map((link) => (
+                <div key={link.platform} className="p-4 flex flex-col sm:flex-row sm:items-center gap-3">
+                  <div className="sm:w-36 shrink-0">
+                    <span className="text-xs font-semibold uppercase tracking-wider text-foreground">{link.label}</span>
+                  </div>
+                  <input
+                    type="url"
+                    value={link.url}
+                    onChange={(e) => updateSocialLink(link.platform, { url: e.target.value })}
+                    placeholder={`https://... your ${link.label} page link`}
+                    aria-label={`${link.label} link`}
+                    className="min-w-0 flex-1 bg-background border border-border rounded px-3 py-2 text-xs text-foreground placeholder:text-muted-foreground outline-none focus:border-primary"
+                  />
+                  <label className="flex items-center gap-2 cursor-pointer text-xs shrink-0">
+                    <input
+                      type="checkbox"
+                      checked={link.isEnabled}
+                      onChange={(e) => updateSocialLink(link.platform, { isEnabled: e.target.checked })}
+                      className="w-4 h-4 rounded border-border bg-muted text-primary"
+                    />
+                    <span className={`uppercase font-mono ${link.isEnabled ? "text-success" : "text-muted-foreground"}`}>
+                      {link.isEnabled ? "On" : "Off"}
+                    </span>
+                  </label>
+                  <Button
+                    variant="atelier"
+                    onClick={() => saveSocialLink(link)}
+                    disabled={socialSaving === link.platform}
+                    className="shrink-0 px-5 py-2 bg-primary text-primary-foreground font-semibold text-xs uppercase tracking-widest hover:bg-secondary transition-colors rounded"
+                  >
+                    {socialSaving === link.platform ? "Saving..." : "Save"}
+                  </Button>
+                </div>
+              ))}
+              {socialLinks.length === 0 && (
+                <p className="p-6 text-xs text-muted-foreground font-mono">No social platforms configured yet.</p>
+              )}
             </div>
           </div>
         )}
