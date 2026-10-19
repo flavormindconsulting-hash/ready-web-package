@@ -268,6 +268,36 @@ export type Database = {
           },
         ]
       }
+      social_links: {
+        Row: {
+          id: string
+          is_enabled: boolean
+          label: string
+          platform: string
+          sort_order: number
+          updated_at: string
+          url: string
+        }
+        Insert: {
+          id?: string
+          is_enabled?: boolean
+          label: string
+          platform: string
+          sort_order?: number
+          updated_at?: string
+          url?: string
+        }
+        Update: {
+          id?: string
+          is_enabled?: boolean
+          label?: string
+          platform?: string
+          sort_order?: number
+          updated_at?: string
+          url?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           id: string
