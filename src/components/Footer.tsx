@@ -68,7 +68,7 @@ export const Footer: React.FC = () => {
         <div><h3 className="font-display text-xl mb-3">Stay in the know.</h3><p className="text-xs opacity-75 mb-5">New collections. Fresh perspectives.</p><form onSubmit={handleNewsletter}><div className="flex border-b border-border"><input type="email" aria-label="Newsletter email" required value={email} onChange={e => setEmail(e.target.value)} placeholder="Your email address" className="min-w-0 flex-1 bg-transparent text-sm py-3 placeholder:text-muted-foreground outline-none" /><Button variant="atelier" type="submit" disabled={submitting} aria-label="Subscribe" className="px-3"><ArrowRight className="size-5" /></Button></div>{status && <p className="text-xs mt-3" role="status">{status.message}</p>}</form></div>
       </div>
       {socialLinks.length > 0 && (
-        <div className="max-w-7xl mx-auto border-t border-border px-6 sm:px-8 py-6 flex items-center justify-center gap-5">
+        <div className="max-w-7xl mx-auto border-t border-border px-6 sm:px-8 py-7 flex items-center justify-center gap-6">
           {socialLinks.map((link) => {
             const Icon = SOCIAL_ICONS[link.platform];
             if (!Icon) return null;
@@ -80,9 +80,9 @@ export const Footer: React.FC = () => {
                 rel="noopener noreferrer"
                 aria-label={`HENRO on ${link.label}`}
                 title={link.label}
-                className="text-muted-foreground hover:text-brand-gold transition-colors"
+                className="text-foreground/80 hover:text-brand-gold transition-colors"
               >
-                <Icon className="size-5" />
+                <Icon className="size-7" />
               </a>
             );
           })}
