@@ -1,12 +1,34 @@
 import eagleLogo from "@/assets/henro-eagle-logo.jpg.asset.json";
 import { Button } from "@/components/ui/button";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "@/compat/next-link";
-import { ArrowRight, ShieldCheck, RefreshCw, Truck, Check } from "lucide-react";
+import { ArrowRight, ShieldCheck, RefreshCw, Truck, Check, Instagram, Facebook, Twitter, Youtube, MessageCircle } from "lucide-react";
+
+interface SocialLink {
+  platform: string;
+  label: string;
+  url: string;
+}
+
+const SOCIAL_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
+  instagram: Instagram,
+  facebook: Facebook,
+  x: Twitter,
+  youtube: Youtube,
+  whatsapp: MessageCircle,
+};
 
 export const Footer: React.FC = () => {
   const [email, setEmail] = useState("");
+  const [socialLinks, setSocialLinks] = useState<SocialLink[]>([]);
+
+  useEffect(() => {
+    fetch("/api/social-links")
+      .then((r) => (r.ok ? r.json() : []))
+      .then((data) => Array.isArray(data) && setSocialLinks(data))
+      .catch(() => {});
+  }, []);
   const [status, setStatus] = useState<{ message: string; success: boolean } | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
