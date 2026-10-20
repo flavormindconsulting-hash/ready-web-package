@@ -27,6 +27,8 @@ export const Route = createFileRoute("/api/admin/social-links")({
         const url = String(body.url || "").trim();
         if (url && !/^https:\/\/.+/i.test(url))
           return json({ error: "Link must start with https://" }, { status: 400 });
+        if (body.isEnabled && !url)
+          return json({ error: "Paste the page link before switching this icon on." }, { status: 400 });
         const c = await db();
         const r = await c
           .from("social_links")
