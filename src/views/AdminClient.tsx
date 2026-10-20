@@ -1142,6 +1142,13 @@ export const AdminClient: React.FC = () => {
                   >
                     {socialSaving === link.platform ? "Saving..." : "Save"}
                   </Button>
+                  <span
+                    className={`shrink-0 sm:w-40 text-[10px] font-mono uppercase tracking-wider ${
+                      link.isEnabled && link.url.trim() ? "text-success" : link.isEnabled ? "text-destructive" : "text-muted-foreground"
+                    }`}
+                  >
+                    {link.isEnabled && link.url.trim() ? "Visible on website" : link.isEnabled ? "Add a link to show" : "Hidden"}
+                  </span>
                 </div>
               ))}
               {socialLinks.length === 0 && (
