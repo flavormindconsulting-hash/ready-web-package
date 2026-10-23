@@ -28,10 +28,10 @@ export const CartDrawer: React.FC = () => {
 
   if (!isCartOpen) return null;
 
-  const handleApplyPromo = (e: React.FormEvent) => {
+  const handleApplyPromo = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!promoInput.trim()) return;
-    const res = applyPromoCode(promoInput);
+    const res = await applyPromoCode(promoInput);
     setPromoMessage({ text: res.message, error: !res.success });
     if (res.success) {
       setPromoInput("");
@@ -218,7 +218,7 @@ export const CartDrawer: React.FC = () => {
                       type="text"
                       value={promoInput}
                       onChange={(e) => setPromoInput(e.target.value)}
-                      placeholder="Promo code (e.g. HENRO10)"
+                      placeholder="Promo code"
                       className="min-w-0 flex-1 bg-muted border border-border text-foreground text-xs px-3 py-2 rounded focus:outline-none focus:border-primary placeholder-muted-foreground font-mono"
                     />
                     <Button variant="atelier"

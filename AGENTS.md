@@ -20,3 +20,7 @@
 - The homepage carries no decorative animated eagle mascot; the supplied logos stay static and appear only in the header, footer, and details section.
 - The homepage hero background is an owner-supplied looping video (separate desktop/mobile CDN assets, muted autoplay loop) shown above a static image fallback that remains visible under reduced motion; campaign text stays in markup, never baked into the video.
 - StoreEntrance wraps the storefront with a once-per-session homepage opening film while the store loads underneath; ended, skip, playback failure, and a safety timeout reveal the store immediately, with reduced-motion and direct inner-page visits bypassing the film.
+
+- Whole-store reset controls are disabled at the UI, endpoint and database-function layers to prevent accidental catalog loss.
+- Promo codes are owner-managed and evaluated against current catalog prices server-side; browser totals are never authoritative for order discounts.
+- Store traffic records random session/event IDs and allowlisted paths only, excluding admin/auth/API pages, with aggregate reads restricted to the owner.

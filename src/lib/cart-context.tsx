@@ -14,7 +14,7 @@ interface CartContextType {
   totalItems: number;
   promoCode: string;
   discountAmount: number;
-  applyPromoCode: (code: string) => { success: boolean; message: string };
+  applyPromoCode: (code: string) => Promise<{ success: boolean; message: string }>;
   removePromoCode: () => void;
   freeShippingThreshold: number;
   amountNeededForFreeShipping: number;
@@ -23,17 +23,11 @@ interface CartContextType {
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-const VALID_PROMOS: Record<string, number> = {
-  HENRO10: 0.1, // 10% off
-  WELCOME15: 0.15, // 15% off
-  VIP20: 0.2, // 20% off
-};
-
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [promoCode, setPromoCode] = useState<string>("");
-  const [discountPercent, setDiscountPercent] = useState<number>(0);
+  const [discountAmount, setDiscountAmount] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
 
   // Load from localStorage on mount
@@ -43,11 +37,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const savedCart = localStorage.getItem("henro_cart");
       if (savedCart) {
         setCart(JSON.parse(savedCart));
-      }
-      const savedPromo = localStorage.getItem("henro_promo");
-      if (savedPromo && VALID_PROMOS[savedPromo]) {
-        setPromoCode(savedPromo);
-        setDiscountPercent(VALID_PROMOS[savedPromo]);
       }
     } catch {
       // ignore storage errors
@@ -109,24 +98,23 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const applyPromoCode = (code: string) => {
-    const cleanCode = code.trim().toUpperCase();
-    if (VALID_PROMOS[cleanCode]) {
-      setPromoCode(cleanCode);
-      setDiscountPercent(VALID_PROMOS[cleanCode]);
-      try {
-        localStorage.setItem("henro_promo", cleanCode);
-      } catch {
-        // ignore
-      }
-      return { success: true, message: `Promo code applied: ${(VALID_PROMOS[cleanCode] * 100)}% off!` };
-    }
-    return { success: false, message: "Invalid code. Try 'HENRO10' or 'WELCOME15'" };
+  const applyPromoCode = async (code: string) => {
+    try {
+      const r = await fetch("/api/public/promo", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({code,items:cart})});
+      const result = await r.json();
+      if (!r.ok) return {success:false,message:result.error || "Cannot apply promo code."};
+      setPromoCode(result.code); setDiscountAmount(result.discount);
+      return {success:true,message:`${result.code} applied: ₹${result.discount.toFixed(2)} off.`};
+    } catch {return {success:false,message:"Cannot check promo code. Please try again."};}
   };
+
+  useEffect(() => {
+    setPromoCode(""); setDiscountAmount(0);
+  }, [cart]);
 
   const removePromoCode = () => {
     setPromoCode("");
-    setDiscountPercent(0);
+    setDiscountAmount(0);
     try {
       localStorage.removeItem("henro_promo");
     } catch {
@@ -136,7 +124,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-  const discountAmount = subtotal * discountPercent;
   const freeShippingThreshold = 150;
   const amountNeededForFreeShipping = Math.max(0, freeShippingThreshold - subtotal);
   const shippingEstimate = subtotal > 0 && subtotal < freeShippingThreshold ? 15 : 0;

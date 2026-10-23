@@ -1,4 +1,6 @@
 import { Button } from "@/components/ui/button";
+import { PromoEditor } from "@/components/admin/PromoEditor";
+import { TrafficStats, type Traffic } from "@/components/admin/TrafficStats";
 
 import { adminFetch } from "@/lib/admin-fetch";
 import { STANDARD_SIZES, nextAvailableSize, sizeValidationError } from "@/lib/product-sizes";
@@ -32,10 +34,11 @@ interface Stats {
   totalProducts: number;
   totalReviews: number;
   avgOrderValue: number;
+  traffic?: Traffic | null;
 }
 
 export const AdminClient: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<"overview" | "products" | "orders" | "reviews" | "social">("overview");
+  const [activeTab, setActiveTab] = useState<"overview" | "products" | "orders" | "reviews" | "social" | "promos">("overview");
   const [stats, setStats] = useState<Stats | null>(null);
   const [productsList, setProductsList] = useState<Product[]>([]);
   const [ordersList, setOrdersList] = useState<Order[]>([]);
@@ -430,25 +433,6 @@ export const AdminClient: React.FC = () => {
     }
   };
 
-  const handleReseedDb = async () => {
-    if (!confirm("Reset database to pristine Henro demo seed? (Existing edits will be re-initialized)")) {
-      return;
-    }
-    setRefreshing(true);
-    try {
-      const res = await adminFetch("/api/admin/seed", { method: "POST" });
-      if (res.ok) {
-        setActionSuccess("Database reset to demo state.");
-        setTimeout(() => setActionSuccess(""), 3000);
-        await fetchData();
-      }
-    } catch {
-      alert("Failed to reseed database");
-    } finally {
-      setRefreshing(false);
-    }
-  };
-
   // Filtered products in Admin table
   const filteredAdminProducts = productsList.filter((p) => {
     if (productCategoryFilter !== "All" && p.category !== productCategoryFilter) {
@@ -484,13 +468,14 @@ export const AdminClient: React.FC = () => {
             </div>
 
             {/* Tabs */}
-            <div className="hidden md:flex items-center gap-1 ml-6 text-xs font-mono uppercase tracking-wider">
+            <div className="hidden xl:flex items-center gap-1 ml-4 text-xs font-mono uppercase tracking-wider">
               {[
                 { id: "overview", label: "Overview & Metrics" },
                 { id: "products", label: `Catalog (${productsList.length})` },
                 { id: "orders", label: `Orders (${ordersList.length})` },
                 { id: "reviews", label: `Reviews (${reviewsList.length})` },
                 { id: "social", label: "Social Links" },
+                { id: "promos", label: "Promo Codes" },
               ].map((tab) => (
                 <Button variant="atelier"
                   key={tab.id}
@@ -517,13 +502,7 @@ export const AdminClient: React.FC = () => {
               <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? "animate-spin text-primary" : ""}`} />
             </Button>
 
-            <Button variant="atelier"
-              onClick={handleReseedDb}
-              title="Reset Demo Dataset"
-              className="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 text-[10px] font-mono uppercase tracking-wider bg-secondary/80 hover:bg-secondary text-foreground rounded border border-border"
-            >
-              Reset Seed
-            </Button>
+
 
             <Link
               href="/products"
@@ -536,13 +515,14 @@ export const AdminClient: React.FC = () => {
         </div>
 
         {/* Mobile Tabs */}
-        <div className="flex md:hidden border-t border-border/60 overflow-x-auto p-2 gap-2 text-xs font-mono">
+        <div className="flex xl:hidden border-t border-border/60 overflow-x-auto p-2 gap-2 text-xs font-mono">
           {[
             { id: "overview", label: "Overview" },
             { id: "products", label: `Shirts (${productsList.length})` },
             { id: "orders", label: `Orders (${ordersList.length})` },
             { id: "reviews", label: `Reviews (${reviewsList.length})` },
             { id: "social", label: "Social" },
+            { id: "promos", label: "Promos" },
           ].map((tab) => (
             <Button variant="atelier"
               key={tab.id}
@@ -633,6 +613,8 @@ export const AdminClient: React.FC = () => {
               </div>
 
             </div>
+
+            <TrafficStats traffic={stats?.traffic} />
 
             {/* Quick Actions & Recent Orders preview */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -732,13 +714,7 @@ export const AdminClient: React.FC = () => {
                     <span>Update Delivery Statuses</span>
                   </Button>
 
-                  <Button variant="atelier"
-                    onClick={handleReseedDb}
-                    className="w-full py-2.5 bg-background hover:bg-muted text-muted-foreground hover:text-foreground text-xs font-mono uppercase tracking-wider rounded border border-border flex items-center justify-center gap-2 transition-colors"
-                  >
-                    <RefreshCw className="w-3.5 h-3.5 text-primary" />
-                    <span>Reset Demo Catalog</span>
-                  </Button>
+      
                 </div>
 
                 <div className="pt-2 text-[11px] text-muted-foreground leading-relaxed font-mono">
@@ -1096,6 +1072,8 @@ export const AdminClient: React.FC = () => {
             </div>
           </div>
         )}
+
+        {activeTab === "promos" && <PromoEditor />}
 
         {/* TAB 5: SOCIAL LINKS */}
         {activeTab === "social" && (
