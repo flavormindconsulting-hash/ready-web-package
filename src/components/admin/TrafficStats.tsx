@@ -1,6 +1,6 @@
 import {Users,Eye,CalendarDays,TrendingUp} from 'lucide-react';
 export interface Traffic {visits:number;pageViews:number;visitsToday:number;visitsWeek:number;trackingSince:string|null;daily:{day:string;visits:number}[];topPages:{path:string;views:number}[]}
-export function TrafficStats({traffic}:{traffic?:Traffic|null}) {
+export function TrafficStats({traffic}:{traffic?:Traffic|null|undefined}) {
  if (!traffic) return <section className="border-y border-border py-6"><h2 className="font-display text-xl">Website traffic</h2><p className="text-sm text-muted-foreground mt-2">Traffic statistics unavailable. Refresh to try again.</p></section>;
  return <section className="space-y-5 border-t border-border pt-6">
   <div><h2 className="text-xl font-display">Website traffic</h2><p className="text-xs text-muted-foreground mt-1">Visits since {traffic.trackingSince?new Date(traffic.trackingSince).toLocaleDateString():'tracking started'} · anonymous browser sessions, not unique people · UTC</p></div>
