@@ -1,4 +1,7 @@
 # HENRO refresh
+- [ ] Remove whole-store reset controls and disable the destructive endpoint.
+- [ ] Add owner-managed promo codes and validate discounts at checkout.
+- [ ] Add privacy-conscious visitor and page-view statistics in Admin; verify the complete flow.
 - [x] Add the uploaded opening video before the website and verify automatic entry when it finishes on desktop and phones.
 - [x] Replace the street banner with owner-created hero videos for desktop and mobile, with static fallbacks.
 - [x] Remove the flying eagle animation from the homepage at the owner's request; the static eagle emblem stays.
