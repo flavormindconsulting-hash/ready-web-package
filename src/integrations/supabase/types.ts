@@ -224,6 +224,42 @@ export type Database = {
         }
         Relationships: []
       }
+      promo_codes: {
+        Row: {
+          code: string
+          created_at: string
+          discount_type: string
+          expires_at: string | null
+          id: string
+          is_enabled: boolean
+          minimum_order: number
+          updated_at: string
+          value: number
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          discount_type?: string
+          expires_at?: string | null
+          id?: string
+          is_enabled?: boolean
+          minimum_order?: number
+          updated_at?: string
+          value: number
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          discount_type?: string
+          expires_at?: string | null
+          id?: string
+          is_enabled?: boolean
+          minimum_order?: number
+          updated_at?: string
+          value?: number
+        }
+        Relationships: []
+      }
       reviews: {
         Row: {
           author_name: string
@@ -298,6 +334,50 @@ export type Database = {
         }
         Relationships: []
       }
+      store_page_views: {
+        Row: {
+          created_at: string
+          id: string
+          path: string
+          visit_id: string
+        }
+        Insert: {
+          created_at?: string
+          id: string
+          path: string
+          visit_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          path?: string
+          visit_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "store_page_views_visit_id_fkey"
+            columns: ["visit_id"]
+            isOneToOne: false
+            referencedRelation: "store_visits"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      store_visits: {
+        Row: {
+          id: string
+          started_at: string
+        }
+        Insert: {
+          id: string
+          started_at?: string
+        }
+        Update: {
+          id?: string
+          started_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           id: string
@@ -329,7 +409,12 @@ export type Database = {
         }
         Returns: boolean
       }
+      record_store_view: {
+        Args: { p_event: string; p_path: string; p_visit: string }
+        Returns: undefined
+      }
       reset_store: { Args: never; Returns: undefined }
+      store_traffic_stats: { Args: never; Returns: Json }
     }
     Enums: {
       app_role: "admin" | "user"
