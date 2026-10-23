@@ -28,11 +28,14 @@ import { Route as ProductsIndexRouteImport } from './routes/products/index'
 import { Route as ProductsSlugRouteImport } from './routes/products/$slug'
 import { Route as ApiAdminOrdersRouteImport } from './routes/api/admin/orders'
 import { Route as ApiAdminProductPhotosRouteImport } from './routes/api/admin/product-photos'
+import { Route as ApiAdminPromosRouteImport } from './routes/api/admin/promos'
 import { Route as ApiAdminSeedRouteImport } from './routes/api/admin/seed'
 import { Route as ApiAdminSocialLinksRouteImport } from './routes/api/admin/social-links'
 import { Route as ApiAdminStatsRouteImport } from './routes/api/admin/stats'
 import { Route as ApiOrdersIdRouteImport } from './routes/api/orders.$id'
 import { Route as ApiProductsIdRouteImport } from './routes/api/products.$id'
+import { Route as ApiPublicPromoRouteImport } from './routes/api/public/promo'
+import { Route as ApiPublicVisitRouteImport } from './routes/api/public/visit'
 import { Route as CheckoutSuccessOrderIdRouteImport } from './routes/checkout/success/$orderId'
 import { Route as ApiAdminOrdersIdRouteImport } from './routes/api/admin/orders.$id'
 import { Route as ApiAdminReviewsIdRouteImport } from './routes/api/admin/reviews.$id'
@@ -133,6 +136,11 @@ const ApiAdminProductPhotosRoute = ApiAdminProductPhotosRouteImport.update({
   path: '/api/admin/product-photos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAdminPromosRoute = ApiAdminPromosRouteImport.update({
+  id: '/api/admin/promos',
+  path: '/api/admin/promos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAdminSeedRoute = ApiAdminSeedRouteImport.update({
   id: '/api/admin/seed',
   path: '/api/admin/seed',
@@ -157,6 +165,16 @@ const ApiProductsIdRoute = ApiProductsIdRouteImport.update({
   id: '/$id',
   path: '/$id',
   getParentRoute: () => ApiProductsRoute,
+} as any)
+const ApiPublicPromoRoute = ApiPublicPromoRouteImport.update({
+  id: '/api/public/promo',
+  path: '/api/public/promo',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicVisitRoute = ApiPublicVisitRouteImport.update({
+  id: '/api/public/visit',
+  path: '/api/public/visit',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const CheckoutSuccessOrderIdRoute = CheckoutSuccessOrderIdRouteImport.update({
   id: '/checkout/success/$orderId',
@@ -204,11 +222,14 @@ export interface FileRoutesByFullPath {
   '/products/': typeof ProductsIndexRoute
   '/api/admin/orders': typeof ApiAdminOrdersRouteWithChildren
   '/api/admin/product-photos': typeof ApiAdminProductPhotosRoute
+  '/api/admin/promos': typeof ApiAdminPromosRoute
   '/api/admin/seed': typeof ApiAdminSeedRoute
   '/api/admin/social-links': typeof ApiAdminSocialLinksRoute
   '/api/admin/stats': typeof ApiAdminStatsRoute
   '/api/orders/$id': typeof ApiOrdersIdRoute
   '/api/products/$id': typeof ApiProductsIdRoute
+  '/api/public/promo': typeof ApiPublicPromoRoute
+  '/api/public/visit': typeof ApiPublicVisitRoute
   '/checkout/success/$orderId': typeof CheckoutSuccessOrderIdRoute
   '/api/admin/orders/$id': typeof ApiAdminOrdersIdRoute
   '/api/admin/reviews/$id': typeof ApiAdminReviewsIdRoute
@@ -234,11 +255,14 @@ export interface FileRoutesByTo {
   '/products': typeof ProductsIndexRoute
   '/api/admin/orders': typeof ApiAdminOrdersRouteWithChildren
   '/api/admin/product-photos': typeof ApiAdminProductPhotosRoute
+  '/api/admin/promos': typeof ApiAdminPromosRoute
   '/api/admin/seed': typeof ApiAdminSeedRoute
   '/api/admin/social-links': typeof ApiAdminSocialLinksRoute
   '/api/admin/stats': typeof ApiAdminStatsRoute
   '/api/orders/$id': typeof ApiOrdersIdRoute
   '/api/products/$id': typeof ApiProductsIdRoute
+  '/api/public/promo': typeof ApiPublicPromoRoute
+  '/api/public/visit': typeof ApiPublicVisitRoute
   '/checkout/success/$orderId': typeof CheckoutSuccessOrderIdRoute
   '/api/admin/orders/$id': typeof ApiAdminOrdersIdRoute
   '/api/admin/reviews/$id': typeof ApiAdminReviewsIdRoute
@@ -266,11 +290,14 @@ export interface FileRoutesById {
   '/products/': typeof ProductsIndexRoute
   '/api/admin/orders': typeof ApiAdminOrdersRouteWithChildren
   '/api/admin/product-photos': typeof ApiAdminProductPhotosRoute
+  '/api/admin/promos': typeof ApiAdminPromosRoute
   '/api/admin/seed': typeof ApiAdminSeedRoute
   '/api/admin/social-links': typeof ApiAdminSocialLinksRoute
   '/api/admin/stats': typeof ApiAdminStatsRoute
   '/api/orders/$id': typeof ApiOrdersIdRoute
   '/api/products/$id': typeof ApiProductsIdRoute
+  '/api/public/promo': typeof ApiPublicPromoRoute
+  '/api/public/visit': typeof ApiPublicVisitRoute
   '/checkout/success/$orderId': typeof CheckoutSuccessOrderIdRoute
   '/api/admin/orders/$id': typeof ApiAdminOrdersIdRoute
   '/api/admin/reviews/$id': typeof ApiAdminReviewsIdRoute
@@ -298,11 +325,14 @@ export interface FileRouteTypes {
     | '/products/'
     | '/api/admin/orders'
     | '/api/admin/product-photos'
+    | '/api/admin/promos'
     | '/api/admin/seed'
     | '/api/admin/social-links'
     | '/api/admin/stats'
     | '/api/orders/$id'
     | '/api/products/$id'
+    | '/api/public/promo'
+    | '/api/public/visit'
     | '/checkout/success/$orderId'
     | '/api/admin/orders/$id'
     | '/api/admin/reviews/$id'
@@ -328,11 +358,14 @@ export interface FileRouteTypes {
     | '/products'
     | '/api/admin/orders'
     | '/api/admin/product-photos'
+    | '/api/admin/promos'
     | '/api/admin/seed'
     | '/api/admin/social-links'
     | '/api/admin/stats'
     | '/api/orders/$id'
     | '/api/products/$id'
+    | '/api/public/promo'
+    | '/api/public/visit'
     | '/checkout/success/$orderId'
     | '/api/admin/orders/$id'
     | '/api/admin/reviews/$id'
@@ -359,11 +392,14 @@ export interface FileRouteTypes {
     | '/products/'
     | '/api/admin/orders'
     | '/api/admin/product-photos'
+    | '/api/admin/promos'
     | '/api/admin/seed'
     | '/api/admin/social-links'
     | '/api/admin/stats'
     | '/api/orders/$id'
     | '/api/products/$id'
+    | '/api/public/promo'
+    | '/api/public/visit'
     | '/checkout/success/$orderId'
     | '/api/admin/orders/$id'
     | '/api/admin/reviews/$id'
@@ -390,10 +426,13 @@ export interface RootRouteChildren {
   ProductsIndexRoute: typeof ProductsIndexRoute
   ApiAdminOrdersRoute: typeof ApiAdminOrdersRouteWithChildren
   ApiAdminProductPhotosRoute: typeof ApiAdminProductPhotosRoute
+  ApiAdminPromosRoute: typeof ApiAdminPromosRoute
   ApiAdminSeedRoute: typeof ApiAdminSeedRoute
   ApiAdminSocialLinksRoute: typeof ApiAdminSocialLinksRoute
   ApiAdminStatsRoute: typeof ApiAdminStatsRoute
   ApiOrdersIdRoute: typeof ApiOrdersIdRoute
+  ApiPublicPromoRoute: typeof ApiPublicPromoRoute
+  ApiPublicVisitRoute: typeof ApiPublicVisitRoute
   CheckoutSuccessOrderIdRoute: typeof CheckoutSuccessOrderIdRoute
   ApiAdminReviewsIdRoute: typeof ApiAdminReviewsIdRoute
   ApiPublicProductPhotosFilenameRoute: typeof ApiPublicProductPhotosFilenameRoute
@@ -534,6 +573,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAdminProductPhotosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/admin/promos': {
+      id: '/api/admin/promos'
+      path: '/api/admin/promos'
+      fullPath: '/api/admin/promos'
+      preLoaderRoute: typeof ApiAdminPromosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/admin/seed': {
       id: '/api/admin/seed'
       path: '/api/admin/seed'
@@ -568,6 +614,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/api/products/$id'
       preLoaderRoute: typeof ApiProductsIdRouteImport
       parentRoute: typeof ApiProductsRoute
+    }
+    '/api/public/promo': {
+      id: '/api/public/promo'
+      path: '/api/public/promo'
+      fullPath: '/api/public/promo'
+      preLoaderRoute: typeof ApiPublicPromoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/visit': {
+      id: '/api/public/visit'
+      path: '/api/public/visit'
+      fullPath: '/api/public/visit'
+      preLoaderRoute: typeof ApiPublicVisitRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/checkout/success/$orderId': {
       id: '/checkout/success/$orderId'
@@ -663,10 +723,13 @@ const rootRouteChildren: RootRouteChildren = {
   ProductsIndexRoute: ProductsIndexRoute,
   ApiAdminOrdersRoute: ApiAdminOrdersRouteWithChildren,
   ApiAdminProductPhotosRoute: ApiAdminProductPhotosRoute,
+  ApiAdminPromosRoute: ApiAdminPromosRoute,
   ApiAdminSeedRoute: ApiAdminSeedRoute,
   ApiAdminSocialLinksRoute: ApiAdminSocialLinksRoute,
   ApiAdminStatsRoute: ApiAdminStatsRoute,
   ApiOrdersIdRoute: ApiOrdersIdRoute,
+  ApiPublicPromoRoute: ApiPublicPromoRoute,
+  ApiPublicVisitRoute: ApiPublicVisitRoute,
   CheckoutSuccessOrderIdRoute: CheckoutSuccessOrderIdRoute,
   ApiAdminReviewsIdRoute: ApiAdminReviewsIdRoute,
   ApiPublicProductPhotosFilenameRoute: ApiPublicProductPhotosFilenameRoute,

@@ -6,7 +6,8 @@ export const Route = createFileRoute("/api/admin/stats")({
     GET: async ({ request }) => {
       const denied = await requireAdmin(request); if (denied) return denied;
       const c = await db();
-      const [p, o, r, recent] = await Promise.all([
+      const [traffic, p, o, r, recent] = await Promise.all([
+        c.rpc("store_traffic_stats"),
         c.from("products").select("id", { count: "exact", head: true }),
         c.from("orders").select("total"),
         c.from("reviews").select("id", { count: "exact", head: true }),
@@ -16,7 +17,7 @@ export const Route = createFileRoute("/api/admin/stats")({
       const totalRevenue = totals.reduce((s, x) => s + Number(x.total), 0);
       const totalOrders = totals.length;
       return json({ totalRevenue, totalOrders, totalProducts: p.count ?? 0, totalReviews: r.count ?? 0,
-        avgOrderValue: totalOrders ? totalRevenue / totalOrders : 0, recentOrders: rows(recent.data) });
+        avgOrderValue: totalOrders ? totalRevenue / totalOrders : 0, traffic: traffic.error ? null : traffic.data, recentOrders: rows(recent.data) });
     },
   } },
 });

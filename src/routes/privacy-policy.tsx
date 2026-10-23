@@ -60,7 +60,7 @@ function PrivacyPolicyPage() {
       </Section>
 
       <Section title="7. Cookies">
-        <p>We use only essential browser storage needed to keep your shopping bag and sign-in session working. We do not use advertising or tracking cookies.</p>
+        <p>We use browser storage to keep your shopping bag and sign-in session working. We also store a random identifier for each browsing session to count store visits and page views. These statistics do not include your name, email, IP address or full browser details, and are not used for advertising. Visit counting respects your browser’s Do Not Track setting.</p>
       </Section>
 
       <Section title="8. Changes to this policy">

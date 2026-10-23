@@ -83,10 +83,10 @@ export default function CheckoutPage() {
     });
   };
 
-  const handleApplyPromo = (e: React.FormEvent) => {
+  const handleApplyPromo = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!promoInput.trim()) return;
-    const res = applyPromoCode(promoInput);
+    const res = await applyPromoCode(promoInput);
     setPromoMsg({ text: res.message, error: !res.success });
     if (res.success) setPromoInput("");
   };
@@ -586,7 +586,7 @@ export default function CheckoutPage() {
                         type="text"
                         value={promoInput}
                         onChange={(e) => setPromoInput(e.target.value)}
-                        placeholder="Voucher code (HENRO10)"
+                        placeholder="Voucher code"
                         className="min-w-0 flex-1 bg-background border border-border rounded px-3 py-1.5 text-xs text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary font-mono"
                       />
                       <Button variant="atelier"
